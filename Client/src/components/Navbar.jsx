@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import logo from "../assets/Logo.jpg";
 
 function NavBar() {
   const [expand, updateExpanded] = useState(false);
@@ -27,6 +28,16 @@ function NavBar() {
       expand="md"
       className={navColour ? "sticky" : "navbar"}
     >
+      <Nav.Item>
+        <Nav.Link
+          className="nav-link about"
+          as={Link}
+          to="/"
+          onClick={() => updateExpanded(false)}
+        >
+          <img style={{ width: "100px" }} src={logo} />
+        </Nav.Link>
+      </Nav.Item>
       <Container>
         <Navbar.Toggle
           aria-controls="responsive-navbar-nav"
