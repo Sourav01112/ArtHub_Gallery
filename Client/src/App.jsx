@@ -13,12 +13,14 @@ import { SingleProductPage } from "./components/SingleProductPage";
 
 import About from "./components/pages/About";
 import Contact from "./components/pages/Contact";
+import { Signup } from "./components/Signup";
 
 function App() {
   return (
     <>
       <NavBar />
-      <AllRoutes/>
+      {/* <AllRoutes/> */}
+      <Signup/>
       <Topfooter/>
       <Footer/>
     </>
