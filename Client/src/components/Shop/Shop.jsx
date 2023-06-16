@@ -1,22 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Container, Image, Text } from "@chakra-ui/react";
 import "./shop.css";
-import data from "../../db.json";
+
 import { Shopcard } from "./Shopcard";
-;
 import ShopBig from "../../assets/Shop_Big.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useSearchParams } from "react-router-dom";
+import { getProducts } from "../../Redux/productReducer/action";
 
 /*  Shop Page by Sourav */
 
 export const Shop = () => {
+  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { products, isLoading } = useSelector((store) => store.productReducer);
+  const location = useLocation();
+
+  console.log("@@@@", products);
+
+  useEffect(() => {
+    //  add ParamsObj inside getProducts and also in action.js when adding the filtering/sorting and useSearchParams
+    dispatch(getProducts());
+  }, []);
+
   return (
     <div>
-      {/* <NavBar /> */}
-      {/* <div>
-        <img src="https://cdn.shopify.com/s/files/1/2095/4219/files/mggs-dg-header.jpg?v=1679000632" />
-        <p>Hello</p>
-      </div> */}
-
       <div style={{ position: "relative", display: "inline-block" }}>
         <img src={ShopBig} alt="Image" style={{ maxWidth: "100%" }} />
         <div
@@ -45,9 +53,11 @@ export const Shop = () => {
         <h3>NEW</h3>
         <div className="CardContainer">
           {/* Include the Card component */}
-          {data.Product?.map((ele) => {
-            return <Shopcard {...ele} />;
-          })}
+
+          {products?.length > 0 &&
+            products?.map((ele) => {
+              return <Shopcard key={ele.id} {...ele} />;
+            })}
         </div>
       </div>
     </div>
