@@ -1,9 +1,12 @@
 import React from 'react'
 import { ArrowForwardIcon } from "@chakra-ui/icons"
+import logo from "../assets/Logo.jpg"
 
 export const Topfooter = () => {
     return (
-        <div style={{ display: "flex", justifyContent: "space-around", width: "70%" }}>
+        <>
+        <hr />
+        <div style={{ display: "flex", justifyContent:"space-around", width: "90%",fontSize:"12px",color:"rgba(0, 0, 0, 0.547)",marginTop:"30px" }}>
             <div>
                 <p>NEW YORK</p>
                 <hr />
@@ -20,7 +23,7 @@ export const Topfooter = () => {
                     Monday - Saturday, 10 am - 6 pm <br />
                     Closed Monday, June 19, 2023
                 </p>
-                <p><ArrowForwardIcon /> View Map</p>
+                <p><ArrowForwardIcon style={{marginBottom:"3px"}}/> View Map</p>
             </div>
             <div>
                 <p>PARIS</p>
@@ -38,7 +41,7 @@ export const Topfooter = () => {
                     Tuesday - Saturday, 11 am - 7 pm <br />
                     Closed Monday, June 19, 2023
                 </p>
-                <p><ArrowForwardIcon /> View Map</p>
+                <p><ArrowForwardIcon style={{marginBottom:"3px"}}/> View Map</p>
             </div>
             <div>
                 <p>LOS ANGELES</p>
@@ -56,8 +59,14 @@ export const Topfooter = () => {
                     Monday - Saturday, 10 am - 6 pm <br />
                     Closed Monday, June 19, 2023
                 </p>
+                
             </div>
+            <div style={{width:"35%"}}>
+                <img src={logo} alt="" style={{width:"100%"}}/>
+            </div>
+            
         </div>
+        </>
     )
 }
 
