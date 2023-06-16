@@ -1,126 +1,106 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-import logo from "../assets/Logo.jpg"
-import {Search2Icon} from "@chakra-ui/icons"
+import logo from "../assets/Logo.jpg";
+import { Search2Icon } from "@chakra-ui/icons";
+import { Box, position } from "@chakra-ui/react";
+import { FaArrowCircleUp } from "react-icons/fa";
+import "../App.css";
+
 function NavBar() {
   const [expand, updateExpanded] = useState(false);
   const [navColour, updateNavbar] = useState(false);
 
-  function scrollHandler() {
-    if (window.scrollY >= 20) {
-      updateNavbar(true);
-    } else {
-      updateNavbar(false);
-    }
-  }
+  //****************  Scroll to Top   **************
+  const [isTop, setIsTop] = useState(true);
 
-  window.addEventListener("scroll", scrollHandler);
+  useEffect(() => {
+    const handleScroll = () => {
+      const threshold =
+        document.documentElement.scrollHeight - window.innerHeight;
+
+      if (window.pageYOffset < threshold / 2) {
+        setIsTop(false);
+      } else {
+        setIsTop(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    setIsTop(true);
+  };
+  //****************  Scroll to Top  ENDS **************
 
   return (
     <>
-    <div style={{display:"flex",justifyContent:"space-between",paddingBottom:"10px",alignItems:"center",marginBottom:"1px"}} id='section-1'>
-      <div style={{display:"flex",alignItems:"center"}}>
-        <img src={logo} alt="" style={{width:"10%"}}/>
-        <p style={{color:"red",fontSize:"16px",marginLeft:"10px"}}>MORDERN ART GALLERY</p>
+      <div
+        className="navbarNew"
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          // paddingBottom: "10px",
+          alignItems: "center",
+          marginBottom: "1px",
+          padding: "30px",
+        }}
+        id="section-1"
+      >
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <img src={logo} alt="" style={{ width: "10%" }} />
+          <p style={{ color: "red", fontSize: "16px", marginLeft: "10px" }}>
+            MORDERN ART GALLERY
+          </p>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "80%",
+            alignItems: "center",
+          }}
+        >
+          <Link style={{ color: "rgba(0, 0, 0, 0.547)" }}>ARTISTS</Link>
+          <Link style={{ color: "rgba(0, 0, 0, 0.547)" }}>EXHIBITIONS</Link>
+          <Link style={{ color: "rgba(0, 0, 0, 0.547)" }}>NEWS</Link>
+          <Link style={{ color: "rgba(0, 0, 0, 0.547)" }} to={"/shop"}>
+            SHOP
+          </Link>
+          <Link style={{ color: "rgba(0, 0, 0, 0.547)" }} to={"/contact"}>
+            CONTACT
+          </Link>
+          <Link style={{ color: "rgba(0, 0, 0, 0.547)" }} to={"/about"}>
+            ABOUT
+          </Link>
+          <Link style={{ color: "rgba(0, 0, 0, 0.547)", marginBottom: "5px" }}>
+            <Search2Icon />
+          </Link>
+        </div>
       </div>
-      <div style={{display:"flex",justifyContent:"space-between",width:"80%",alignItems:"center"}}>
-        <Link style={{color:"rgba(0, 0, 0, 0.547)"}}>ARTISTS</Link>
-        <Link style={{color:"rgba(0, 0, 0, 0.547)"}}>EXHIBITIONS</Link>
-        <Link style={{color:"rgba(0, 0, 0, 0.547)"}}>NEWS</Link>
-        <Link style={{color:"rgba(0, 0, 0, 0.547)"}} to={"/shop"}>SHOP</Link>
-        <Link style={{color:"rgba(0, 0, 0, 0.547)"}} to={"/contact"}>CONTACT</Link>
-        <Link style={{color:"rgba(0, 0, 0, 0.547)"}} to={"/about"}>ABOUT</Link>
-        <Link style={{color:"rgba(0, 0, 0, 0.547)",marginBottom:"5px"}}><Search2Icon/></Link>
-      </div>
-      
-    </div>
-    <hr />
+
+      {/* To top button :- CHAKRA */}
+
+      <Box position="fixed" bottom="2rem" right="0.5rem">
+        {isTop && (
+          <FaArrowCircleUp color="red" size={30} onClick={scrollToTop} />
+        )}
+      </Box>
+      {/* <hr /> */}
     </>
   );
 }
 
 export default NavBar;
-
-
-{/* <Navbar
-      id="nav-menu"
-      expanded={expand}
-      fixed="top"
-      expand="md"
-      className={navColour ? "sticky" : "navbar"}
-    >
-      <Container>
-        <Navbar.Toggle
-          aria-controls="responsive-navbar-nav"
-          onClick={() => {
-            updateExpanded(expand ? false : "expanded");
-          }}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </Navbar.Toggle>
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="ms-auto" defaultActiveKey="#home">
-            <Nav.Item>
-              <Nav.Link
-                className="nav-link home"
-                as={Link}
-                to="/artists"
-                onClick={() => updateExpanded(false)}
-              >
-                ARTISTS
-              </Nav.Link>
-            </Nav.Item>
-
-            <Nav.Item>
-              <Nav.Link
-                className="nav-link about"
-                as={Link}
-                to="/exhibition"
-                onClick={() => updateExpanded(false)}
-              >
-                EXHIBITIONS
-              </Nav.Link>
-            </Nav.Item>
-
-            <Nav.Item>
-              <Nav.Link
-                className="nav-link about"
-                as={Link}
-                to="/shop"
-                onClick={() => updateExpanded(false)}
-              >
-                SHOP
-              </Nav.Link>
-            </Nav.Item>
-
-            <Nav.Item>
-              <Nav.Link
-                as={Link}
-                className="nav-link projects"
-                to="/contact"
-                onClick={() => updateExpanded(false)}
-              >
-                CONTACT
-              </Nav.Link>
-            </Nav.Item>
-
-            <Nav.Item>
-              <Nav.Link
-                as={Link}
-                className="nav-link projects"
-                to="/about"
-                onClick={() => updateExpanded(false)}
-              >
-                ABOUT
-              </Nav.Link>
-            </Nav.Item>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar> */}

@@ -3,7 +3,7 @@ import { Box, Container, Image, Text } from "@chakra-ui/react";
 import "./shop.css";
 import data from "../../db.json";
 import { Shopcard } from "./Shopcard";
-import NavBar from "../Navbar";
+;
 import ShopBig from "../../assets/Shop_Big.jpg";
 
 /*  Shop Page by Sourav */

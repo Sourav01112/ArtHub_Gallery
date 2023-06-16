@@ -8,10 +8,10 @@ import { Shop } from "../Shop/Shop";
 export const AllRoutes = () => {
   return (
     <Routes>
-       <Route path="/" element={<HomePage/>}/>
+      <Route path="/" element={<HomePage />} />
       <Route path="/shop" element={<Shop />} />
-      <Route path="/about" element={<About/>}></Route>
-      <Route path="/contact" element={<Contact/>}></Route>
+      <Route path="/about" element={<About />}></Route>
+      <Route path="/contact" element={<Contact />}></Route>
     </Routes>
   );
 };
