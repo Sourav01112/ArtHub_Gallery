@@ -5,9 +5,11 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import logo from "../assets/Logo.jpg";
-import { Search2Icon } from "@chakra-ui/icons";
-import { Box, position } from "@chakra-ui/react";
+import { ChevronDownIcon, Search2Icon } from "@chakra-ui/icons";
+import { Box, Divider, Menu, MenuButton, MenuItem, MenuList, position,Text} from "@chakra-ui/react";
 import { FaArrowCircleUp } from "react-icons/fa";
+import {AiOutlineLogin} from "react-icons/ai"
+import {AiOutlineLogout} from "react-icons/ai"
 import "../App.css";
 
 function NavBar() {
@@ -61,9 +63,9 @@ function NavBar() {
       >
         <div style={{ display: "flex", alignItems: "center" }}>
           <img src={logo} alt="" style={{ width: "10%" }} />
-          <p style={{ color: "red", fontSize: "16px", marginLeft: "10px" }}>
-            MORDERN ART GALLERY
-          </p>
+          <Link to={"/"}  style={{ color: "red", fontSize: "16px", marginLeft: "10px",marginBottom:"15px" }}>
+            MODERN ART GALLERY
+          </Link>
         </div>
         <div
           style={{
@@ -85,9 +87,22 @@ function NavBar() {
           <Link style={{ color: "rgba(0, 0, 0, 0.547)" }} to={"/about"}>
             ABOUT
           </Link>
+          <div>
+            <Menu>
+              <MenuButton mt={4} color={"rgba(0, 0, 0, 0.547)"} as={Text} rightIcon={<ChevronDownIcon />}>
+                Profile
+              </MenuButton>
+              <MenuList mt={5} p={0}>
+              <Link to={"/login"}> <MenuItem  border={"0"} justifyContent={"space-between"} >Login <AiOutlineLogin/></MenuItem></Link>
+               
+              <Link to={"/signup"}> <MenuItem border={"0"} justifyContent={"space-between"}>Sign Up <AiOutlineLogout/></MenuItem></Link>
+              </MenuList>
+            </Menu>
+          </div>
           <Link style={{ color: "rgba(0, 0, 0, 0.547)", marginBottom: "5px" }}>
             <Search2Icon />
           </Link>
+          
         </div>
       </div>
 

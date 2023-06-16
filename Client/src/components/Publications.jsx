@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export const Publications = () => {
     return (
@@ -17,6 +18,7 @@ export const Publications = () => {
                             Cristina Iglesias transformed it into a breath-taking sculptural work
                             <br /> that opened to the...</p>
                     </div>
+                    <Link to={"/shop/5"}>
                     <div>
                         <img src="https://cdn.shopify.com/s/files/1/2095/4219/products/MGGS_GabrielOrozco_CorplegadosandParticles_Cover.jpg?v=1669233423&width=823" alt="" />
                         <p style={{fontSize:"13px",color:"rgba(0, 0, 0, 0.547)",marginTop:"15px"}}>PUBLICATIONS</p>
@@ -27,6 +29,7 @@ export const Publications = () => {
                             Cristina Iglesias transformed it into a breath-taking sculptural work
                             <br /> that opened to the...</p>
                     </div>
+                    </Link>
                     <div>
                         <img src="https://cdn.shopify.com/s/files/1/2095/4219/products/MGG_Shop_GabrielOrozco_AnIsland_Cover.jpg?v=1673030906&width=823" alt="" />
                         <p style={{fontSize:"13px",color:"rgba(0, 0, 0, 0.547)",marginTop:"15px"}}>PUBLICATIONS</p>

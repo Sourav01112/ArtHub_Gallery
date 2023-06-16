@@ -11,14 +11,15 @@ import { NewsandEvents } from "./components/NewsandEvents";
 import { SingleProductPage } from "./components/SingleProductPage";
 import About from "./components/pages/About";
 import Contact from "./components/pages/Contact";
+import { Signup } from "./components/Signup";
 
 function App() {
   return (
     <>
       <NavBar />
-      <AllRoutes />
-      <Topfooter />
-      <Footer />
+      <AllRoutes/>
+      <Topfooter/>
+      <Footer/>
     </>
   );
 }
