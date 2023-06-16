@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
@@ -6,22 +6,44 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import logo from "../assets/Logo.jpg";
 import { Search2Icon } from "@chakra-ui/icons";
-import { position } from "@chakra-ui/react";
+import { Box, position } from "@chakra-ui/react";
+import { FaArrowCircleUp } from "react-icons/fa";
 import "../App.css";
 
 function NavBar() {
   const [expand, updateExpanded] = useState(false);
   const [navColour, updateNavbar] = useState(false);
 
-  function scrollHandler() {
-    if (window.scrollY >= 20) {
-      updateNavbar(true);
-    } else {
-      updateNavbar(false);
-    }
-  }
+  //****************  Scroll to Top   **************
+  const [isTop, setIsTop] = useState(true);
 
-  window.addEventListener("scroll", scrollHandler);
+  useEffect(() => {
+    const handleScroll = () => {
+      const threshold =
+        document.documentElement.scrollHeight - window.innerHeight;
+
+      if (window.pageYOffset < threshold / 2) {
+        setIsTop(false);
+      } else {
+        setIsTop(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    setIsTop(true);
+  };
+  //****************  Scroll to Top  ENDS **************
 
   return (
     <>
@@ -68,6 +90,14 @@ function NavBar() {
           </Link>
         </div>
       </div>
+
+      {/* To top button :- CHAKRA */}
+
+      <Box position="fixed" bottom="2rem" right="0.5rem">
+        {isTop && (
+          <FaArrowCircleUp color="red" size={30} onClick={scrollToTop} />
+        )}
+      </Box>
       {/* <hr /> */}
     </>
   );
