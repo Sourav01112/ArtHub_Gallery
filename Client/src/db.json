@@ -1,65 +1,86 @@
-{
-  "Product": [
-    {
-      "id": 1,
-      "title": "Amazing Table and chair",
-      "image": "https://cdn.shopify.com/s/files/1/2095/4219/products/MGG_Shop_Graham_manga_71c1c4d5-acd1-4baa-be77-335ee0f67cbd.jpg?v=1678998185&width=320",
-      "description": "abc",
-      "price": "50000"
-    },
-    {
-      "id": 2,
-      "title": "Amazing Table and chair",
-      "image": "https://cdn.shopify.com/s/files/1/2095/4219/products/MGG_Shop_Graham_manga_71c1c4d5-acd1-4baa-be77-335ee0f67cbd.jpg?v=1678998185&width=320",
-      "price": "50000"
-    },
-    {
-      "id": 3,
-      "title": "Amazing Table and chair",
-      "image": "https://cdn.shopify.com/s/files/1/2095/4219/products/MGG_Shop_Graham_manga_71c1c4d5-acd1-4baa-be77-335ee0f67cbd.jpg?v=1678998185&width=320",
-      "price": "50000"
-    },
-    {
-      "id": 4,
-      "title": "Amazing Table and chair",
-      "image": "https://cdn.shopify.com/s/files/1/2095/4219/products/MGG_Shop_Graham_manga_71c1c4d5-acd1-4baa-be77-335ee0f67cbd.jpg?v=1678998185&width=320",
-      "price": "50000"
-    },
-    {
-      "id": 5,
-      "title": "Amazing Table and chair",
-      "image": "https://cdn.shopify.com/s/files/1/2095/4219/products/MGG_Shop_Graham_manga_71c1c4d5-acd1-4baa-be77-335ee0f67cbd.jpg?v=1678998185&width=320",
-      "price": "50000"
-    },
-    {
-      "id": 6,
-      "title": "Amazing Table and chair",
-      "image": "https://cdn.shopify.com/s/files/1/2095/4219/products/MGG_Shop_Graham_manga_71c1c4d5-acd1-4baa-be77-335ee0f67cbd.jpg?v=1678998185&width=320",
-      "price": "50000"
-    },
-    {
-      "id": 7,
-      "title": "Amazing Table and chair",
-      "image": "https://cdn.shopify.com/s/files/1/2095/4219/products/MGG_Shop_Graham_manga_71c1c4d5-acd1-4baa-be77-335ee0f67cbd.jpg?v=1678998185&width=320",
-      "price": "50000"
-    },
-    {
-      "id": 8,
-      "title": "Amazing Table and chair",
-      "image": "https://cdn.shopify.com/s/files/1/2095/4219/products/MGG_Shop_Graham_manga_71c1c4d5-acd1-4baa-be77-335ee0f67cbd.jpg?v=1678998185&width=320",
-      "price": "50000"
-    },
-    {
-      "id": 9,
-      "title": "Amazing Table and chair",
-      "image": "https://cdn.shopify.com/s/files/1/2095/4219/products/MGG_Shop_Graham_manga_71c1c4d5-acd1-4baa-be77-335ee0f67cbd.jpg?v=1678998185&width=320",
-      "price": "50000"
-    },
-    {
-      "id": 10,
-      "title": "Amazing Table and chair",
-      "image": "https://cdn.shopify.com/s/files/1/2095/4219/products/MGG_Shop_Graham_manga_71c1c4d5-acd1-4baa-be77-335ee0f67cbd.jpg?v=1678998185&width=320",
-      "price": "50000"
-    }
-  ]
-}
+[
+  {
+   "image": ["https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/MGG_Shop_Graham_manga_71c1c4d5-acd1-4baa-be77-335ee0f67cbd.jpg?v=1678998185&width=533","https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/MGG_Shop_Graham_manga_pages.jpg?v=1678998185&width=823","https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/MGG_Shop_Graham_manga_pages3.jpg?v=1678998185&width=823"],
+   "title": "Manga Dan Graham Story",
+   "desc": "This Manga-style comic focuses on Dan Graham, his life, times and work. Includes scenes with Robert Smithson, Nancy Holt, Sol LeWitt, The Rolling Stones, Kim Gordon and others.",
+   "price": "$40.00",
+   "id": 1
+  },
+  {
+   "image": [
+    "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/MGGS-Cristina-Iglesias-Hondulea.jpg?v=1675364329&width=533",
+   "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/IMG_15312.jpg?v=1675364328&width=823",
+   "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/IMG_15313.jpg?v=1675364328&width=823",
+   "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/IMG_15312.jpg?v=1675364328&width=1100",
+   "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/IMG_15313.jpg?v=1675364328&width=1100"],
+   "title": "Cristina Iglesias",
+   "desc": "Cristina Iglesias – Hondalea documents a remarkable work realized by one of the world’s leading sculptors in the city where she was born.",
+   "price": "$48.00",
+   "subtitle": "Hondalea",
+   "id": 2
+  },
+  {
+   "image": [
+    "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/MGG_Goldin_Charity_1.jpg?v=1674064711&width=533"],
+   "title": "Nan Goldin",
+   "desc": "To accompany the theatrical release of All the Beauty and the Bloodshed, Nan Goldin is releasing a special limited edition print, for sale in collaboration with Marian Goodman Gallery.",
+   "price": "$250.00",
+   "subtitle": "Benefit Edition",
+   "id": 3
+  },
+  {
+   "image":[
+    "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/MGGS_NairyBaghramian_SideLeaps_Cover_9c52a683-2986-4b98-bbca-340ec82446f3.jpg?v=1673631046&width=533",
+    "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/nairy_sideleaps.jpg?v=1673631046&width=1100",
+    "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/MGG_Shop_Baghramian_Open2.jpg?v=1673631046&width=1100"],
+   "title": "Nairy Baghramian",
+   "desc": "This new volume features numerous illustrations released exclusively from the artist’s archives, as well as a panoramic essay on Baghramian’s sculptural practice by art historian and curator Miwon Kwon, and a new conversation between the artist, Marian Goodman and Philipp Kaiser, Chief Executive Director of Artists & Programs at the gallery.",
+   "price": "$50.00",
+   "subtitle": "Side Leaps",
+   "id": 4
+  },
+  {
+   "image": [
+    "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/DB1.jpg?v=1675091697&width=533",
+    "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/DB2.jpg?v=1675091711",
+    "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/DB3.jpg?v=1675091717"],
+   "title": "Dara Birnbaum",
+   "desc": "This book will examine key works to explore how they have illuminated media and culture at their moment of making and how they continue to inform present critical thinking around “watching” technology, culture, and the dynamics of popular culture.",
+   "price": "$40.00",
+   "subtitle": "Reaction",
+   "id": 5
+  },
+  {
+   "image": [
+    "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/MGG_Shop_MattSaunders_PoemsofOurClimate.jpg?v=1671229504&width=533",
+    "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/PoemsOfOurClimateBookSaundersInsideBook2_PhotoCreditAlexYudzon.jpg?v=1671229504&width=823",
+    "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/PoemsOfOurClimateBookSaundersInsideBook3_PhotoCreditAlexYudzon.jpg?v=1671229504&width=823"],
+   "title": "Matt Saunders",
+   "desc": "Drawing on avant-garde cinema and found photographs, Saunders’s multimedia works explore the mobility and affective power of images.",
+   "price": "$35.00",
+   "subtitle": "Poems of Our Climate",
+   "id": 6
+  },
+  {
+   "image": [
+    "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/MGG_Shop_TavaresStrachan_PlainSight.jpg?v=1672956307&width=533",
+    "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/StrachanBookInPlainSightSideCover_Book2.jpg?v=1672956307&width=823",
+    "vhttps:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/StrachanBookInPlainSightInterior_Book8.jpg?v=1672956307&width=823"],
+   "title": "Tavares Strachan",
+   "desc": "Tavares Strachan: In Plain Sight is the first major book on the artist to be published since 2014. Focusing on his extraordinary exhibition at Marian Goodman Gallery London in 2020, this hardcover book features a lenticular print on the cover and over 120 full color images. The book includes a new and insightful text by esteemed writer and art critic Adrian Searle.",
+   "price": "$65.00",
+   "subtitle": "In Plain Sight",
+   "id": 7
+  },
+  {
+   "image": [
+    "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/MGG_Shop_FrancescaWoodman_AlternateStories_Cover.jpg?v=1671213309&width=533",
+    "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/9780944219508_1.jpg?v=1671213309&width=823",
+    "https:\/\/cdn.shopify.com\/s\/files\/1\/2095\/4219\/products\/9780944219508_3.jpg?v=1671213309&width=823"],
+   "title": "Francesca Woodman",
+   "desc": "presents over forty vintage photographs by the pioneering American photographer, many of which have never before been seen.",
+   "price": "$50.00",
+   "subtitle": "Alternate Stories",
+   "id": 8
+  }
+ ]
