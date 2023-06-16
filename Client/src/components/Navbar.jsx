@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-import {Search2Icon} from "@chakra-ui/icons"
+import { Search2Icon } from "@chakra-ui/icons";
 function NavBar() {
   const [expand, updateExpanded] = useState(false);
   const [navColour, updateNavbar] = useState(false);
@@ -20,31 +20,58 @@ function NavBar() {
   window.addEventListener("scroll", scrollHandler);
 
   return (
-    <div style={{display:"flex",justifyContent:"space-between",padding:"40px",alignItems:"center",marginBottom:"30px"}}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "40px",
+        alignItems: "center",
+        marginBottom: "30px",
+      }}
+    >
       <div>
-        <p style={{fontSize:"16x",color:"red",fontWeight:"500",display:"flex",alignItems:"center",justifyContent:"center"}}>MORDERN ART GALLERY</p>
+        <p
+          style={{
+            fontSize: "16x",
+            color: "red",
+            fontWeight: "500",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          MODERN ART GALLERY
+        </p>
       </div>
-      <div style={{display:"flex",justifyContent:"space-between",width:"50%",alignItems:"center"}}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "50%",
+          alignItems: "center",
+        }}
+      >
         <Link>ARTISTS</Link>
         <Link>EXHIBITIONS</Link>
-        <Link>VIEWING ROOMS</Link>
-        <Link>FAIRS</Link>
+        {/* <Link>VIEWING ROOMS</Link> */}
+        {/* <Link>FAIRS</Link> */}
         <Link>NEWS</Link>
-        <Link>SHOP</Link>
-        <Link>EDUCATION</Link>
+        <Link to="/shop">SHOP</Link>
+        {/* <Link>EDUCATION</Link> */}
         <Link>CONTACT</Link>
         <Link>ABOUT</Link>
-        <Link><Search2Icon/></Link>
+        <Link>
+          <Search2Icon />
+        </Link>
       </div>
     </div>
-    
   );
 }
 
 export default NavBar;
 
-
-{/* <Navbar
+{
+  /* <Navbar
       id="nav-menu"
       expanded={expand}
       fixed="top"
@@ -121,4 +148,5 @@ export default NavBar;
           </Nav>
         </Navbar.Collapse>
       </Container>
-    </Navbar> */}
+    </Navbar> */
+}
