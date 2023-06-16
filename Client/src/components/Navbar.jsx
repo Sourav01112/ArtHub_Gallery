@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import logo from "../assets/Logo.jpg"
 import {Search2Icon} from "@chakra-ui/icons"
 function NavBar() {
   const [expand, updateExpanded] = useState(false);
@@ -20,24 +21,25 @@ function NavBar() {
   window.addEventListener("scroll", scrollHandler);
 
   return (
-    <div style={{display:"flex",justifyContent:"space-between",padding:"40px",alignItems:"center",marginBottom:"30px"}}>
-      <div>
-        <p style={{fontSize:"16x",color:"red",fontWeight:"500",display:"flex",alignItems:"center",justifyContent:"center"}}>MORDERN ART GALLERY</p>
+    <>
+    <div style={{display:"flex",justifyContent:"space-between",paddingBottom:"10px",alignItems:"center",marginBottom:"1px"}} id='section-1'>
+      <div style={{display:"flex",alignItems:"center"}}>
+        <img src={logo} alt="" style={{width:"10%"}}/>
+        <p style={{color:"red",fontSize:"16px",marginLeft:"10px"}}>MORDERN ART GALLERY</p>
       </div>
-      <div style={{display:"flex",justifyContent:"space-between",width:"50%",alignItems:"center"}}>
-        <Link>ARTISTS</Link>
-        <Link>EXHIBITIONS</Link>
-        <Link>VIEWING ROOMS</Link>
-        <Link>FAIRS</Link>
-        <Link>NEWS</Link>
-        <Link>SHOP</Link>
-        <Link>EDUCATION</Link>
-        <Link>CONTACT</Link>
-        <Link>ABOUT</Link>
-        <Link><Search2Icon/></Link>
+      <div style={{display:"flex",justifyContent:"space-between",width:"80%",alignItems:"center"}}>
+        <Link style={{color:"rgba(0, 0, 0, 0.547)"}}>ARTISTS</Link>
+        <Link style={{color:"rgba(0, 0, 0, 0.547)"}}>EXHIBITIONS</Link>
+        <Link style={{color:"rgba(0, 0, 0, 0.547)"}}>NEWS</Link>
+        <Link style={{color:"rgba(0, 0, 0, 0.547)"}} to={"/shop"}>SHOP</Link>
+        <Link style={{color:"rgba(0, 0, 0, 0.547)"}} to={"/contact"}>CONTACT</Link>
+        <Link style={{color:"rgba(0, 0, 0, 0.547)"}} to={"/about"}>ABOUT</Link>
+        <Link style={{color:"rgba(0, 0, 0, 0.547)",marginBottom:"5px"}}><Search2Icon/></Link>
       </div>
+      
     </div>
-    
+    <hr />
+    </>
   );
 }
 

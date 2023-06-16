@@ -11,7 +11,7 @@ import ShopBig from "../../assets/Shop_Big.jpg";
 export const Shop = () => {
   return (
     <div>
-      <NavBar />
+      {/* <NavBar /> */}
       {/* <div>
         <img src="https://cdn.shopify.com/s/files/1/2095/4219/files/mggs-dg-header.jpg?v=1679000632" />
         <p>Hello</p>
