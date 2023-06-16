@@ -1,5 +1,8 @@
 import React, { useReducer, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useToast } from "@chakra-ui/react";
+
 import "../App.css";
 import {
   Box,
@@ -9,8 +12,11 @@ import {
   Text,
   Input,
   Image,
+  InputRightElement,
+  InputGroup,
   Button,
 } from "@chakra-ui/react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -39,17 +45,61 @@ const inState = {
   city: "",
 };
 
+const url =
+  process.env.NODE_ENV == "development"
+    ? import.meta.env.VITE_REACT_API_URL
+    : import.meta.env.VITE_REACT_APP_PROD_URL;
+
 export const Signup = () => {
   const [state, dispatch] = useReducer(formReducer, inState);
+  const [showPassword, setShowPassword] = useState(false);
+  //   const [password1, setPassword1] = useState("");
+
+  const toast = useToast();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(state);
+    axios
+      .post(`http://localhost:4500/user/register`, {
+        name: state.name,
+        email: state.email,
+        password: state.password,
+        age: state.age,
+        city: state.city,
+      })
+      .then((res) => {
+        console.log("Data", res);
+        if (res.data.msg === "The new user has been registered") {
+          console.log("waah kya baat hai", res.data.registeredUser);
+        }
+        toast({
+          position: "top",
+          description: res.data.msg,
+          status:
+            res.data.msg === "The new user has been registered"
+              ? "success"
+              : "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      })
+      .catch((error) => {
+        console.log("Error", error);
+        toast({
+          position: "top-right",
+          description: "Error occurred",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      });
+
     dispatch({ type: "RESET_INPUT_FIELDS" });
   };
 
   const handleChange = (e) => {
-    console.log("@e.target.value", e.target.value);
+    // console.log("@e.target.value", e.target.value);
     let { name, value } = e.target;
 
     // logic to convert Age string to number
@@ -125,14 +175,36 @@ export const Signup = () => {
                 />
 
                 <FormLabel mt={2}>Password *</FormLabel>
-                <Input
-                  type="password"
+
+                {/* <Input
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   value={password}
                   placeholder="Enter your Password"
                   onChange={handleChange}
                   isRequired
-                />
+                /> */}
+
+                <InputGroup>
+                  <Input
+                    isRequired
+                    name="password"
+                    value={password}
+                    placeholder="Enter your Password"
+                    type={showPassword ? "text" : "password"}
+                    onChange={handleChange}
+                  />
+                  <InputRightElement h={"full"}>
+                    <Button
+                      variant={"ghost"}
+                      onClick={() =>
+                        setShowPassword((showPassword) => !showPassword)
+                      }
+                    >
+                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
 
                 <FormLabel mt={2}>Age *</FormLabel>
                 <Input
@@ -171,6 +243,7 @@ export const Signup = () => {
               {/* <Text textAlign={"Center"} mt={6}>
                 If you have an account?{" "}
               </Text> */}
+              {/* <Text>{JSON.stringify(import.meta.env)}</Text> */}
             </form>
             <Link to={"/login"}>
               <Button mt={6} textAlign={"center"}>
