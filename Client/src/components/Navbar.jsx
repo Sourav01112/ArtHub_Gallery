@@ -6,6 +6,9 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import logo from "../assets/Logo.jpg";
 import { Search2Icon } from "@chakra-ui/icons";
+import { position } from "@chakra-ui/react";
+import "../App.css";
+
 function NavBar() {
   const [expand, updateExpanded] = useState(false);
   const [navColour, updateNavbar] = useState(false);
@@ -23,12 +26,14 @@ function NavBar() {
   return (
     <>
       <div
+        className="navbarNew"
         style={{
           display: "flex",
           justifyContent: "space-between",
-          paddingBottom: "10px",
+          // paddingBottom: "10px",
           alignItems: "center",
           marginBottom: "1px",
+          padding: "30px",
         }}
         id="section-1"
       >
@@ -63,7 +68,7 @@ function NavBar() {
           </Link>
         </div>
       </div>
-      <hr />
+      {/* <hr /> */}
     </>
   );
 }

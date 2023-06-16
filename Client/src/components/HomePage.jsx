@@ -6,7 +6,7 @@ import Navbar from "./Navbar";
 
 export const HomePage = () => {
   return (
-    <div>
+    <div style={{ padding: "40px" }}>
       <SecondTop />
       <Publications />
       <NewsandEvents />
