@@ -4,10 +4,8 @@ import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-
 import logo from "../assets/Logo.jpg";
 import { Search2Icon } from "@chakra-ui/icons";
-
 function NavBar() {
   const [expand, updateExpanded] = useState(false);
   const [navColour, updateNavbar] = useState(false);
@@ -65,6 +63,9 @@ function NavBar() {
           </Link>
         </div>
       </div>
+      <hr />
     </>
   );
 }
+
+export default NavBar;
