@@ -7,6 +7,7 @@ import { Footer } from "./components/Footer";
 import { Topfooter } from "./components/Topfooter";
 import { SecondTop } from "./components/SecondTop";
 import { Publications } from "./components/Publications";
+import { NewsandEvents } from "./components/NewsandEvents";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <NavBar />
       <SecondTop/>
       <Publications/>
+      <NewsandEvents/>
       <Topfooter/>
       <Footer/>
     </>
