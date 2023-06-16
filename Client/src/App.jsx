@@ -11,12 +11,14 @@ import { NewsandEvents } from "./components/NewsandEvents";
 import { AllRoutes } from "./components/Routes/AllRoutes";
 import { SingleProductPage } from "./components/SingleProductPage";
 
+import About from "./components/pages/About";
+import Contact from "./components/pages/Contact";
+
 function App() {
   return (
     <>
       <NavBar />
       <AllRoutes/>
-      {/* <SingleProductPage/> */}
       <Topfooter/>
       <Footer/>
     </>

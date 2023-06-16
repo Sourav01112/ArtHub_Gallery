@@ -30,13 +30,10 @@ function NavBar() {
       <div style={{display:"flex",justifyContent:"space-between",width:"80%",alignItems:"center"}}>
         <Link style={{color:"rgba(0, 0, 0, 0.547)"}}>ARTISTS</Link>
         <Link style={{color:"rgba(0, 0, 0, 0.547)"}}>EXHIBITIONS</Link>
-        <Link style={{color:"rgba(0, 0, 0, 0.547)"}}>VIEWING ROOMS</Link>
-        <Link style={{color:"rgba(0, 0, 0, 0.547)"}}>FAIRS</Link>
         <Link style={{color:"rgba(0, 0, 0, 0.547)"}}>NEWS</Link>
-        <Link style={{color:"rgba(0, 0, 0, 0.547)"}}>SHOP</Link>
-        <Link style={{color:"rgba(0, 0, 0, 0.547)"}}>EDUCATION</Link>
-        <Link style={{color:"rgba(0, 0, 0, 0.547)"}}>CONTACT</Link>
-        <Link style={{color:"rgba(0, 0, 0, 0.547)"}}>ABOUT</Link>
+        <Link style={{color:"rgba(0, 0, 0, 0.547)"}} to={"/shop"}>SHOP</Link>
+        <Link style={{color:"rgba(0, 0, 0, 0.547)"}} to={"/contact"}>CONTACT</Link>
+        <Link style={{color:"rgba(0, 0, 0, 0.547)"}} to={"/about"}>ABOUT</Link>
         <Link style={{color:"rgba(0, 0, 0, 0.547)",marginBottom:"5px"}}><Search2Icon/></Link>
       </div>
       
