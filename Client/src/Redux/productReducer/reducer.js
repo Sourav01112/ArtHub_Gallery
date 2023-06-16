@@ -14,7 +14,7 @@ const inState = {
 };
 
 export const reducer = (state = inState, { type, payload }) => {
-  console.log("payload", payload);
+  // console.log("payload", payload);
   switch (type) {
     case PRODUCT_REQUEST: {
       return {
