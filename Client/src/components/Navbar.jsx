@@ -22,7 +22,7 @@ function NavBar() {
 
   return (
     <>
-    <div style={{display:"flex",justifyContent:"space-between",paddingBottom:"10px",alignItems:"center",marginBottom:"1px"}}>
+    <div style={{display:"flex",justifyContent:"space-between",paddingBottom:"10px",alignItems:"center",marginBottom:"1px"}} id='section-1'>
       <div style={{display:"flex",alignItems:"center"}}>
         <img src={logo} alt="" style={{width:"10%"}}/>
         <p style={{color:"red",fontSize:"16px",marginLeft:"10px"}}>MORDERN ART GALLERY</p>

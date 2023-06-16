@@ -5,7 +5,7 @@ export const Publications = () => {
         <>
             <hr />
             <div style={{width:"100%",marginBottom:"30px"}}>
-                <p>PUBLICATIONS</p>
+                <p style={{marginLeft:"10px",fontSize:"20px",marginBottom:"20px"}}>PUBLICATIONS</p>
                 <div style={{display:"grid",gridTemplateColumns:"repeat(3,30%)",justifyContent:"space-around",textAlign:"center"}}>
                     <div>
                         <img src="https://cdn.shopify.com/s/files/1/2095/4219/products/MGGS-Cristina-Iglesias-Hondulea.jpg?v=1675364329&width=823" alt="" />

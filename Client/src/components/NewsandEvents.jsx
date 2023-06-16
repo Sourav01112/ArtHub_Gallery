@@ -2,16 +2,17 @@ import React from 'react'
 import img1 from "../assets/img2.png"
 import img2 from "../assets/img1.png"
 import img3 from "../assets/img3.png"
+import { ArrowForwardIcon } from '@chakra-ui/icons'
 
 export const NewsandEvents = () => {
     return (
         <>
             <hr />
             <div style={{ marginBottom: "50px" }}>
-                <p>
+                <p style={{marginLeft:"10px",fontSize:"20px",marginBottom:"20px"}}>
                     NewsandEvents
                 </p>
-                <div style={{display:"grid",gridTemplateColumns:"repeat(3,30%)",justifyContent:"space-around",textAlign:"center"}}>
+                <div style={{display:"grid",gridTemplateColumns:"repeat(3,25%)",justifyContent:"space-around",textAlign:"center",gap:"50px"}}>
                     <div>
                         <img src={img1} alt="" />
                         <p style={{fontSize:"13px",color:"rgba(0, 0, 0, 0.547)",marginTop:"15px"}}>SOLO EXHIBITION</p>
@@ -111,6 +112,7 @@ export const NewsandEvents = () => {
                 </div>
 
             </div>
+            <button style={{border:"1px solid rgba(0, 0, 0, 0.547)",padding:"10px 20px",display:"block",margin:"auto",marginBottom:"50px",color:"rgba(0, 0, 0, 0.547)"}}><ArrowForwardIcon style={{marginBottom:"3px"}}/> View More</button>
         </>
     )
 }

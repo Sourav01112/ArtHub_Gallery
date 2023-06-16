@@ -4,7 +4,9 @@ import logo from "../assets/Logo.jpg"
 
 export const Topfooter = () => {
     return (
-        <div style={{ display: "flex", justifyContent:"space-around", width: "90%",fontSize:"12px",color:"rgba(0, 0, 0, 0.547)" }}>
+        <>
+        <hr />
+        <div style={{ display: "flex", justifyContent:"space-around", width: "90%",fontSize:"12px",color:"rgba(0, 0, 0, 0.547)",marginTop:"30px" }}>
             <div>
                 <p>NEW YORK</p>
                 <hr />
@@ -64,6 +66,7 @@ export const Topfooter = () => {
             </div>
             
         </div>
+        </>
     )
 }
 
