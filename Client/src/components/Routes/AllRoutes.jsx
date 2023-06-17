@@ -25,7 +25,7 @@ export const AllRoutes = () => {
       <Route path="/admin_login" element={<Admin />}></Route>
 
       <Route
-        path="/shop/:shop_id"
+        path="/shop/:_id"
         element={
           <PrivateRoute>
             <SingleProductPage />

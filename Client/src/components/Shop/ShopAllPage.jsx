@@ -31,7 +31,7 @@ export const ShopAllPage = () => {
             products?.map((ele) => {
               return (
                 <div key={ele.id}>
-                  <Link to={`/shop/${ele.shop_id}`}>
+                  <Link to={`/shop/${ele._id}`}>
                     <Shopcard {...ele} />
                   </Link>
                 </div>

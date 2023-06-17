@@ -12,6 +12,7 @@ const inState = {
   isError: false,
   products: [],
 };
+// console.log(inState);
 
 export const reducer = (state = inState, { type, payload }) => {
   // console.log("payload", payload);
@@ -41,7 +42,7 @@ export const reducer = (state = inState, { type, payload }) => {
       return {
         ...state,
         isLoading: false,
-        products: payload.data,
+        products: payload,
         isError: true,
       };
     }
