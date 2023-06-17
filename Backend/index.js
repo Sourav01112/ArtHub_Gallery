@@ -7,6 +7,7 @@ const { userRouter } = require("./routes/user.routes");
 const { authMiddleware } = require("./middlewares/auth.middleware");
 const { productRouter } = require("./routes/products.routes");
 const { errorHandler } = require("./middlewares/errorHandle.middleware");
+const { adminRouter } = require("./routes/admin.routes");
 require("dotenv").config();
 
 const PORT = process.env.PORT;
@@ -20,7 +21,7 @@ app.use("/user", userRouter);
 // user middleware for user Route
 app.use("/user", authMiddleware);
 app.use("/shop", productRouter);
-app.use("/admin", userRouter);
+app.use("/admin", adminRouter);
 
 // Server
 app.listen(PORT, async () => {

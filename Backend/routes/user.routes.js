@@ -58,53 +58,6 @@ userRouter.post("/login", async (req, res) => {
   }
 });
 
-// Admin Route
 
-// userRouter.post("/admin", async (req, res) => {
-//   const { email, password } = req.body;
-//   try {
-//     if (email == process.env.adminEmail && password == process.env.adminPassword) {
-//       const token = jwt.sign(
-//         { adminEmail: email, role: "admin" },
-//         process.env.secrete
-//       );
-
-//       if (token) {
-//         res.cookie("jwt", token);
-//         res.cookie("role", "Admin"); //tried to achieve with cookies but was not able to access cookie data had to depend on token and local storage
-//         res.statusMessage = "Success";
-//         res.json({
-//           msg: "Login Successful.",
-//           status: "success",
-//           token,
-//           cookie: req.cookies,
-//         });
-//       }
-//     } else {
-//       res.statusMessage = "Invalid Credentials!";
-//       res.json({ msg: "Check you email and password.", status: "error" });
-//     }
-//   } catch (error) {
-//     res.status(400).json({ error });
-//   }
-// });
-
-
-userRouter.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    const admin = await AdminModel.findOne({ email, password });
-    if (admin) {
-      // Admin login successful
-      res.json({ message: 'Admin login successful' });
-    } else {
-      // Invalid credentials
-      res.status(401).json({ message: 'Invalid credentials' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: 'Server error' });
-  }
-});
 
 module.exports = { userRouter };
