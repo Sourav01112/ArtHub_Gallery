@@ -5,7 +5,7 @@ export const verifyToken = () => async (dispatch) => {
   const token = localStorage.getItem("token");
   if (token) {
     return await axios
-      .post(`${"http://localhost:4500"}/admin/verify`, { token })
+      .post(`http://localhost:4500/admin/verify`, { token })
       .then((res) => {
         // console.log(res);
         if (res.data.decoded.role == "admin") {

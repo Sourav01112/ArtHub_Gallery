@@ -1,7 +1,8 @@
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 import "../App.css";
 import {
@@ -53,9 +54,19 @@ const url =
 export const Signup = () => {
   const [state, dispatch] = useReducer(formReducer, inState);
   const [showPassword, setShowPassword] = useState(false);
-  //   const [password1, setPassword1] = useState("");
-
+  const [signupSuccess, setSignupSuccess] = useState(false);
+  const navigate = useNavigate();
   const toast = useToast();
+
+  useEffect(() => {
+    if (signupSuccess) {
+      const timeout = setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [signupSuccess, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -72,6 +83,14 @@ export const Signup = () => {
         console.log("Data", res);
         if (res.data.msg === "The new user has been registered") {
           console.log("waah kya baat hai", res.data.registeredUser);
+          setSignupSuccess(true);
+          toast({
+            position: "top",
+            title: "Redirecting To Login Page",
+            status: "warning",
+            duration: 3000,
+            isClosable: true,
+          });
         }
         toast({
           position: "top",
@@ -80,7 +99,7 @@ export const Signup = () => {
             res.data.msg === "The new user has been registered"
               ? "success"
               : "error",
-          duration: 9000,
+          duration: 4000,
           isClosable: true,
         });
       })
@@ -90,7 +109,7 @@ export const Signup = () => {
           position: "top-right",
           description: "Error occurred",
           status: "error",
-          duration: 9000,
+          duration: 4000,
           isClosable: true,
         });
       });
