@@ -128,6 +128,11 @@ function NavBar() {
                     Sign Up <AiOutlineLogout />
                   </MenuItem>
                 </Link>
+                <Link to={"/admin"}>
+                  <MenuItem border={"0"} justifyContent={"space-between"}>
+                    Admin <AiOutlineLogout />
+                  </MenuItem>
+                </Link>
               </MenuList>
             </Menu>
           </div>
