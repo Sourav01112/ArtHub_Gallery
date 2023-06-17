@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-
-import "../App.css";
 import {
   Box,
   FormControl,
@@ -18,6 +16,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import "../App.css";
 
 const formReducer = (state, action) => {
   switch (action.type) {

@@ -55,7 +55,8 @@ export default function Admin() {
           if (res.data.status == "success") {
             localStorage.setItem("token", res.data.token);
             dispatch(verifyToken()).then(() => {
-              navigate(location.state ? location.state : "/admin");
+              //  as of now redirecting to homepage
+              navigate(location.state ? location.state : "/");
             });
           }
         })
@@ -87,11 +88,11 @@ export default function Admin() {
         <Box
           rounded={"lg"}
           bg={useColorModeValue("white", "gray.700")}
-        //   boxShadow={"lg"}
-        boxShadow={"2xl"}
+          //   boxShadow={"lg"}
+          boxShadow={"2xl"}
           p={8}
           w={{ base: "335px", md: "470px" }}
-        //   border={"1px solid black"}
+          //   border={"1px solid black"}
         >
           <Heading marginBottom={4} fontSize={"4xl"} textAlign={"center"}>
             Admin

@@ -15,10 +15,13 @@ import {
   MenuList,
   position,
   Text,
+  Image,
 } from "@chakra-ui/react";
 import { FaArrowCircleUp } from "react-icons/fa";
 import { AiOutlineLogin } from "react-icons/ai";
 import { AiOutlineLogout } from "react-icons/ai";
+import LoginLogo from "../assets/Login.png";
+
 import "../App.css";
 
 function NavBar() {
@@ -106,31 +109,32 @@ function NavBar() {
           </Link>
           <div>
             <Menu>
-              <MenuButton
-                mt={4}
-                color={"rgba(0, 0, 0, 0.547)"}
-                as={Text}
-                rightIcon={<ChevronDownIcon />}
-              >
+              <MenuButton as={Text} mt={4} color={"rgba(0, 0, 0, 0.547)"}>
                 PROFILE
               </MenuButton>
               <MenuList mt={5} p={0}>
-                <Link to={"/login"}>
-                  {" "}
-                  <MenuItem border={"0"} justifyContent={"space-between"}>
-                    Login <AiOutlineLogin />
-                  </MenuItem>
-                </Link>
-
                 <Link to={"/signup"}>
-                  {" "}
-                  <MenuItem border={"0"} justifyContent={"space-between"}>
-                    Sign Up <AiOutlineLogout />
+                  <MenuItem border={"0"} minH="20px">
+                    <Image
+                      boxSize="2rem"
+                      borderRadius="full"
+                      src={LoginLogo}
+                      alt="Fluffybuns the destroyer"
+                      mr="12px"
+                    />
+                    <span> SIGN UP!</span>
                   </MenuItem>
                 </Link>
-                <Link to={"/admin"}>
-                  <MenuItem border={"0"} justifyContent={"space-between"}>
-                    Admin <AiOutlineLogout />
+                <Link to={"/login"}>
+                  <MenuItem border={"0"} minH="40px">
+                    <Image
+                      boxSize="2rem"
+                      // borderRadius="full"
+                      src="https://img.uxwing.com/wp-content/themes/uxwing/download/editing-user-action/signup-icon.svg"
+                      alt="Simon the pensive"
+                      mr="12px"
+                    />
+                    <span>LOGIN</span>
                   </MenuItem>
                 </Link>
               </MenuList>
