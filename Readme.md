@@ -13,7 +13,7 @@ git clone https://github.com/Sourav01112/gusty-adjustment-6018.git
 npm install
 ```
 
-<p>3. Client on browser at http://127.0.0.1:5173</p>
+<p>3. Client on browser at 127.0.0.1:5173</p>
 
 ```
 npm run dev
