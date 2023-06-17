@@ -1,7 +1,7 @@
 
 <h2>🛠️ Installation Steps:</h2>
 
-<p>1. Clone the repo</p>
+<p>1. Clone the repo : VITE App</p>
 
 ```
 git clone https://github.com/Sourav01112/gusty-adjustment-6018.git
@@ -13,10 +13,16 @@ git clone https://github.com/Sourav01112/gusty-adjustment-6018.git
 npm install
 ```
 
-<p>3. View on browser at localhost:3000</p>
+<p>3. Client on browser at http://127.0.0.1:5173</p>
 
 ```
-npm start
+npm run dev
+```
+
+<p>3. BackEnd at localhost:4500</p>
+
+```
+npm run server
 ```
 
   
