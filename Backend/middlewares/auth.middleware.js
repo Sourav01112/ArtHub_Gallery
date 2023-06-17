@@ -8,6 +8,7 @@ const authMiddleware = async (req, res, next) => {
   try {
     let existingToken = await BlacklistModel.find({
       blacklist: { $in: tokenExists },
+      // if the token is present in Blacklist arr., it means the user is already logged out so, we will ask to login again
     });
 
     if (existingToken) {

@@ -5,8 +5,9 @@ const userRouter = express.Router();
 require("dotenv").config();
 const { UserModel } = require("../models/User.model");
 const { AdminModel } = require("../models/Admin.model");
+const { BlacklistModel } = require("../models/blacklist.model");
 
-// register
+// Register
 userRouter.post("/register", async (req, res) => {
   const { name, email, password, age, city } = req.body;
   try {
@@ -31,7 +32,7 @@ userRouter.post("/register", async (req, res) => {
   }
 });
 
-// login
+// Login
 userRouter.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -58,6 +59,19 @@ userRouter.post("/login", async (req, res) => {
   }
 });
 
+// Logout
 
+userRouter.post("/logout", async () => {
+  try {
+    const tokenExists = req.headers.authorization?.split(" ")[1];
+
+    if (tokenExists) {
+      await BlacklistModel.updateMany({}, { $push: { blacklist: [token] } });
+      res.status(200).send("Logout successful !");
+    }
+  } catch (error) {
+    res.status(400).json({ err: err.message });
+  }
+});
 
 module.exports = { userRouter };
