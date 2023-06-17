@@ -20,7 +20,7 @@ export const loginAction =
       return axios
         .post(`http://localhost:4500/user/login`, userData)
         .then((res) => {
-          console.log(res.data.token);
+          console.log("@@ token from authReducer ~ action", res.data.token);
           dispatch({ type: LOGIN_SUCCESS, payload: res.data.token });
 
           toast({

@@ -1,8 +1,57 @@
 import { Box, Flex, Text, HStack, Stack } from "@chakra-ui/react";
 import React from "react";
+import Select from "react-select";
+import AsyncSelect from "react-select/async";
 
 // This will handle all the filter and sort and useSearchParams
 export const ShopNavbar = () => {
+  //  Dummy Dat, change it with API call to artists
+  const options = [
+    { value: "chocolate", label: "Chocolate", color: "#FF8B00" },
+    { value: "strawberry", label: "Strawberry", color: "#36B37E" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
+
+  const colorStyles = {
+    control: (styles) => ({
+      ...styles,
+      backgroundColor: "white",
+      marginLeft: "7px",
+      marginRight: "7px",
+    }),
+    option: (styles, { data, isDisable, isFocused, isSelected }) => {
+      //   console.log("option", data, isDisable, isFocused, isSelected);
+      return { ...styles, color: data.color };
+    },
+    multiValue: (styles, { data }) => {
+      return {
+        ...styles,
+        backgroundColor: data.color,
+        color: "#fff",
+      };
+    },
+    multiValueLabel: (styles, { data }) => {
+      return {
+        ...styles,
+        color: "#fff",
+      };
+    },
+  };
+
+  const loadOptions = (searchValue, callback) => {
+    setTimeout(() => {
+      const filteredOptions = options?.filter((ele) =>
+        ele.label.toLowerCase().includes(searchValue.toLowerCase())
+      );
+      console.log("loadOptions", searchValue, filteredOptions);
+      callback(filteredOptions);
+    }, 2000);
+  };
+
+  const handleChange = (selectedOption) => {
+    console.log("handleChange", selectedOption);
+  };
+
   return (
     <div>
       <Stack
@@ -45,10 +94,15 @@ export const ShopNavbar = () => {
           <Text fontSize="md">CART</Text>
         </HStack>
       </Stack>
-      <hr></hr>
+      {/* <hr></hr> */}
 
-
-      
+      <AsyncSelect
+        loadOptions={loadOptions}
+        defaultOptions
+        isMulti
+        onChange={handleChange}
+        styles={colorStyles}
+      />
     </div>
   );
 };

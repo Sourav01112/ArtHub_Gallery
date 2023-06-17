@@ -69,7 +69,13 @@ export const Shop = () => {
 
           {products?.length > 0 &&
             products?.map((ele) => {
-              return <Shopcard key={ele.id} {...ele} />;
+              return (
+                <div key={ele.id}>
+                  <Link to={`/shop/${ele.shop_id}`}>
+                    <Shopcard {...ele} />
+                  </Link>
+                </div>
+              );
             })}
         </div>
         <Link to="/collections/shop">

@@ -16,7 +16,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import "../App.css";
+import "../../App.css";
 
 const formReducer = (state, action) => {
   switch (action.type) {

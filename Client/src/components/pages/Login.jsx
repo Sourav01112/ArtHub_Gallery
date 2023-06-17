@@ -17,11 +17,11 @@ import { ChevronDownIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import LoginPageTemp from "../assets/LoginPageTemp.png";
-import { loadData, saveData } from "../Utilities/localStorage";
-import "../App.css";
+import LoginPageTemp from "../../assets/LoginPageTemp.png";
+import { loadData, saveData } from "../../Utilities/localStorage";
+import "../../App.css";
 import { useDispatch, useSelector } from "react-redux";
-import { loginAction, logoutAction } from "../Redux/authReducer/action";
+import { loginAction, logoutAction } from "../../Redux/authReducer/action";
 
 export const Login = () => {
   const [email, setEmail] = useState("");

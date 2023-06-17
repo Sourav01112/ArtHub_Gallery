@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import logo from "../assets/Logo.jpg";
 import { ChevronDownIcon, Search2Icon } from "@chakra-ui/icons";
