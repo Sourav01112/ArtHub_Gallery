@@ -20,6 +20,7 @@ app.use("/user", userRouter);
 // user middleware for user Route
 app.use("/user", authMiddleware);
 app.use("/shop", productRouter);
+app.use("/admin", userRouter);
 
 // Server
 app.listen(PORT, async () => {
