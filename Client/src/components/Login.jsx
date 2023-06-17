@@ -20,8 +20,8 @@ import axios from "axios";
 import LoginPageTemp from "../assets/LoginPageTemp.png";
 import { loadData, saveData } from "../Utilities/localStorage";
 import "../App.css";
-import { useDispatch } from "react-redux";
-import { loginAction } from "../Redux/authReducer/action";
+import { useDispatch, useSelector } from "react-redux";
+import { loginAction, logoutAction } from "../Redux/authReducer/action";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -32,8 +32,11 @@ export const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const toast = useToast();
-
   const isError = email === "";
+  const { isAuth } = useSelector((store) => store.authReducer);
+  // console.log("@@@location from Login", location);
+
+  // All the Logic inside handleSubmit is in action.js of AuthReducer
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,11 +46,21 @@ export const Login = () => {
       password,
     };
 
-    dispatch(loginAction(userData, toast, setEmail, setPassword)).then(
-      (res) => {
-        navigate(location.state);
-      }
-    );
+    dispatch(loginAction(userData, toast, setEmail, setPassword)).then(() => {
+      toast({
+        position: "top",
+        title: isAuth ? "Taking you back where you came from" : "-",
+        status: "success",
+        duration: 1000,
+        isClosable: true,
+      });
+      navigate(location.state);
+    });
+  };
+
+  const logout = () => {
+    alert(`You're about to be logged out`);
+    dispatch(logoutAction);
   };
 
   // if (email && password) {
@@ -124,8 +137,8 @@ export const Login = () => {
               margin={"auto"}
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTo7kHT9XYYCnVNBIrKcz7Z-b3mwtnJj-0y_tsgvEc0k8WdHVJA4T2jskYT6nElVcskZpY&usqp=CAU"
             />
-            <FormControl mt={30} id="email" isRequired isInvalid={isError}>
-              <FormLabel isRequired>
+            <FormControl mt={30} id="email" isInvalid={isError}>
+              <FormLabel>
                 <span style={{ color: "red" }}>*</span> Email address
               </FormLabel>
               <Input
@@ -133,7 +146,6 @@ export const Login = () => {
                 value={email}
                 placeholder="Enter your Email"
                 onChange={(e) => setEmail(e.target.value)}
-                isRequired
               />
               {!isError ? (
                 <FormHelperText>
@@ -143,7 +155,7 @@ export const Login = () => {
                 <FormErrorMessage>Email is required.</FormErrorMessage>
               )}
 
-              <FormLabel mt={5} id="password" isRequired>
+              <FormLabel mt={5} id="password">
                 <span style={{ color: "red" }}>*</span> Password
               </FormLabel>
               <InputGroup>
@@ -153,7 +165,6 @@ export const Login = () => {
                   placeholder="Enter your Password"
                   type={showPassword ? "text" : "password"}
                   onChange={(e) => setPassword(e.target.value)}
-                  isRequired
                 />
 
                 <InputRightElement h={"full"}>
@@ -189,6 +200,7 @@ export const Login = () => {
                   <strong>Sign up</strong>
                 </Link>
               </Text>
+              <Button onClick={logout}>Log Out</Button>
             </FormControl>
           </Box>
         </Box>

@@ -81,7 +81,7 @@ export const Signup = () => {
       .then((res) => {
         console.log("Data", res);
         if (res.data.msg === "The new user has been registered") {
-          console.log("waah kya baat hai", res.data.registeredUser);
+          // console.log("waah kya baat hai", res.data.registeredUser);
           setSignupSuccess(true);
           toast({
             position: "top",

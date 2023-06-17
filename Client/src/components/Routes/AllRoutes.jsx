@@ -15,21 +15,21 @@ export const AllRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/shop" element={<Shop />} />
+      <Route
+        path="/shop"
+        element={
+          <PrivateRoute>
+            <Shop />
+          </PrivateRoute>
+        }
+      />
       <Route path="/about" element={<About />}></Route>
       <Route path="/contact" element={<Contact />}></Route>
       <Route path="/login" element={<Login />}></Route>
       <Route path="/signup" element={<Signup />}></Route>
       <Route path="/admin_login" element={<Admin />}></Route>
 
-      <Route
-        path="/shop/:id"
-        element={
-          <PrivateRoute>
-            <SingleProductPage />
-          </PrivateRoute>
-        }
-      ></Route>
+      <Route path="/shop/:id" element={<SingleProductPage />}></Route>
 
       <Route path="*" element={<PageNotFound />}></Route>
     </Routes>
