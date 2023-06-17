@@ -28,6 +28,8 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [signupSuccess, setSignupSuccess] = useState(false);
+  const [isErrorVal, setIsErrorVal] = useState(false);
+
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -40,6 +42,19 @@ export const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!email || !password) {
+      setIsErrorVal(true); // Set the form validation error
+      toast({
+        position: "top",
+        title: "Validation Error",
+        description: "Please fill in all the fields.",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+      });
+      return; // Stop further execution if the form is not valid
+    }
 
     const userData = {
       email,

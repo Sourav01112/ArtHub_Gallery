@@ -27,6 +27,7 @@ export default function Admin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isErrorVal, setIsErrorVal] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -37,6 +38,20 @@ export default function Admin() {
   // console.log(location, admin);
 
   function handleAdminLogin() {
+    // Form validation
+    if (!email || !password) {
+      setIsErrorVal(true); // Set the form validation error
+      toast({
+        position: "top",
+        title: "Validation Error",
+        description: "Please fill in all the fields.",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+      });
+      return; // Stop further execution if the form is not valid
+    }
+
     // console.table({ email, password });
     if (email && password) {
       axios
@@ -56,7 +71,7 @@ export default function Admin() {
           });
 
           if (res.data.status == "success") {
-            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("adminToken", res.data.token);
             dispatch(verifyToken()).then(() => {
               //  as of now redirecting to homepage
               navigate(location.state ? location.state : "/");
@@ -89,11 +104,12 @@ export default function Admin() {
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}></Stack>
         <Box
-          rounded={"lg"}
+          // rounded={"2xl"}
+          borderRadius={"45px"}
           bg={useColorModeValue("white", "gray.700")}
           //   boxShadow={"lg"}
           boxShadow={"2xl"}
-          p={8}
+          p={10}
           w={{ base: "335px", md: "470px" }}
           //   border={"1px solid black"}
         >
@@ -156,10 +172,10 @@ export default function Admin() {
                 <Link color={"blue.400"}>Forgot password?</Link>
               </Stack>
               <Button
-                bg={"green.500"}
+                bg={"black"}
                 color={"white"}
                 _hover={{
-                  bg: "green.600",
+                  bg: "orange.400",
                 }}
                 onClick={handleAdminLogin}
               >

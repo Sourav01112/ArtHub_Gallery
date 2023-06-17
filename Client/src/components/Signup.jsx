@@ -54,6 +54,8 @@ export const Signup = () => {
   const [state, dispatch] = useReducer(formReducer, inState);
   const [showPassword, setShowPassword] = useState(false);
   const [signupSuccess, setSignupSuccess] = useState(false);
+  const [isErrorVal, setIsErrorVal] = useState(false);
+
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -69,7 +71,21 @@ export const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(state);
+
+    if (!email || !password) {
+      setIsErrorVal(true); // Set the form validation error
+      toast({
+        position: "top",
+        title: "Validation Error",
+        description: "Please fill in all the fields.",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+      });
+      return; // Stop further execution if the form is not valid
+    }
+
+    // console.log(state);
     axios
       .post(`http://localhost:4500/user/register`, {
         name: state.name,

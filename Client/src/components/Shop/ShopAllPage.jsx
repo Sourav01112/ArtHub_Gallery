@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Shopcard } from "./Shopcard";
 import { getProducts } from "../../Redux/productReducer/action";
+import { ShopNavbar } from "./ShopNavbar";
 
 export const ShopAllPage = () => {
   const dispatch = useDispatch();
@@ -18,9 +19,10 @@ export const ShopAllPage = () => {
 
   return (
     <div>
+      <ShopNavbar />
+
       {/* Shop ART Card  */}
       <div className="ShopContainer">
-        <h3>NEW</h3>
         <div className="CardContainer">
           {/* Include the Card component */}
 
