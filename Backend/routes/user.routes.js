@@ -47,11 +47,11 @@ userRouter.post("/login", async (req, res) => {
 
           res.status(200).json({ msg: "Login Successful", token });
         } else {
-          res.status(200).json({ err: "Wrong credentials" });
+          res.status(200).json({ msg: "Wrong credentials" });
         }
       });
     } else {
-      res.status(200).json({ msg: "user does not exist" });
+      res.status(400).json({ msg: "user does not exist" });
     }
   } catch (err) {
     res.status(400).json({ err: err.message });
