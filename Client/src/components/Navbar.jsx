@@ -118,7 +118,7 @@ function NavBar() {
                     <Image
                       boxSize="2rem"
                       borderRadius="full"
-                      src={LoginLogo}
+                      src="https://img.uxwing.com/wp-content/themes/uxwing/download/editing-user-action/signup-icon.svg"
                       alt="Fluffybuns the destroyer"
                       mr="12px"
                     />
@@ -130,7 +130,7 @@ function NavBar() {
                     <Image
                       boxSize="2rem"
                       // borderRadius="full"
-                      src="https://img.uxwing.com/wp-content/themes/uxwing/download/editing-user-action/signup-icon.svg"
+                      src={LoginLogo}
                       alt="Simon the pensive"
                       mr="12px"
                     />

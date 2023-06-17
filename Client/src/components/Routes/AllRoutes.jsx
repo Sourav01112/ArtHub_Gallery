@@ -9,6 +9,7 @@ import { Signup } from "../Signup";
 import { SingleProductPage } from "../SingleProductPage";
 import Admin from "../AdminLogin";
 import { PageNotFound } from "../PageNotFound";
+import { PrivateRoute } from "../pages/PrivateRoute";
 
 export const AllRoutes = () => {
   return (
@@ -20,7 +21,16 @@ export const AllRoutes = () => {
       <Route path="/login" element={<Login />}></Route>
       <Route path="/signup" element={<Signup />}></Route>
       <Route path="/admin_login" element={<Admin />}></Route>
-      <Route path="/shop/:id" element={<SingleProductPage />}></Route>
+
+      <Route
+        path="/shop/:id"
+        element={
+          <PrivateRoute>
+            <SingleProductPage />
+          </PrivateRoute>
+        }
+      ></Route>
+
       <Route path="*" element={<PageNotFound />}></Route>
     </Routes>
   );
