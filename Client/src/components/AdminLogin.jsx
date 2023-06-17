@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useToast } from "@chakra-ui/react";
+import { FormErrorMessage, FormHelperText, useToast } from "@chakra-ui/react";
 import {
   Flex,
   Box,
@@ -31,6 +31,8 @@ export default function Admin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+
+  const isError = email === "";
 
   // console.log(location, admin);
 
@@ -98,24 +100,34 @@ export default function Admin() {
             Admin
           </Heading>
           <Stack spacing={4}>
-            <FormControl id="email">
+            <FormControl id="email" isInvalid={isError}>
               <FormLabel>Email</FormLabel>
               <Input
-                required
+                isRequired
                 type="email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
               />
+              {!isError ? (
+                <FormHelperText>
+                  Enter the email you used during Sign Up!
+                </FormHelperText>
+              ) : (
+                <FormErrorMessage>Email is required.</FormErrorMessage>
+              )}
             </FormControl>
-            <FormControl id="password">
+
+            <FormControl id="password" isInvalid={isError}>
               <FormLabel>Password</FormLabel>
               <InputGroup>
                 <Input
+                  isRequired
                   required={true}
                   value={password}
                   type={showPassword ? "text" : "password"}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+
                 <InputRightElement h={"full"}>
                   <Button
                     variant={"ghost"}
@@ -127,7 +139,13 @@ export default function Admin() {
                   </Button>
                 </InputRightElement>
               </InputGroup>
+              {!isError ? (
+                <FormHelperText>Password is Mandatory!</FormHelperText>
+              ) : (
+                <FormErrorMessage>Password is required.</FormErrorMessage>
+              )}
             </FormControl>
+
             <Stack spacing={10}>
               <Stack
                 direction={{ base: "column", sm: "row" }}

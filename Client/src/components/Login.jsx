@@ -10,6 +10,8 @@ import {
   Button,
   useToast,
   InputRightElement,
+  FormHelperText,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { ChevronDownIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import React, { useState } from "react";
@@ -25,6 +27,8 @@ export const Login = () => {
   const [signupSuccess, setSignupSuccess] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
+
+  const isError = email === "";
 
   const handleSubmit = (e) => {
     if (email && password) {
@@ -99,8 +103,8 @@ export const Login = () => {
               margin={"auto"}
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTo7kHT9XYYCnVNBIrKcz7Z-b3mwtnJj-0y_tsgvEc0k8WdHVJA4T2jskYT6nElVcskZpY&usqp=CAU"
             />
-            <FormControl mt={30} id="email">
-              <FormLabel>
+            <FormControl mt={30} id="email" isRequired isInvalid={isError}>
+              <FormLabel isRequired>
                 <span style={{ color: "red" }}>*</span> Email address
               </FormLabel>
               <Input
@@ -108,11 +112,17 @@ export const Login = () => {
                 value={email}
                 placeholder="Enter your Email"
                 onChange={(e) => setEmail(e.target.value)}
+                isRequired
               />
+              {!isError ? (
+                <FormHelperText>
+                  Enter the email you used during Sign Up!
+                </FormHelperText>
+              ) : (
+                <FormErrorMessage>Email is required.</FormErrorMessage>
+              )}
 
-              {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
-
-              <FormLabel mt={5} id="password">
+              <FormLabel mt={5} id="password" isRequired>
                 <span style={{ color: "red" }}>*</span> Password
               </FormLabel>
               <InputGroup>
@@ -122,7 +132,9 @@ export const Login = () => {
                   placeholder="Enter your Password"
                   type={showPassword ? "text" : "password"}
                   onChange={(e) => setPassword(e.target.value)}
+                  isRequired
                 />
+
                 <InputRightElement h={"full"}>
                   <Button
                     variant={"ghost"}
@@ -134,6 +146,11 @@ export const Login = () => {
                   </Button>
                 </InputRightElement>
               </InputGroup>
+              {!isError ? (
+                <FormHelperText>Password is Mandatory!</FormHelperText>
+              ) : (
+                <FormErrorMessage>Password is required.</FormErrorMessage>
+              )}
 
               <Button
                 display={"block"}
@@ -146,7 +163,10 @@ export const Login = () => {
                 Submit
               </Button>
               <Text mt={6} textAlign={"center"}>
-                Not have a account? <Link to={"/signup"}>Sign up</Link>
+                Not have a account?{" "}
+                <Link to={"/signup"}>
+                  <strong>Sign up</strong>
+                </Link>
               </Text>
             </FormControl>
           </Box>
