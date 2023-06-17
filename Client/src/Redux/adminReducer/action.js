@@ -2,7 +2,7 @@ import axios from "axios";
 import { ADMIN_TYPE } from "./actionTypes";
 
 export const verifyToken = () => async (dispatch) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("adminToken");
   if (token) {
     return await axios
       .post(`http://localhost:4500/admin/verify`, { token })

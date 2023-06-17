@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { Box, Container, Image, Text } from "@chakra-ui/react";
+import { Box, Button, Container, Image, Text } from "@chakra-ui/react";
 import "./shop.css";
 
 import { Shopcard } from "./Shopcard";
 import ShopBig from "../../assets/Shop_Big.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { getProducts } from "../../Redux/productReducer/action";
 
 /*  Shop Page by Sourav */
@@ -16,7 +16,7 @@ export const Shop = () => {
   const { products, isLoading } = useSelector((store) => store.productReducer);
   const location = useLocation();
 
-  console.log("@@@@", products);
+  // console.log("@@@@", products);
 
   useEffect(() => {
     //  add ParamsObj inside getProducts and also in action.js when adding the filtering/sorting and useSearchParams
@@ -27,6 +27,20 @@ export const Shop = () => {
     <div>
       <div style={{ position: "relative", display: "inline-block" }}>
         <img src={ShopBig} alt="Image" style={{ maxWidth: "100%" }} />
+        <Link to="/collections/shop">
+          <div
+            style={{
+              position: "absolute",
+              top: "5%",
+              left: "90%",
+              color: "white",
+              // padding: "10px",
+            }}
+          >
+            <p style={{ fontSize: "25px" }}>SHOP ALL</p>
+          </div>
+        </Link>
+
         <div
           style={{
             position: "absolute",
@@ -35,7 +49,6 @@ export const Shop = () => {
             color: "white",
 
             transform: "translate(-50%, -50%)",
-            // backgroundColor: "rgba(255, 255, 255, 0.8)",
             padding: "10px",
           }}
         >
@@ -59,6 +72,9 @@ export const Shop = () => {
               return <Shopcard key={ele.id} {...ele} />;
             })}
         </div>
+        <Link to="/collections/shop">
+          <Button>SHOP ALL</Button>
+        </Link>
       </div>
     </div>
   );

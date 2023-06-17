@@ -10,16 +10,18 @@ import { SingleProductPage } from "../SingleProductPage";
 import Admin from "../AdminLogin";
 import { PageNotFound } from "../PageNotFound";
 import { PrivateRoute } from "../pages/PrivateRoute";
+import { ShopAllPage } from "../Shop/ShopAllPage";
 
 export const AllRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/shop" element={<Shop />} />
       <Route
-        path="/shop"
+        path="/collections/shop"
         element={
           <PrivateRoute>
-            <Shop />
+            <ShopAllPage />
           </PrivateRoute>
         }
       />

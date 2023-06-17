@@ -24,7 +24,7 @@ export const reducer = (state = inState, { type, payload }) => {
     }
     case LOGIN_SUCCESS: {
       let newPayLoad = payload;
-      saveData("token", newPayLoad);
+      saveData("loginToken", newPayLoad);
       return {
         ...state,
         isLoading: false,
@@ -42,7 +42,7 @@ export const reducer = (state = inState, { type, payload }) => {
       };
     }
     case LOGOUT: {
-      localStorage.removeItem("token");
+      localStorage.removeItem("loginToken");
       return { inState };
     }
 

@@ -47,20 +47,72 @@ export const Login = () => {
     };
 
     dispatch(loginAction(userData, toast, setEmail, setPassword)).then(() => {
-      toast({
-        position: "top",
-        title: isAuth ? "Taking you back where you came from" : "-",
-        status: "success",
-        duration: 1000,
-        isClosable: true,
-      });
-      navigate(location.state);
+      // delaying Navigate after 2 seconds
+      function delay(ms) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(); // resolving
+          }, ms);
+        });
+      }
+
+      delay(1000)
+        .then(() => {
+          toast({
+            position: "top-right",
+            title: !isAuth ? "Taking you back where you came from" : "-",
+            status: "warning",
+            duration: 1000,
+            isClosable: true,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      delay(2000)
+        .then(() => {
+          navigate(location.state);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
   };
 
   const logout = () => {
-    alert(`You're about to be logged out`);
-    dispatch(logoutAction);
+    toast({
+      position: "top",
+      title: "Logging out..",
+      status: "error",
+      duration: 1000,
+      isClosable: true,
+    });
+    toast({
+      position: "bottom",
+      title: "Redirecting To Homepage !",
+      status: "warning",
+      duration: 2000,
+      isClosable: true,
+    });
+
+    // delaying Navigate after 2 seconds
+    function delay(ms) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(); // resolving
+        }, ms);
+      });
+    }
+
+    delay(2000)
+      .then(() => {
+        dispatch(logoutAction);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // if (email && password) {

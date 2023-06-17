@@ -6,6 +6,14 @@ import {
 } from "./actionTypes";
 import axios from "axios";
 
+function delay(ms) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(); // resolving
+    }, ms);
+  });
+}
+
 export const loginAction =
   (userData, toast, setEmail, setPassword) => async (dispatch) => {
     if (email && password) {
@@ -20,7 +28,7 @@ export const loginAction =
             title: res.request.statusText,
             description: res.data.msg,
             status: res.data.msg === "Login Successful" ? "success" : "error",
-            duration: 3000,
+            duration: 1000,
             isClosable: true,
           });
         })
@@ -32,7 +40,7 @@ export const loginAction =
             title: `Request Failed`,
             description: `Something went wrong please try again.`,
             status: "error",
-            duration: 3000,
+            duration: 1000,
             isClosable: true,
           });
         });
