@@ -7,6 +7,9 @@ const productsSchema = new mongoose.Schema(
     image: { type: Array, required: true },
     price: { type: Number, required: true },
     subtitle: { type: String, required: true },
+    year: { type: Number, required: true },
+    artist: { type: String, required: true },
+    inStock: { type: Number, required: true }
   },
   {
     versionKey: false,
