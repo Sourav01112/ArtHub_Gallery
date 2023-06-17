@@ -10,12 +10,12 @@ import {
   Button,
   useToast,
   InputRightElement,
- 
 } from "@chakra-ui/react";
 import { ChevronDownIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import LoginPageTemp from "../assets/LoginPageTemp.png";
 import "../App.css";
 
 export const Login = () => {
@@ -64,7 +64,7 @@ export const Login = () => {
     <div>
       <Box
         id="log-Sec"
-        p={20}
+        p={10}
         backgroundImage={
           "url(https://dm0qx8t0i9gc9.cloudfront.net/thumbnails/video/SNc_bPaMeiw63zp8r/white-seamless-animated-background-loop_rizjvmafux_thumbnail-1080_01.png)"
         }
@@ -79,6 +79,7 @@ export const Login = () => {
           display={"flex"}
           margin={"auto"}
           mt={"50px"}
+          borderRadius={"50px"}
           backgroundColor={"white"}
           p={10}
           boxShadow={"rgba(0, 0, 0, 0.16) 0px 1px 4px"}
@@ -86,7 +87,8 @@ export const Login = () => {
           <Box width={"70%"}>
             <Image
               height={"100%"}
-              src="https://img.xcitefun.net/users/2012/11/308288,xcitefun-incredible-painting-art-5.jpg"
+              src={LoginPageTemp}
+              //   src="https://img.xcitefun.net/users/2012/11/308288,xcitefun-incredible-painting-art-5.jpg"
               width={"95%"}
             />
           </Box>
@@ -98,7 +100,9 @@ export const Login = () => {
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTo7kHT9XYYCnVNBIrKcz7Z-b3mwtnJj-0y_tsgvEc0k8WdHVJA4T2jskYT6nElVcskZpY&usqp=CAU"
             />
             <FormControl mt={30} id="email">
-              <FormLabel>Email address</FormLabel>
+              <FormLabel>
+                <span style={{ color: "red" }}>*</span> Email address
+              </FormLabel>
               <Input
                 type="email"
                 value={email}
@@ -109,7 +113,7 @@ export const Login = () => {
               {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
 
               <FormLabel mt={5} id="password">
-                Password
+                <span style={{ color: "red" }}>*</span> Password
               </FormLabel>
               <InputGroup>
                 <Input
@@ -147,8 +151,6 @@ export const Login = () => {
             </FormControl>
           </Box>
         </Box>
-
-        
       </Box>
     </div>
   );

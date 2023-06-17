@@ -140,7 +140,7 @@ export const Signup = () => {
     <div>
       <Box
         id="signup"
-        p={20}
+        p={10}
         backgroundImage={
           "url(https://www.technocrazed.com/wp-content/uploads/2015/11/Cool-Black-And-White-Wallpapers-Resolution-1920x1080-Desktop-Backgrounds-130.jpg)"
         }
@@ -155,6 +155,7 @@ export const Signup = () => {
           display={"flex"}
           margin={"auto"}
           mt={"50px"}
+          borderRadius={"50px"}
           backgroundColor={"white"}
           p={10}
           boxShadow={"rgba(0, 0, 0, 0.16) 0px 1px 4px"}
@@ -182,7 +183,10 @@ export const Signup = () => {
                   isRequired
                 />
 
-                <FormLabel mt={2}>Email address *</FormLabel>
+                <FormLabel mt={2}>
+                  {" "}
+                  <span style={{ color: "red" }}>*</span> Email address{" "}
+                </FormLabel>
                 <Input
                   type="email"
                   name="email"
@@ -192,7 +196,9 @@ export const Signup = () => {
                   isRequired
                 />
 
-                <FormLabel mt={2}>Password *</FormLabel>
+                <FormLabel mt={2}>
+                  <span style={{ color: "red" }}>*</span> Password{" "}
+                </FormLabel>
 
                 {/* <Input
                   type={showPassword ? "text" : "password"}
@@ -224,7 +230,9 @@ export const Signup = () => {
                   </InputRightElement>
                 </InputGroup>
 
-                <FormLabel mt={2}>Age *</FormLabel>
+                <FormLabel mt={2}>
+                  <span style={{ color: "red" }}>*</span> Age
+                </FormLabel>
                 <Input
                   type="number"
                   name="age"
@@ -234,7 +242,9 @@ export const Signup = () => {
                   isRequired
                 />
 
-                <FormLabel mt={2}>City *</FormLabel>
+                <FormLabel mt={2}>
+                  <span style={{ color: "red" }}>*</span> City
+                </FormLabel>
                 <Input
                   type="text"
                   name="city"
