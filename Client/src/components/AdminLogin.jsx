@@ -37,6 +37,7 @@ export default function Admin() {
   // console.log(location, admin);
 
   function handleAdminLogin() {
+    // console.table({ email, password });
     if (email && password) {
       axios
         .post(`${"http://localhost:4500/admin"}`, {

@@ -15,54 +15,75 @@ import {
 } from "@chakra-ui/react";
 import { ChevronDownIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoginPageTemp from "../assets/LoginPageTemp.png";
+import { loadData, saveData } from "../Utilities/localStorage";
 import "../App.css";
+import { useDispatch } from "react-redux";
+import { loginAction } from "../Redux/authReducer/action";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [signupSuccess, setSignupSuccess] = useState(false);
+  const dispatch = useDispatch();
+  const location = useLocation();
   const navigate = useNavigate();
   const toast = useToast();
 
   const isError = email === "";
 
   const handleSubmit = (e) => {
-    if (email && password) {
-      axios
-        .post(`${"http://localhost:4500/user/login"}`, {
-          email,
-          password,
-        })
-        .then((res) => {
-          //   console.log(res);
-          toast({
-            position: "top",
-            title: res.statusText,
-            description: res.data.msg,
-            status: res.data.msg === "Login Successful" ? "success" : "error",
-            duration: 9000,
-            isClosable: true,
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          toast({
-            position: "top",
-            title: `Request Failed`,
-            description: `Something went wrong please try again.`,
-            status: "error",
-            duration: 9000,
-            isClosable: true,
-          });
-        });
-    }
-    setEmail("");
-    setPassword("");
+    e.preventDefault();
+
+    const userData = {
+      email,
+      password,
+    };
+
+    dispatch(loginAction(userData, toast, setEmail, setPassword)).then(
+      (res) => {
+        navigate(location.state);
+      }
+    );
   };
+
+  // if (email && password) {
+  //   axios
+  //     .post(`${"http://localhost:4500/user/login"}`, {
+  //       email,
+  //       password,
+  //     })
+  //     .then((res) => {
+  //       console.log(res);
+  //       // setting token so that I can access the private Route
+  //       saveData("loginToken", res.data.token);
+  //       // saveData is nothing but localStorage
+  //       toast({
+  //         position: "top",
+  //         title: res.statusText,
+  //         description: res.data.msg,
+  //         status: res.data.msg === "Login Successful" ? "success" : "error",
+  //         duration: 9000,
+  //         isClosable: true,
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       toast({
+  //         position: "top",
+  //         title: `Request Failed`,
+  //         description: `Something went wrong please try again.`,
+  //         status: "error",
+  //         duration: 9000,
+  //         isClosable: true,
+  //       });
+  //     });
+  // }
+  // setEmail("");
+  // setPassword("");
 
   return (
     <div>
