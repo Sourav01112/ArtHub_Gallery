@@ -36,23 +36,39 @@ productRouter.get("/:id", async (req, res) => {
 // Add to Cart
 
 productRouter.post("/add-to-cart", async (req, res) => {
-  console.log(req.body, "62");
-  return res.send("addtoCart");
+  // console.log(req.body, "62");
 
   const isUpdate = await UserModel.updateOne(
-    { _id: req.body.userId },
+    { _id: req.body.userID },
     {
-      $addToSet: { cart: req.body.productId },
+      $addToSet: { productInCart: req.body.productID },
     }
+    /*   // $addToSet will help in pushing some data inside Array becuase productInCart is and Array, so this method is the only way */
   );
-
   if (isUpdate) {
-    return res.send({ code: 200, message: "Add to cart success." });
+    return res.status(200).json({ msg: "Add to cart success." });
   } else {
-    return res.send({ code: 500, message: "Server Err" });
+    return res.status(500).json({ msg: "Server Error" });
   }
 });
 
+// GET productInCart products
+
+productRouter.post("/get-cart", async (req, res) => {
+  const userID = req.body.userID;
+
+  const data = await UserModel.findOne({ _id: userID }).populate(
+    "productInCart"
+  );
+  /* This code is finding a user in the UserModel collection by their ID and populating the
+    "productInCart" field with the actual product documents from the ProductsModel collection. This means that when the user's cart is retrieved, it will contain the full details of each product in their cart, rather than just the product IDs. */
+
+  if (data) {
+    return res.status(200).json({ msg: "Get cart success.", data: data });
+  } else {
+    return res.status(500).json({ msg: "Server Error" });
+  }
+});
 
 //****  ADD here the filter, sorting, pagination for useSearchParams in the FrontEnd ******
 
