@@ -24,8 +24,9 @@ export const reducer = (state = inState, { type, payload }) => {
       };
     }
     case LOGIN_SUCCESS: {
-      saveData("loginToken", payload.token);
-      saveData("userID", payload.userID);
+      localStorage.setItem("loginToken", payload.token);
+      localStorage.setItem("userID", payload.userID);
+
       return {
         ...state,
         isLoading: false,
@@ -44,7 +45,10 @@ export const reducer = (state = inState, { type, payload }) => {
       };
     }
     case LOGOUT: {
-      localStorage.removeItem("loginToken");
+      // localStorage.removeItem("loginToken");
+      // localStorage.removeItem("userID");
+      localStorage.clear();
+
       return { inState };
     }
 

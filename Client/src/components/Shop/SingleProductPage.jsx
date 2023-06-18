@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Box,
   Image,
@@ -24,6 +24,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../Redux/productReducer/action";
+import CartPage from "./CartPage";
 
 export const SingleProductPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -31,6 +32,9 @@ export const SingleProductPage = () => {
     (store) => store.productReducer
   );
   const [refresh, setRefresh] = useState(false);
+  const [isAuth, SetisAuth] = useState(true);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = useRef();
 
   // to get product ID to add to Cart
   // console.log("@@products", products);
@@ -38,7 +42,6 @@ export const SingleProductPage = () => {
 
   const dispatch = useDispatch();
 
-  const [isAuth, SetisAuth] = useState(true);
   const [alertStatus, SetAlert] = useState(false);
   const [art, setArt] = useState();
 
@@ -65,12 +68,13 @@ export const SingleProductPage = () => {
     // console.log({ productID });
     // console.log(JSON.parse(userID));
     // got productID and userID from frontEnd, now logic can be written on the BE
-    const parsedUserID = JSON.parse(userID); //to remove the double quotes
-
-    const _payload = { productID, parsedUserID };
-
+    /*   const parsedUserID = JSON.parse(userID); 
+    //to remove the double quotes
+ */
+    const payload = { product_ID: productID, userID };
+    const headers = { loginToken: localStorage.getItem("loginToken") };
     axios
-      .post("http://localhost:4500/shop/add-to-cart", _payload)
+      .post("http://localhost:4500/shop/add-to-cart", payload, { headers })
       .then((res) => {
         console.log(res.data);
         if (res.data.status === 200) {
@@ -83,25 +87,6 @@ export const SingleProductPage = () => {
   };
 
   const [val, setval] = useState(1);
-
-  const [img, SetImage] = useState(
-    "https://cdn.shopify.com/s/files/1/2095/4219/products/MGGS_GabrielOrozco_CorplegadosandParticles_Cover.jpg?v=1669233423&width=823"
-  );
-
-  const imgArr = [
-    "https://cdn.shopify.com/s/files/1/2095/4219/products/MGGS_GabrielOrozco_CorplegadosandParticles_Cover.jpg?v=1669233423&width=823",
-    "https://cdn.shopify.com/s/files/1/2095/4219/products/MGG_Orozco_Corplegados_Pages.jpg?v=1677264760&width=823",
-  ];
-
-  const func = () => {
-    setTimeout(() => {
-      SetAlert(false);
-    }, 2000);
-  };
-
-  useEffect(() => {
-    func();
-  }, [alertStatus]);
 
   return (
     <div>
@@ -132,9 +117,6 @@ export const SingleProductPage = () => {
           Home <ChevronRightIcon /> Shop <ChevronRightIcon />{" "}
           {singlePageData?.title}
         </Text>
-        <Link style={{ marginLeft: "600px", fontSize: "30px" }}>
-          <DrawerExample />
-        </Link>
       </div>
 
       <div
@@ -190,20 +172,43 @@ export const SingleProductPage = () => {
           </p>
           <p> in stock: {singlePageData?.inStock}</p>
 
-          <button
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: "25px",
-              fontWeight: "500",
-              marginTop: "50px",
+          <Button
+            ref={btnRef}
+            colorScheme="teal"
+            // onClick={onOpen}
+            onClick={() => {
+              onOpen();
+              handleADDtoCART(singlePageData._id);
             }}
-            id="Add-btn"
-            onClick={() => handleADDtoCART(singlePageData._id)}
-
+            // key={size}
             // sending product ID directly through function
           >
-            Add to cart
-          </button>
+            ADD TO CART
+          </Button>
+          <Drawer
+            isOpen={isOpen}
+            placement="right"
+            onClose={onClose}
+            finalFocusRef={btnRef}
+            size={"md"}
+          >
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerCloseButton />
+              <DrawerHeader>Cart count</DrawerHeader>
+
+              <DrawerBody>
+                <CartPage />
+              </DrawerBody>
+
+              <DrawerFooter>
+                <Button colorScheme="blue" mr={3}>
+                  Checkout
+                </Button>
+                <Button onClick={onClose}>Cancel</Button>
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
         </div>
       </div>
     </div>
@@ -211,49 +216,3 @@ export const SingleProductPage = () => {
 };
 
 // ******************************* DRAWER *****************
-
-function DrawerExample() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const btnRef = React.useRef();
-
-  return (
-    <>
-      <AiOutlineShoppingCart onClick={onOpen} />
-
-      <Drawer
-        isOpen={isOpen}
-        placement="right"
-        onClose={onClose}
-        finalFocusRef={btnRef}
-        size={"sm"}
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Cart Page</DrawerHeader>
-          <Divider />
-
-          <DrawerBody mt={150}>
-            <img
-              src="https://cpimg.tistatic.com/04750918/b/4/extra-04750918.jpg"
-              alt=""
-              style={{ margin: "auto", alignItems: "center", width: "60%" }}
-            />
-            <p
-              style={{
-                textAlign: "center",
-                fontSize: "20px",
-                textDecoration: "underline",
-              }}
-            >
-              Cart is Empty
-            </p>
-          </DrawerBody>
-
-          <DrawerFooter></DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-    </>
-  );
-}

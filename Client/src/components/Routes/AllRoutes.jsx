@@ -11,6 +11,7 @@ import { PrivateRoute } from "../pages/PrivateRoute";
 import { ShopAllPage } from "../Shop/ShopAllPage";
 import Admin from "../AdminLogin";
 import { Login } from "../../components/pages/Login";
+import CartPage from "../Shop/CartPage";
 
 export const AllRoutes = () => {
   return (
@@ -18,21 +19,30 @@ export const AllRoutes = () => {
       <Route path="/" element={<HomePage />} />
       <Route path="/shop" element={<Shop />} />
       <Route path="/collections/shop" element={<ShopAllPage />} />
+      <Route
+        path="/shop/:_id"
+        element={
+          // <PrivateRoute>
+          <SingleProductPage />
+          // </PrivateRoute>
+        }
+      ></Route>
+
+      <Route
+        path="/get/cart"
+        // path="/shop/:_id"
+        element={
+          <PrivateRoute>
+            <CartPage />
+          </PrivateRoute>
+        }
+      />
+
       <Route path="/about" element={<About />}></Route>
       <Route path="/contact" element={<Contact />}></Route>
       <Route path="/login" element={<Login />}></Route>
       <Route path="/signup" element={<Signup />}></Route>
       <Route path="/admin_login" element={<Admin />}></Route>
-
-      <Route
-        path="/shop/:_id"
-        element={
-          <PrivateRoute>
-            <SingleProductPage />
-          </PrivateRoute>
-        }
-      ></Route>
-
       <Route path="*" element={<PageNotFound />}></Route>
     </Routes>
   );
