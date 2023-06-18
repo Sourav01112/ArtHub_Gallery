@@ -38,7 +38,8 @@ function NavBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isAuth } = useSelector((store) => store.authReducer);
-  console.log("isAuth is ?", isAuth);
+
+  // console.log("isAuth is Boolean value ?", isAuth);
 
   const toast = useToast();
 

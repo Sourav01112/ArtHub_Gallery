@@ -70,7 +70,7 @@ export const Shop = () => {
           {products?.length > 0 &&
             products?.map((ele) => {
               return (
-                <div key={ele.id}>
+                <div key={ele._id}>
                   <Link to={`/shop/${ele._id}`}>
                     <Shopcard {...ele} />
                   </Link>

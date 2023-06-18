@@ -30,8 +30,11 @@ export const SingleProductPage = () => {
   const { products, isLoading, isError } = useSelector(
     (store) => store.productReducer
   );
+  const [refresh, setRefresh] = useState(false);
 
-  //   console.log("@@products", products);
+  // to get product ID to add to Cart
+  // console.log("@@products", products);
+  // console.log("@@@productID", productID);
 
   const dispatch = useDispatch();
 
@@ -53,6 +56,32 @@ export const SingleProductPage = () => {
     dispatch(getProducts(_id));
   }, [_id]);
 
+  /*  Now to make sure ADD to CART works properly, we need the product ID and at the same time which user is logged in so that we can keep a track of who is buying what..thorugh handleADDtoCART */
+
+  const handleADDtoCART = (product_ID) => {
+    let productID = product_ID;
+    const userID = localStorage.getItem("userID");
+    // Generally userID can be retreived with getItem in backend also, but this is temporary, will change later with help of decoding in backend
+    // console.log({ productID });
+    // console.log(JSON.parse(userID));
+    // got productID and userID from frontEnd, now logic can be written on the BE
+    const parsedUserID = JSON.parse(userID); //to remove the double quotes
+
+    const _payload = { productID, parsedUserID };
+
+    axios
+      .post("http://localhost:4500/shop/add-to-cart", _payload)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.status === 200) {
+          setRefresh(!refresh);
+        }
+      })
+      .catch((err) => {
+        console.log(err, "30");
+      });
+  };
+
   const [val, setval] = useState(1);
 
   const [img, SetImage] = useState(
@@ -64,16 +93,6 @@ export const SingleProductPage = () => {
     "https://cdn.shopify.com/s/files/1/2095/4219/products/MGG_Orozco_Corplegados_Pages.jpg?v=1677264760&width=823",
   ];
 
-  const handleBuy = () => {
-    if (!isAuth) {
-      const element = document.getElementById("section-1");
-      element.scrollIntoView({ behavior: "smooth" });
-    } else {
-      SetAlert((prev) => !prev);
-      const element = document.getElementById("section-1");
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
   const func = () => {
     setTimeout(() => {
       SetAlert(false);
@@ -179,7 +198,9 @@ export const SingleProductPage = () => {
               marginTop: "50px",
             }}
             id="Add-btn"
-            onClick={() => handleBuy()}
+            onClick={() => handleADDtoCART(singlePageData._id)}
+
+            // sending product ID directly through function
           >
             Add to cart
           </button>

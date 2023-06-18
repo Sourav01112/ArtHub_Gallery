@@ -10,6 +10,7 @@ const inState = {
   isLoading: false,
   isAuth: loadData("loginToken") || true || undefined,
   token: loadData("loginToken") || "",
+  userID: loadData("userID") || "",
   isError: false,
   errorMessage: "",
 };
@@ -23,13 +24,14 @@ export const reducer = (state = inState, { type, payload }) => {
       };
     }
     case LOGIN_SUCCESS: {
-      let newPayLoad = payload;
-      saveData("loginToken", newPayLoad);
+      saveData("loginToken", payload.token);
+      saveData("userID", payload.userID);
       return {
         ...state,
         isLoading: false,
         isAuth: true,
-        token: payload,
+        token: payload.token,
+        userID: payload.userID,
         isError: false,
       };
     }

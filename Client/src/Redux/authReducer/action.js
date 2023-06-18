@@ -20,14 +20,22 @@ export const loginAction =
       return axios
         .post(`http://localhost:4500/user/login`, userData)
         .then((res) => {
-          console.log("@@ token from authReducer ~ action", res.data.token);
-          dispatch({ type: LOGIN_SUCCESS, payload: res.data.token });
+          console.log("@@ token from authReducer ~ action", res);
+          dispatch({
+            type: LOGIN_SUCCESS,
+            payload: {
+              token: res.data.token,
+              userID: res.data.userID,
+            },
+          });
+          // console.log("@@ payload", payload);
 
           toast({
             position: "top",
             title: res.request.statusText,
             description: res.data.msg,
             status: res.data.msg === "Login Successful" ? "success" : "error",
+            // Above code is conditional, telling if te msg is equal to given string, then pass toast in green (success) or error (red)
             duration: 1000,
             isClosable: true,
           });

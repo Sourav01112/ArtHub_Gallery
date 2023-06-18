@@ -65,6 +65,7 @@ export const Login = () => {
       password,
     };
 
+    // API call Logic is in action.js
     dispatch(loginAction(userData, toast, setEmail, setPassword)).then(() => {
       // delaying Navigate after 2 seconds
       function delay(ms) {
