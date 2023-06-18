@@ -38,12 +38,14 @@ export const SingleProductPage = () => {
   const [isAuth, SetisAuth] = useState(true);
   const [alertStatus, SetAlert] = useState(false);
   const [art, setArt] = useState();
+
   const { _id } = useParams();
+
   let alt = "";
 
   // Getting individual Data Dynamically
-  const singlePageData = products?.find((ele) => ele._id === _id);
   // console.log(_id);
+  const singlePageData = products?.find((ele) => ele._id === _id);
   //   console.log("SinglePageData", singlePageData);
 
   //  API call for dynamic product fetch {(_id)}

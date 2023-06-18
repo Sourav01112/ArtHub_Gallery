@@ -12,6 +12,10 @@ import {
   InputRightElement,
   FormHelperText,
   FormErrorMessage,
+  MenuButton,
+  MenuList,
+  Menu,
+  MenuItem,
 } from "@chakra-ui/react";
 import { ChevronDownIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import React, { useState } from "react";
@@ -94,76 +98,6 @@ export const Login = () => {
         });
     });
   };
-
-  const logout = () => {
-    toast({
-      position: "top",
-      title: "Logging out..",
-      status: "error",
-      duration: 1000,
-      isClosable: true,
-    });
-    toast({
-      position: "bottom",
-      title: "Redirecting To Homepage !",
-      status: "warning",
-      duration: 2000,
-      isClosable: true,
-    });
-
-    // delaying Navigate after 2 seconds
-    function delay(ms) {
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve(); // resolving
-        }, ms);
-      });
-    }
-
-    delay(2000)
-      .then(() => {
-        dispatch(logoutAction);
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  // if (email && password) {
-  //   axios
-  //     .post(`${"http://localhost:4500/user/login"}`, {
-  //       email,
-  //       password,
-  //     })
-  //     .then((res) => {
-  //       console.log(res);
-  //       // setting token so that I can access the private Route
-  //       saveData("loginToken", res.data.token);
-  //       // saveData is nothing but localStorage
-  //       toast({
-  //         position: "top",
-  //         title: res.statusText,
-  //         description: res.data.msg,
-  //         status: res.data.msg === "Login Successful" ? "success" : "error",
-  //         duration: 9000,
-  //         isClosable: true,
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       toast({
-  //         position: "top",
-  //         title: `Request Failed`,
-  //         description: `Something went wrong please try again.`,
-  //         status: "error",
-  //         duration: 9000,
-  //         isClosable: true,
-  //       });
-  //     });
-  // }
-  // setEmail("");
-  // setPassword("");
 
   return (
     <div>
@@ -251,23 +185,47 @@ export const Login = () => {
                 <FormErrorMessage>Password is required.</FormErrorMessage>
               )}
 
-              <Button
-                display={"block"}
-                bgColor={"black"}
-                color={"white"}
-                margin={"auto"}
-                mt={"50px"}
-                onClick={handleSubmit}
+              <div
+                style={{
+                  display: "flex",
+                  marginTop: "50px",
+                  justifyContent: "space-around",
+                }}
               >
-                Submit
-              </Button>
+                <Button
+                  display={"block"}
+                  bgColor={"black"}
+                  color={"white"}
+                  // margin={"auto"}
+                  // mt={"50px"}
+                  onClick={handleSubmit}
+                >
+                  Login
+                </Button>
+                <Menu mt={"50px"}>
+                  <MenuButton
+                    color={"white"}
+                    as={Button}
+                    bgColor={"black"}
+                    rightIcon={<ChevronDownIcon />}
+                  >
+                    Login as
+                  </MenuButton>
+                  <MenuList>
+                    <Link to="/admin_login">
+                      <MenuItem border={"0"} maxH="50px">
+                        ADMIN
+                      </MenuItem>
+                    </Link>
+                  </MenuList>
+                </Menu>
+              </div>
               <Text mt={6} textAlign={"center"}>
                 Not have a account?{" "}
                 <Link to={"/signup"}>
                   <strong>Sign up</strong>
                 </Link>
               </Text>
-              <Button onClick={logout}>Log Out</Button>
             </FormControl>
           </Box>
         </Box>
