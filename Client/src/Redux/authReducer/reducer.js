@@ -8,7 +8,7 @@ import {
 
 const inState = {
   isLoading: false,
-  isAuth: loadData("loginToken"),
+  isAuth: loadData("loginToken") || true || undefined,
   token: loadData("loginToken") || "",
   isError: false,
   errorMessage: "",

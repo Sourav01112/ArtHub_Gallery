@@ -27,7 +27,7 @@ import { AiOutlineLogin } from "react-icons/ai";
 import { AiOutlineLogout } from "react-icons/ai";
 import LoginLogo from "../assets/Login.png";
 import { logoutAction } from "../Redux/authReducer/action";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "../App.css";
 
 function NavBar() {
@@ -37,6 +37,8 @@ function NavBar() {
   const cancelRef = useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { isAuth } = useSelector((store) => store.authReducer);
+  console.log("isAuth is ?", isAuth);
 
   const toast = useToast();
 
@@ -163,10 +165,10 @@ function NavBar() {
               </MenuButton>
               <MenuList mt={5} p={0}>
                 <Link to={"/signup"}>
-                  <MenuItem border={"0"} maxH="50px">
+                  <MenuItem border={"0"} maxH="60px">
                     <Image
-                      boxSize="2rem"
-                      borderRadius="full"
+                      boxSize="2.1rem"
+                      // borderRadius="full"
                       src="https://img.uxwing.com/wp-content/themes/uxwing/download/editing-user-action/signup-icon.svg"
                       alt="SignUp"
                       ml="10%"
@@ -175,46 +177,51 @@ function NavBar() {
                     <span> SIGN UP</span>
                   </MenuItem>
                 </Link>
-                <Link to={"/login"}>
-                  <MenuItem border={"0"} maxH="60px" bg={"#CCFF90"}>
+
+                {!isAuth ? (
+                  <Link to={"/login"}>
+                    <MenuItem border={"0"} maxH="60px" bg={"#CCFF90"}>
+                      <Image
+                        boxSize="2rem"
+                        // borderRadius="full"
+                        src={LoginLogo}
+                        alt="Login"
+                        ml="10%"
+                        mr="20%"
+                      />
+                      <span>LOGIN</span>
+                    </MenuItem>
+                  </Link>
+                ) : (
+                  <MenuItem
+                    onClick={onOpen}
+                    // onClick={logout}
+                    border={"0"}
+                    maxH="60px"
+                    bg={"#FF7043"}
+                  >
                     <Image
                       boxSize="2rem"
                       // borderRadius="full"
-                      src={LoginLogo}
-                      alt="Login"
+                      src={
+                        "https://cdn.icon-icons.com/icons2/2518/PNG/512/logout_icon_151219.png"
+                      }
+                      alt="Logout"
                       ml="10%"
                       mr="20%"
                     />
-                    <span>LOGIN</span>
+                    <span>LOGOUT</span>
                   </MenuItem>
-                </Link>
-
-                <MenuItem
-                  onClick={onOpen}
-                  // onClick={logout}
-                  border={"0"}
-                  maxH="70px"
-                  bg={"#FF7043"}
-                >
-                  <Image
-                    boxSize="2rem"
-                    // borderRadius="full"
-                    src={
-                      "https://cdn.icon-icons.com/icons2/2518/PNG/512/logout_icon_151219.png"
-                    }
-                    alt="Logout"
-                    ml="10%"
-                    mr="20%"
-                  />
-                  <span>LOGOUT</span>
-                </MenuItem>
+                )}
               </MenuList>
             </Menu>
 
             <AlertDialog
+              motionPreset="scale"
               isOpen={isOpen}
               leastDestructiveRef={cancelRef}
               onClose={onClose}
+              isCentered
             >
               <AlertDialogOverlay>
                 <AlertDialogContent>
