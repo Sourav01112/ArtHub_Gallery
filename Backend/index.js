@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const { connection } = require("./db");
 const { userRouter } = require("./routes/user.routes");
@@ -15,7 +16,9 @@ const PORT = process.env.PORT;
 // Middlewares
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/user", userRouter);
 // user middleware for user Route
