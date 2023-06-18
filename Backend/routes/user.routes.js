@@ -6,6 +6,7 @@ require("dotenv").config();
 const { UserModel } = require("../models/User.model");
 const { AdminModel } = require("../models/Admin.model");
 const { BlacklistModel } = require("../models/blacklist.model");
+const { authMiddleware } = require("../middlewares/auth.middleware");
 
 // Register
 userRouter.post("/register", async (req, res) => {
@@ -34,8 +35,8 @@ userRouter.post("/register", async (req, res) => {
 
 // Login
 userRouter.post("/login", async (req, res) => {
-  const { email, password } = req.body;
   try {
+    const { email, password } = req.body;
     const userExists = await UserModel.findOne({ email });
 
     if (userExists) {
@@ -46,20 +47,30 @@ userRouter.post("/login", async (req, res) => {
             process.env.JWT_SECRET_KEY
           );
 
-          res.status(200).json({ msg: "Login Successful", token });
+          // console.log("@@@userExists", userExists);
+          if (token) {
+            res
+              .status(200)
+              .json({ msg: "Login Successful", token, userID: userExists._id });
+            /* Above userID will help in making sure which product is being added in the CART PAGE on the Client Side, retrieve in FE */
+          } else {
+            res
+              .status(200)
+              .json({ msg: "Something went wrong. Please try again." });
+          }
         } else {
-          res.status(200).json({ msg: "Wrong credentials" });
+          res.status(400).json({ msg: "Invalid Credentials." });
         }
       });
     } else {
-      res.status(400).json({ msg: "user does not exist" });
+      res.status(400).json({ msg: "User does not exist" });
     }
   } catch (err) {
     res.status(400).json({ err: err.message });
   }
 });
 
-// Logout
+// Logout : couldn't implement
 
 userRouter.post("/logout", async () => {
   try {
@@ -73,5 +84,6 @@ userRouter.post("/logout", async () => {
     res.status(400).json({ err: err.message });
   }
 });
+
 
 module.exports = { userRouter };

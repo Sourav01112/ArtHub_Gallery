@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { ProductsModel } = require("../models/Products.model");
 const { errorHandler } = require("../middlewares/errorHandle.middleware");
+const { UserModel } = require("../models/User.model");
 const productRouter = express.Router();
 require("dotenv").config();
 
@@ -32,79 +33,102 @@ productRouter.get("/:id", async (req, res) => {
   }
 });
 
-// POST
+// Add to Cart
 
-productRouter.post("/add-product", async (req, res) => {
-  //   if (req.permissions.indexOf('add-product') === -1) {
-  //     return res.send({ code: 401, message: 'Unauthenticated' })
-  // }
-  let data = new ProductsModel(req.body);
-  await data.save();
-  if (data) {
-    res.status(200).json({ msg: "New Product added", newData: data });
+productRouter.post("/add-to-cart", async (req, res) => {
+  console.log(req.body, "62");
+  return res.send("addtoCart");
+
+  const isUpdate = await UserModel.updateOne(
+    { _id: req.body.userId },
+    {
+      $addToSet: { cart: req.body.productId },
+    }
+  );
+
+  if (isUpdate) {
+    return res.send({ code: 200, message: "Add to cart success." });
   } else {
-    res.status(500).json({ msg: err.message });
+    return res.send({ code: 500, message: "Server Err" });
   }
 });
 
-// EDIT
-productRouter.post("/edit-Product", async (req, res) => {
-  // console.log(req.body, 31);
 
-  let newData = {};
+//****  ADD here the filter, sorting, pagination for useSearchParams in the FrontEnd ******
 
-  if (req.body.title) {
-    newData["title"] = req.body.title;
-  }
-  if (req.body.desc) {
-    newData["desc"] = req.body.desc;
-  }
-  if (req.body.image) {
-    newData["image"] = req.body.image;
-  }
-  if (req.body.price) {
-    newData["price"] = req.body.price;
-  }
-  if (req.body.subtitle) {
-    newData["subtitle"] = req.body.subtitle;
-  }
-  if (req.body.year) {
-    newData["year"] = req.body.year;
-  }
-  if (req.body.artist) {
-    newData["artist"] = req.body.artist;
-  }
-  if (req.body.inStock) {
-    newData["inStock"] = req.body.inStock;
-  }
+// // POST
 
-  const id = req.body.id;
-  let filter = { _id: id };
+// productRouter.post("/add-product", async (req, res) => {
+//   //   if (req.permissions.indexOf('add-product') === -1) {
+//   //     return res.send({ code: 401, message: 'Unauthenticated' })
+//   // }
+//   let data = new ProductsModel(req.body);
+//   await data.save();
+//   if (data) {
+//     res.status(200).json({ msg: "New Product added", newData: data });
+//   } else {
+//     res.status(500).json({ msg: err.message });
+//   }
+// });
 
-  let updateData = await ProductsModel.findOneAndUpdate(filter, newData, {
-    new: true,
-  });
-  if (updateData) {
-    res.status(200).json({ msg: "edit success", updated: updateData });
-  } else {
-    res.status(500).json({ msg: err.message });
-  }
-});
+// // EDIT
+// productRouter.post("/edit-Product", async (req, res) => {
+//   // console.log(req.body, 31);
 
-// DELETE
+//   let newData = {};
 
-productRouter.delete("/delete-product", async (req, res) => {
-  // console.log(req.body, "73")
-  //   if (req.permissions.indexOf('delete-products') === -1) {
-  //       return res.send({ code: 401, message: 'Unauthenticated' })
-  //   }
-  const { id } = req.body;
-  const deleted = await ProductsModel.findByIdAndDelete({ _id: id });
-  if (deleted) {
-    res.status(200).json({ msg: "Deleted successfully", deletedData: deleted });
-  } else {
-    res.status(500).json({ msg: err.message });
-  }
-});
+//   if (req.body.title) {
+//     newData["title"] = req.body.title;
+//   }
+//   if (req.body.desc) {
+//     newData["desc"] = req.body.desc;
+//   }
+//   if (req.body.image) {
+//     newData["image"] = req.body.image;
+//   }
+//   if (req.body.price) {
+//     newData["price"] = req.body.price;
+//   }
+//   if (req.body.subtitle) {
+//     newData["subtitle"] = req.body.subtitle;
+//   }
+//   if (req.body.year) {
+//     newData["year"] = req.body.year;
+//   }
+//   if (req.body.artist) {
+//     newData["artist"] = req.body.artist;
+//   }
+//   if (req.body.inStock) {
+//     newData["inStock"] = req.body.inStock;
+//   }
+
+//   const id = req.body.id;
+//   let filter = { _id: id };
+
+//   let updateData = await ProductsModel.findOneAndUpdate(filter, newData, {
+//     new: true,
+//   });
+//   if (updateData) {
+//     res.status(200).json({ msg: "edit success", updated: updateData });
+//   } else {
+//     res.status(500).json({ msg: err.message });
+//   }
+// });
+
+// // DELETE
+
+// productRouter.delete("/delete-product", async (req, res) => {
+//   // console.log(req.body, "73")
+//   //   if (req.permissions.indexOf('delete-products') === -1) {
+//   //       return res.send({ code: 401, message: 'Unauthenticated' })
+//   //   }
+//   const { id } = req.body;
+//   const deleted = await ProductsModel.findByIdAndDelete({ _id: id });
+//   if (deleted) {
+//     res.status(200).json({ msg: "Deleted successfully", deletedData: deleted });
+//   } else {
+//     res.status(500).json({ msg: err.message });
+//   }
+// });
 
 module.exports = { productRouter };

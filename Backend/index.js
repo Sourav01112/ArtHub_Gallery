@@ -20,9 +20,8 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/user", userRouter);
-// user middleware for user Route
-app.use("/user", authMiddleware);
+// No auth Middleware should be passed
+app.use("/user", userRouter); 
 app.use("/shop", productRouter);
 app.use("/admin", adminRouter);
 
