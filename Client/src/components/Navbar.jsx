@@ -151,7 +151,7 @@ function NavBar() {
           <Link style={{ color: "rgba(0, 0, 0, 0.547)" }}>EXHIBITIONS</Link>
           <Link style={{ color: "rgba(0, 0, 0, 0.547)" }}>NEWS</Link>
           <Link style={{ color: "rgba(0, 0, 0, 0.547)" }} to={"/shop"}>
-            SHOP
+            <span style={{ color: "red" }}>SHOP</span>
           </Link>
           <Link style={{ color: "rgba(0, 0, 0, 0.547)" }} to={"/contact"}>
             CONTACT
@@ -161,8 +161,8 @@ function NavBar() {
           </Link>
           <div>
             <Menu>
-              <MenuButton as={Text}  color={"rgba(0, 0, 0, 0.547)"}>
-                PROFILE
+              <MenuButton as={Text} color={"rgba(0, 0, 0, 0.547)"}>
+                <span style={{ color: "red", fontWeight: 800 }}>PROFILE</span>
               </MenuButton>
               <MenuList mt={5} p={0}>
                 <Link to={"/signup"}>

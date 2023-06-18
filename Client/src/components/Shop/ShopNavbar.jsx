@@ -7,12 +7,35 @@ import AsyncSelect from "react-select/async";
 export const ShopNavbar = () => {
   //  Dummy Dat, change it with API call to artists
   const options = [
-    { value: "chocolate", label: "Chocolate", color: "#FF8B00" },
-    { value: "strawberry", label: "Strawberry", color: "#36B37E" },
-    { value: "vanilla", label: "Vanilla" },
+    {
+      value: "Ahtila, Eija-Liisa",
+      label: "Ahtila, Eija-Liisa",
+      color: "#FF8B00",
+    },
+    {
+      value: "Baghramian, Nairy",
+      label: "Baghramian, Nairy",
+    },
+    { value: "Baldessari, John", label: "Baldessari, John", color: "#FF8B00" },
+    { value: "Baldessari, John", label: "Baldessari, John" },
+    { value: "Baldessari, John", label: "Baldessari, John", color: "#FF8B00" },
+    { value: "Baldessari, John", label: "Baldessari, John" },
+    { value: "Baldessari, John", label: "Baldessari, John", color: "#FF8B00" },
+    { value: "Baldessari, John", label: "Baldessari, John" },
+    { value: "Baldessari, John", label: "Baldessari, John", color: "#FF8B00" },
+    { value: "Baldessari, John", label: "Baldessari, John" },
+    { value: "Baldessari, John", label: "Baldessari, John", color: "#FF8B00" },
+    { value: "Baldessari, John", label: "Baldessari, John" },
+    { value: "Baldessari, John", label: "Baldessari, John", color: "#FF8B00" },
+    { value: "Baldessari, John", label: "Baldessari, John" },
   ];
 
   const colorStyles = {
+    menu: (provided) => ({
+      ...provided,
+      // maxHeight: "200px", // Adjust the height as needed
+      overflowY: "scroll",
+    }),
     control: (styles) => ({
       ...styles,
       backgroundColor: "white",
@@ -64,6 +87,7 @@ export const ShopNavbar = () => {
         alignContent={"center"}
         alignItems={"center"}
         h="100px"
+
         // border={"1px solid red"}
       >
         <HStack
@@ -82,7 +106,9 @@ export const ShopNavbar = () => {
           w="45%"
           justifyContent={"center"}
         >
-          <Text fontSize="lg">MODERN ART GALLERY</Text>
+          <Text fontSize="lg" color={"red"}>
+            MODERN ART GALLERY
+          </Text>
         </HStack>
 
         <HStack
@@ -100,6 +126,7 @@ export const ShopNavbar = () => {
         loadOptions={loadOptions}
         defaultOptions
         isMulti
+        placeholder="Select Artist...."
         onChange={handleChange}
         styles={colorStyles}
       />

@@ -16,6 +16,7 @@ import {
   useDisclosure,
   Input,
   Divider,
+  Heading,
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import "./SingleProductPage.css";
@@ -24,6 +25,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../Redux/productReducer/action";
+import Contact from "../../components/pages/Contact";
 import CartPage from "./CartPage";
 
 export const SingleProductPage = () => {
@@ -71,12 +73,12 @@ export const SingleProductPage = () => {
     /*   const parsedUserID = JSON.parse(userID); 
     //to remove the double quotes
  */
-    const payload = { product_ID: productID, userID };
-    const headers = { loginToken: localStorage.getItem("loginToken") };
+    const payload = { productID, userID };
+    // const headers = { loginToken: localStorage.getItem("loginToken") };
     axios
-      .post("http://localhost:4500/shop/add-to-cart", payload, { headers })
+      .post("http://localhost:4500/shop/add-to-cart", payload)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data.status === 200) {
           setRefresh(!refresh);
         }
@@ -126,10 +128,15 @@ export const SingleProductPage = () => {
           margin: "auto",
           justifyContent: "center",
           marginBottom: "100px",
+          padding: "20px",
+          // border: "1px solid red",
         }}
       >
-        <div style={{ width: "50%", display: "flex", gap: "40px" }}>
-          <Box width={"20%"}>
+        <div style={{ width: "90%", display: "flex", gap: "40px" }}>
+          <Box
+            width={"20%"}
+            // style={{ border: "1px solid red" }}
+          >
             <Image
               width={"100%"}
               onClick={() => setval(1)}
@@ -142,39 +149,75 @@ export const SingleProductPage = () => {
               onClick={() => setval(2)}
               cursor="pointer"
               src={singlePageData?.image[1]}
+              mb={5}
             />
-          </Box>
-          <Box width={"90%"}>
             <Image
               width={"100%"}
+              onClick={() => setval(2)}
+              cursor="pointer"
+              src={singlePageData?.image[2]}
+              mb={5}
+            />
+            <Image
+              width={"100%"}
+              onClick={() => setval(2)}
+              cursor="pointer"
+              src={singlePageData?.image[3]}
+              mb={5}
+            />
+          </Box>
+          <Box>
+            <Image
+              width={"1050px"}
               src={
                 val == 1 ? singlePageData?.image[0] : singlePageData?.image[1]
               }
             />
           </Box>
         </div>
-        <div>
-          <h2 style={{ fontFamily: "'Playfair Display', serif" }}>
+        <div
+          style={{
+            // border: "1px solid red", 
+            textAlign: "center",
+            width: "90%",
+            // margin: "auto",
+          }}
+        >
+          <Heading as="h5" size={"lg"} style={{}}>
             {singlePageData?.title}
-          </h2>
-          <p style={{ fontFamily: "'Playfair Display', serif" }}>
-            <i> {singlePageData?.subtitle}</i>
+          </Heading>
+          <p style={{ marginTop: "20px" }}>
+            <strong> {singlePageData?.subtitle}</strong>
           </p>
-          <p style={{ fontFamily: "'Playfair Display', serif" }}>$60.00</p>
+          <p
+            style={{
+              fontSize: "20px",
+              marginTop: "20px",
+              fontFamily: "'Playfair Display', serif",
+            }}
+          >
+            <strong> $ {singlePageData?.price}</strong>
+          </p>
           <p style={{ fontSize: "16px", marginTop: "20px" }}>
             {singlePageData?.desc}
           </p>
           <p style={{ fontSize: "16px", marginTop: "20px" }}>
-            {singlePageData?.year} <br />
-            Essay by Benjamin H.D. Buchloh <br />
-            Published by Marian Goodman Gallery, New York <br />
-            ISBN 0-944219-19-5
+            <strong>{singlePageData?.year}</strong>
+            <br />
+            <strong>Essay by </strong> {singlePageData?.artist} <br /> <br />
+            <strong> Published by </strong> Marian Goodman Gallery, New York <br /> <br />
+            <strong>ISBN</strong> 0-944219-19-5 <br /> <br />
           </p>
-          <p> in stock: {singlePageData?.inStock}</p>
+          <p>
+            {" "}
+            <strong>in stock:</strong> {singlePageData?.inStock} <br />
+            <br />
+          </p>
 
           <Button
             ref={btnRef}
-            colorScheme="teal"
+            colorScheme="red"
+            mb={"20px"}
             // onClick={onOpen}
             onClick={() => {
               onOpen();
@@ -193,16 +236,17 @@ export const SingleProductPage = () => {
             size={"md"}
           >
             <DrawerOverlay />
-            <DrawerContent>
-              <DrawerCloseButton />
-              <DrawerHeader>Cart count</DrawerHeader>
 
-              <DrawerBody>
+            <DrawerContent css={{ '&::-webkit-scrollbar': { width: '6px' } }}>
+              <DrawerCloseButton />
+              <DrawerHeader>Cart : 4</DrawerHeader>
+
+              <DrawerBody css={{ '&::-webkit-scrollbar': { width: '6px' } }}>
                 <CartPage />
               </DrawerBody>
 
               <DrawerFooter>
-                <Button colorScheme="blue" mr={3}>
+                <Button colorScheme="blue" mr={3} onClick={() => handle}>
                   Checkout
                 </Button>
                 <Button onClick={onClose}>Cancel</Button>
@@ -211,6 +255,7 @@ export const SingleProductPage = () => {
           </Drawer>
         </div>
       </div>
+      <Contact />
     </div>
   );
 };

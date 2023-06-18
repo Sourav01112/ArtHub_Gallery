@@ -62,8 +62,10 @@ export const Shop = () => {
       </div>
 
       {/* Shop ART Card  */}
+      <h3 style={{ fontSize: "30px", marginTop: "50px", marginLeft: "4%" }}>
+        NEW
+      </h3>
       <div className="ShopContainer">
-        <h3>NEW</h3>
         <div className="CardContainer">
           {/* Include the Card component */}
 

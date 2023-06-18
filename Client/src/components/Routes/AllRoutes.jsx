@@ -22,19 +22,20 @@ export const AllRoutes = () => {
       <Route
         path="/shop/:_id"
         element={
-          // <PrivateRoute>
-          <SingleProductPage />
-          // </PrivateRoute>
+          <PrivateRoute>
+            <SingleProductPage />
+          </PrivateRoute>
         }
       ></Route>
 
+      {/*  failed to apply Private Route on CartPage component which is on page <SingleProductPage/>, so as of now apply PrivateRoute to only <SingleProductPage />*/}
       <Route
         path="/get/cart"
         // path="/shop/:_id"
         element={
-          <PrivateRoute>
-            <CartPage />
-          </PrivateRoute>
+          // <PrivateRoute>
+          <CartPage />
+          // </PrivateRoute>
         }
       />
 

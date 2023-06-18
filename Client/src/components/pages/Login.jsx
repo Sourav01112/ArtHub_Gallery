@@ -106,12 +106,19 @@ export const Login = () => {
         id="log-Sec"
         p={10}
         backgroundImage={
-          "url(https://dm0qx8t0i9gc9.cloudfront.net/thumbnails/video/SNc_bPaMeiw63zp8r/white-seamless-animated-background-loop_rizjvmafux_thumbnail-1080_01.png)"
+          // "url(https://dm0qx8t0i9gc9.cloudfront.net/thumbnails/video/SNc_bPaMeiw63zp8r/white-seamless-animated-background-loop_rizjvmafux_thumbnail-1080_01.png)"
+
+          "url(https://img.freepik.com/free-vector/watercolor-artwork_1409-2684.jpg?w=996&t=st=1687124167~exp=1687124767~hmac=74620e1e575dc094b45df3ea69670d28e0345865fa0d5a08c9acd8acbe68c21d)"
         }
         backgroundPosition={"center"}
         backgroundSize={"cover"}
       >
-        <Heading fontWeight={"500"} textAlign={"center"}>
+        <Heading
+          fontWeight={"700"}
+          fontSize={"50px"}
+          textAlign={"center"}
+          color={"#616161"}
+        >
           Login
         </Heading>
         <Box
@@ -119,26 +126,21 @@ export const Login = () => {
           display={"flex"}
           margin={"auto"}
           mt={"50px"}
-          borderRadius={"50px"}
+          borderRadius={"20px"}
           backgroundColor={"white"}
           p={10}
           boxShadow={"rgba(0, 0, 0, 0.16) 0px 1px 4px"}
         >
-          <Box width={"70%"}>
-            <Image
-              height={"100%"}
-              src={LoginPageTemp}
-              //   src="https://img.xcitefun.net/users/2012/11/308288,xcitefun-incredible-painting-art-5.jpg"
-              width={"95%"}
-            />
+          <Box>
+            <Image src={LoginPageTemp} mt={"50px"} width={"90%"} />
           </Box>
           <Box width={"50%"}>
-            <Image
+            {/* <Image
               width={"50%"}
               display={"block"}
               margin={"auto"}
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTo7kHT9XYYCnVNBIrKcz7Z-b3mwtnJj-0y_tsgvEc0k8WdHVJA4T2jskYT6nElVcskZpY&usqp=CAU"
-            />
+            /> */}
             <FormControl mt={30} id="email" isInvalid={isError}>
               <FormLabel>
                 <span style={{ color: "red" }}>*</span> Email address
@@ -221,12 +223,12 @@ export const Login = () => {
                   </MenuList>
                 </Menu>
               </div>
-              <Text mt={6} textAlign={"center"}>
-                Not have a account?{" "}
+              <Button mt={6} textAlign={"center"} variant={"ghost"}>
+                Don't have an account?&nbsp;{" "}
                 <Link to={"/signup"}>
-                  <strong>Sign up</strong>
+                  <span style={{ color: "red" }}>SIGN UP</span>
                 </Link>
-              </Text>
+              </Button>
             </FormControl>
           </Box>
         </Box>

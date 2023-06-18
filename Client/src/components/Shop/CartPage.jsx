@@ -12,7 +12,7 @@ function CartPage() {
     axios
       .post("http://localhost:4500/shop/get-cart", data, { headers })
       .then((res) => {
-        console.log(res.data.data.productInCart, "15");
+        // console.log(res.data.data.productInCart, "15");
         setData(res.data.data.productInCart);
       })
       .catch((err) => {
@@ -21,30 +21,56 @@ function CartPage() {
   }, []);
 
   return (
-    <div>
-
-      <h1>PRODUCT LIST</h1>
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
+    <div style={{ overflowX: "hidden", overflow: "hidden" }}>
+      <hr style={{ border: "2px solid gray" }} />
+      <h1 style={{ marginBottom: "15px", marginTop: "15px" }}>CART LIST</h1>
+      <div style={{ display: "flex", flexDirection: "column" }}>
         {data?.map((item, index) => {
           return (
             <div
+              key={item.id}
               style={{
-                margin: "50px 30px",
-                background: "#eee",
-                width: "27%",
+                margin: "10px",
+                // background: "#eee",
+                // border: "2px solid blue",
               }}
             >
-              <img
+              <div
                 style={{
-                  width: "100%",
-                  height: "300px",
+                  display: "flex",
+                  // border: "2px solid red"
                 }}
-                src={item.image[0]}
-              />
-              <p>{item.title}</p>
-              <p> By {item.artist} </p>
-              <p> PRICE : {item.price} Only/- </p>
-              <button> PAY NOW </button>
+              >
+                <img
+                  style={{
+                    width: "50%",
+                  }}
+                  src={item.image[0]}
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    lineHeight: "2",
+                    marginLeft: "10px",
+                  }}
+                >
+                  <p
+                    style={{ color: "red", fontWeight: 800, fontSize: "16px" }}
+                  >
+                    {item.artist}{" "}
+                  </p>
+                  <p style={{ fontSize: "12px" }}>{item.subtitle}</p>
+                  <strong>
+                    {" "}
+                    <p> $ {item.price} </p>{" "}
+                  </strong>
+                  <p> + 1 - </p>
+                  <strong>
+                    <p>Remove</p>
+                  </strong>
+                </div>
+              </div>
             </div>
           );
         })}

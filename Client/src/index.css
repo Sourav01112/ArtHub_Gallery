@@ -1,10 +1,19 @@
-body {
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
+
+body,
+html {
   overflow-x: hidden;
+  /* background-color: aqua !important; */
+  font-family: "Roboto Mono", monospace !important;
+}
+App {
+  background-color: aqua;
 }
 
 /******** ScrollBar  Modification ******/
 ::-webkit-scrollbar {
   width: 7px;
+  display: none;
 }
 /* track */
 ::-webkit-scrollbar-track {
