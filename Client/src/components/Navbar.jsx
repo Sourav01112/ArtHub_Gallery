@@ -161,7 +161,7 @@ function NavBar() {
           </Link>
           <div>
             <Menu>
-              <MenuButton as={Text} mt={4} color={"rgba(0, 0, 0, 0.547)"}>
+              <MenuButton as={Text}  color={"rgba(0, 0, 0, 0.547)"}>
                 PROFILE
               </MenuButton>
               <MenuList mt={5} p={0}>

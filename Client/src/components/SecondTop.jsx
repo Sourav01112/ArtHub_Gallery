@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import img from "../assets/Artlogo.png"
 import i1 from "../assets/i1.png"
 import i2 from "../assets/i2.png"
@@ -7,14 +7,20 @@ import i4 from "../assets/i4.png"
 import i5 from "../assets/i5.png"
 import i6 from "../assets/i6.png"
 export const SecondTop = () => {
-    const [count, Setcount] = useState(0)
-    const [imgArr, SetimgArr] = useState(i1)
+    // const [count, Setcount] = useState(0)
+    const imgArr=[i1,i2,i3,i4,i5,i6] ;
+    const [img1,setImg]=useState(i1)
+    
+    
+
+   
+
 
 
     return (
         <div style={{ marginBottom: "30px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", padding: "40px", gap: "30px" }}>
-                <img src={imgArr} alt="" style={{ width: "47%" }} />
+                <img src={img1} alt="" style={{ width: "47%" }} />
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <div>
                         <h2 style={{ fontFamily: "'Playfair Display', serif" }}>Art Basel</h2>
