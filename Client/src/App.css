@@ -13,9 +13,10 @@
 
 /* About section css */
 .About {
-  font-size: 23px;
+  font-size: 20px;
   margin-top: 40px;
-  color: rgba(23, 22, 22, 0.521);
+  color: black;
+  font-family: Playfair Display, serif;
   text-align: justify;
 }
 .om {
@@ -31,7 +32,9 @@
 .om2 {
   width: 100%;
   margin: auto;
-  padding: 150px;
+  text-align: center;
+  padding: 30px;
+  margin-top: 80px;
 }
 .om2 > p {
   font-size: 15px;
@@ -41,8 +44,11 @@
   display: flex;
   width: 96%;
   justify-content: space-between;
-  margin-bottom: 70px;
-  margin-left: 30px;
+  /* justify-content: center; */
+  align-items: center;
+  padding: 50px;
+  /* margin-bottom: 70px;
+  margin-left: 30px; */
 }
 .last > div:nth-child(3) > input {
   height: 80px;
@@ -72,6 +78,7 @@ input::placeholder {
 .logo {
   display: flex;
   width: 50%;
+  padding: 30px;
   justify-content: space-evenly;
 }
 button {
@@ -82,6 +89,11 @@ button {
   height: 78px;
 }
 
+#name-pro{
+  margin-left: 15px;
+  color: rgba(0, 0, 0, 0.551);
+  font-size: 13px;
+}
 /* Contact page css */
 .contact {
   display: flex;
@@ -89,12 +101,14 @@ button {
   width: 70%;
   margin: auto;
   color: gray;
-  margin-top: 100px;
+  margin-top: 50px;
+  text-align: center;
 }
 #con {
-  margin-left: 36px;
+  /* margin-left: 36px; */
   margin-bottom: 90px;
-  color: rgba(0, 0, 0, 0.571);
+  color: black;
+  font-family: Playfair Display, serif;
   font-size: 30px;
 }
 .contact {
