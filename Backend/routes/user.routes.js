@@ -6,10 +6,10 @@ require("dotenv").config();
 const { UserModel } = require("../models/User.model");
 const { AdminModel } = require("../models/Admin.model");
 const { BlacklistModel } = require("../models/blacklist.model");
-const { authMiddleware } = require("../middlewares/auth.middleware");
+const { passwordValidater } = require("../middlewares/validator.middleware");
 
 // Register
-userRouter.post("/register", async (req, res) => {
+userRouter.post("/register", passwordValidater, async (req, res) => {
   const { name, email, password, age, city } = req.body;
   try {
     const userExists = await UserModel.findOne({ email });
@@ -84,6 +84,5 @@ userRouter.post("/logout", async () => {
     res.status(400).json({ err: err.message });
   }
 });
-
 
 module.exports = { userRouter };

@@ -25,14 +25,11 @@ adminRouter.post("/", async (req, res) => {
       );
 
       if (token) {
-        res.cookie("jwt", token);
-        res.cookie("role", "Admin"); // did not work with cookies, instead using localStorage
         res.statusMessage = "Success";
         res.json({
           msg: "Login Successful.",
           status: "success",
           token,
-          cookie: req.cookies,
         });
       }
     } else {
@@ -149,10 +146,6 @@ adminRouter.post("/edit-Product", async (req, res) => {
 // DELETE
 
 adminRouter.delete("/delete-product", async (req, res) => {
-  // console.log(req.body, "73")
-  //   if (req.permissions.indexOf('delete-products') === -1) {
-  //       return res.send({ code: 401, message: 'Unauthenticated' })
-  //   }
   const { id } = req.body;
   const deleted = await ProductsModel.findByIdAndDelete({ _id: id });
   if (deleted) {

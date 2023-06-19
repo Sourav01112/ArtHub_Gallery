@@ -1,6 +1,4 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
 const { ProductsModel } = require("../models/Products.model");
 const { errorHandler } = require("../middlewares/errorHandle.middleware");
 const { UserModel } = require("../models/User.model");
@@ -43,7 +41,7 @@ productRouter.post("/add-to-cart", async (req, res) => {
     {
       $addToSet: { productInCart: req.body.productID },
     }
-    /*   // $addToSet will help in pushing some data inside Array becuase productInCart is and Array, so this method is the only way */
+    /*   // $addToSet will help in pushing some data inside Array becuase productInCart is  Array, so this method is the only way */
   );
   if (isUpdate) {
     return res.status(200).json({ msg: "Add to cart success." });
@@ -75,9 +73,7 @@ productRouter.post("/get-cart", async (req, res) => {
 // // POST
 
 // productRouter.post("/add-product", async (req, res) => {
-//   //   if (req.permissions.indexOf('add-product') === -1) {
-//   //     return res.send({ code: 401, message: 'Unauthenticated' })
-//   // }
+
 //   let data = new ProductsModel(req.body);
 //   await data.save();
 //   if (data) {
@@ -134,10 +130,7 @@ productRouter.post("/get-cart", async (req, res) => {
 // // DELETE
 
 // productRouter.delete("/delete-product", async (req, res) => {
-//   // console.log(req.body, "73")
-//   //   if (req.permissions.indexOf('delete-products') === -1) {
-//   //       return res.send({ code: 401, message: 'Unauthenticated' })
-//   //   }
+
 //   const { id } = req.body;
 //   const deleted = await ProductsModel.findByIdAndDelete({ _id: id });
 //   if (deleted) {

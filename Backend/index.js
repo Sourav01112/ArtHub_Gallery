@@ -9,6 +9,8 @@ const { authMiddleware } = require("./middlewares/auth.middleware");
 const { productRouter } = require("./routes/products.routes");
 const { errorHandler } = require("./middlewares/errorHandle.middleware");
 const { adminRouter } = require("./routes/admin.routes");
+const { orderRouter } = require("./routes/payment.routes");
+
 require("dotenv").config();
 
 const PORT = process.env.PORT;
@@ -21,9 +23,10 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // No auth Middleware should be passed
-app.use("/user", userRouter); 
+app.use("/user", userRouter);
 app.use("/shop", productRouter);
 app.use("/admin", adminRouter);
+app.use("/order", orderRouter);
 
 // Server
 app.listen(PORT, async () => {
