@@ -224,7 +224,7 @@ export const Login = () => {
                 </Menu>
               </div>
               <Button mt={6} textAlign={"center"} variant={"ghost"}>
-                Don't have an account?&nbsp;{" "}
+                Not Registered, Don't worry?&nbsp;{" "}
                 <Link to={"/signup"}>
                   <span style={{ color: "red" }}>SIGN UP</span>
                 </Link>

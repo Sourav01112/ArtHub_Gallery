@@ -122,7 +122,8 @@ export const Signup = () => {
         console.log("Error", error);
         toast({
           position: "top-right",
-          description: "Error occurred",
+          description: "Error Occurred",
+          // description: data.msg,
           status: "error",
           duration: 4000,
           isClosable: true,

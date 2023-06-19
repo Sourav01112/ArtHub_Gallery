@@ -17,6 +17,7 @@ import {
   Input,
   Divider,
   Heading,
+  useToast,
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import "./SingleProductPage.css";
@@ -37,6 +38,7 @@ export const SingleProductPage = () => {
   const [isAuth, SetisAuth] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
+  const toast = useToast();
 
   // to get product ID to add to Cart
   // console.log("@@products", products);
@@ -177,7 +179,7 @@ export const SingleProductPage = () => {
         </div>
         <div
           style={{
-            // border: "1px solid red", 
+            // border: "1px solid red",
             textAlign: "center",
             width: "90%",
             // margin: "auto",
@@ -205,7 +207,8 @@ export const SingleProductPage = () => {
             <strong>{singlePageData?.year}</strong>
             <br />
             <strong>Essay by </strong> {singlePageData?.artist} <br /> <br />
-            <strong> Published by </strong> Marian Goodman Gallery, New York <br /> <br />
+            <strong> Published by </strong> Marian Goodman Gallery, New York{" "}
+            <br /> <br />
             <strong>ISBN</strong> 0-944219-19-5 <br /> <br />
           </p>
           <p>
@@ -213,21 +216,34 @@ export const SingleProductPage = () => {
             <strong>in stock:</strong> {singlePageData?.inStock} <br />
             <br />
           </p>
-
-          <Button
-            ref={btnRef}
-            colorScheme="red"
-            mb={"20px"}
-            // onClick={onOpen}
-            onClick={() => {
-              onOpen();
-              handleADDtoCART(singlePageData._id);
-            }}
-            // key={size}
-            // sending product ID directly through function
-          >
-            ADD TO CART
-          </Button>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <Button w={'300px'}
+            ml={'150px'}
+              colorScheme="red"
+              mb={"20px"}
+              // onClick={onOpen}
+              onClick={() => {
+                handleADDtoCART(singlePageData._id);
+                toast({
+                  position: "top",
+                  title: "Art added to Cart !",
+                  // description: "Please fill in all the fields.",
+                  status: "success",
+                  duration: 2000,
+                  isClosable: true,
+                });
+              }}
+              // key={size}
+              // sending product ID directly through function
+            >
+              ADD TO CART
+            </Button>
+            <Button  w={'300px'}
+            ml={'150px'}
+              colorScheme="green" ref={btnRef} onClick={() => onOpen()}>
+              Show CART
+            </Button>
+          </div>
           <Drawer
             isOpen={isOpen}
             placement="right"
@@ -237,16 +253,16 @@ export const SingleProductPage = () => {
           >
             <DrawerOverlay />
 
-            <DrawerContent css={{ '&::-webkit-scrollbar': { width: '6px' } }}>
+            <DrawerContent css={{ "&::-webkit-scrollbar": { width: "6px" } }}>
               <DrawerCloseButton />
               <DrawerHeader>Cart : 4</DrawerHeader>
 
-              <DrawerBody css={{ '&::-webkit-scrollbar': { width: '6px' } }}>
+              <DrawerBody css={{ "&::-webkit-scrollbar": { width: "6px" } }}>
                 <CartPage />
               </DrawerBody>
 
               <DrawerFooter>
-                <Button colorScheme="blue" mr={3} onClick={() => handle}>
+                <Button colorScheme="blue" mr={3}>
                   Checkout
                 </Button>
                 <Button onClick={onClose}>Cancel</Button>
