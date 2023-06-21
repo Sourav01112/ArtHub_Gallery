@@ -26,6 +26,7 @@ export const reducer = (state = inState, { type, payload }) => {
     case LOGIN_SUCCESS: {
       localStorage.setItem("loginToken", payload.token);
       localStorage.setItem("userID", payload.userID);
+      localStorage.setItem('rights', JSON.stringify(res.data.roles))
 
       return {
         ...state,

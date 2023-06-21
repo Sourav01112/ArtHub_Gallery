@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useToast } from "@chakra-ui/react";
+import { Select, Stack, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -55,6 +55,7 @@ export const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [signupSuccess, setSignupSuccess] = useState(false);
   const [isErrorVal, setIsErrorVal] = useState(false);
+  const [value, setValue] = useState("");
 
   const navigate = useNavigate();
   const toast = useToast();
@@ -265,6 +266,26 @@ export const Signup = () => {
                   onChange={handleChange}
                   isRequired
                 />
+                {/* Roles */}
+                <FormLabel mt={2}>
+                  <span style={{ color: "red" }}>*</span> Role
+                </FormLabel>
+
+                <Select
+                  className="selectRole"
+                  variant="outline"
+                  placeholder="Select role..."
+                  _placeholder={{ opacity: 1, color: "gray.500" }}
+                  onChange={(e) => {
+                    handleChange;
+                    setValue(e.target.value);
+                  }}
+                  // below is only for placeholder/value color
+                  {...(value === "" && { color: "gray" })}
+                >
+                  <option value="User">User</option>
+                  <option value="Admin">Admin</option>
+                </Select>
 
                 <FormLabel mt={2}>
                   <span style={{ color: "red" }}>*</span> City

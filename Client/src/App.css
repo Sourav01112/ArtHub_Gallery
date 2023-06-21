@@ -136,3 +136,7 @@ button {
   color: #bdbdbd;
   font-size: 14px;
 }
+#selectRole ::placeholder {
+  color: #bdbdbd;
+  font-size: 14px;
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import img from "../../assets/contact.png";
+import img from "../../assets/Contact.png";
 import img2 from "../../assets/contact2.png";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";

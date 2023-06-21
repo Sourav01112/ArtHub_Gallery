@@ -26,6 +26,7 @@ export const loginAction =
             payload: {
               token: res.data.token,
               userID: res.data.userID,
+              rights: res.data.permissions,
             },
           });
           // console.log("@@ payload", payload);
