@@ -7,10 +7,13 @@ const { UserModel } = require("../models/User.model");
 const { AdminModel } = require("../models/Admin.model");
 const { BlacklistModel } = require("../models/blacklist.model");
 const { passwordValidater } = require("../middlewares/validator.middleware");
+const { RoleModel } = require("../models/roles.model");
 
 // Register
 userRouter.post("/register", passwordValidater, async (req, res) => {
   const { name, email, password, age, city } = req.body;
+  const type = req.body.type || "USER";
+  const roles = [type];
   try {
     const userExists = await UserModel.findOne({ email });
     if (userExists) {
@@ -20,7 +23,7 @@ userRouter.post("/register", passwordValidater, async (req, res) => {
       if (err) {
         return res.json({ err: err.message });
       } else {
-        const user = UserModel({ name, email, password: hash, age, city });
+        const user = UserModel({ ...req.body, password: hash, roles });
         await user.save();
       }
     });
@@ -38,20 +41,30 @@ userRouter.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     const userExists = await UserModel.findOne({ email });
+    const roles = userExists.roles;
+    const permissions = await RoleModel.findOne({ role: roles[0] });
 
     if (userExists) {
       bcrypt.compare(password, userExists.password, (err, result) => {
         if (result) {
           var token = jwt.sign(
-            { userID: userExists._id, userName: userExists.name },
+            {
+              userID: userExists._id,
+              userName: userExists.name,
+              type: userExists.type,
+              roles: userExists.roles,
+            },
             process.env.JWT_SECRET_KEY
           );
 
           // console.log("@@@userExists", userExists);
           if (token) {
-            res
-              .status(200)
-              .json({ msg: "Login Successful", token, userID: userExists._id });
+            res.status(200).json({
+              msg: "Login Successful",
+              token,
+              userID: userExists._id,
+              permissions: permissions,
+            });
             /* Above userID will help in making sure which product is being added in the CART PAGE on the Client Side, retrieve in FE */
           } else {
             res

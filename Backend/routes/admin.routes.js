@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const { AdminModel } = require("../models/Admin.model");
 const { ProductsModel } = require("../models/Products.model");
 const { errorHandler } = require("../middlewares/errorHandle.middleware");
+const { RoleModel } = require("../models/roles.model");
 const adminRouter = express.Router();
 require("dotenv").config();
 
@@ -100,7 +101,7 @@ adminRouter.post("/add-product", async (req, res) => {
 });
 
 // EDIT
-adminRouter.post("/edit-Product", async (req, res) => {
+adminRouter.post("/edit-products", async (req, res) => {
   // console.log(req.body, 31);
 
   let newData = {};
@@ -145,7 +146,7 @@ adminRouter.post("/edit-Product", async (req, res) => {
 
 // DELETE
 
-adminRouter.delete("/delete-product", async (req, res) => {
+adminRouter.delete("/delete-products", async (req, res) => {
   const { id } = req.body;
   const deleted = await ProductsModel.findByIdAndDelete({ _id: id });
   if (deleted) {
@@ -153,6 +154,25 @@ adminRouter.delete("/delete-product", async (req, res) => {
   } else {
     res.status(500).json({ msg: err.message });
   }
+});
+
+// Add- Role
+adminRouter.post("/add-role", async (req, res) => {
+  const role = req.body.role;
+  const permissions = req.body.permissions;
+
+  const newRole = await new RoleModel({ role, permissions });
+  const isSaved = await newRole.save();
+
+  if (isSaved) {
+    return res.status(200).json({ msg: "Role added" });
+  } else {
+    return res.status(500).json({ msg: "Server Error" });
+  }
+});
+// DELETE- Role
+adminRouter.post("/delete -role", async (req, res) => {
+  return res.status(200).json({ msg: "Role Deleted!" });
 });
 
 module.exports = { adminRouter };
