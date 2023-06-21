@@ -25,11 +25,10 @@ export const loginAction =
             type: LOGIN_SUCCESS,
             payload: {
               token: res.data.token,
-              userID: res.data.userID,
-              rights: res.data.permissions,
+              user: res.data.user,
+              rights: res.data.user.roles,
             },
           });
-          // console.log("@@ payload", payload);
 
           toast({
             position: "top",

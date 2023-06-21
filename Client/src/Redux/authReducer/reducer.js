@@ -16,6 +16,7 @@ const inState = {
 };
 
 export const reducer = (state = inState, { type, payload }) => {
+  // console.log("@payload", payload);
   switch (type) {
     case LOGIN_REQUEST: {
       return {
@@ -25,8 +26,9 @@ export const reducer = (state = inState, { type, payload }) => {
     }
     case LOGIN_SUCCESS: {
       localStorage.setItem("loginToken", payload.token);
-      localStorage.setItem("userID", payload.userID);
-      localStorage.setItem('rights', JSON.stringify(res.data.roles))
+      // saving whole User and not just _id
+      localStorage.setItem("user",  JSON.stringify(payload.user));
+      localStorage.setItem("Permission_To", JSON.stringify(payload.rights));
 
       return {
         ...state,

@@ -1,5 +1,34 @@
 import axios from "axios";
-import { ADMIN_TYPE } from "./actionTypes";
+import {
+  ADMIN_TYPE,
+  PRODUCT_REQUEST,
+  GET_PRODUCT_SUCCESS,
+  PRODUCT_FAILURE,
+} from "./actionTypes";
+
+export const getAdminProducts = (paramsObj, _id) => (dispatch) => {
+  dispatch({ type: PRODUCT_REQUEST });
+
+  //  conditional fetch
+  let URLwithCondition = "http://localhost:4500/admin/getProducts";
+  if (_id) {
+    URLwithCondition = `${URLwithCondition}/${_id}`;
+  }
+  // if (_id) is present then fetch on the basis of _id
+
+  axios
+    .get(URLwithCondition, paramsObj)
+    .then((res) => {
+      // console.log("@@@response", res.data);
+      dispatch({
+        type: GET_PRODUCT_SUCCESS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch({ type: PRODUCT_FAILURE });
+    });
+};
 
 export const verifyToken = () => async (dispatch) => {
   const token = localStorage.getItem("adminToken");

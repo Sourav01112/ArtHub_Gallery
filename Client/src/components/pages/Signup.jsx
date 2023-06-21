@@ -43,12 +43,8 @@ const inState = {
   password: "",
   age: "",
   city: "",
+  role: "",
 };
-
-const url =
-  process.env.NODE_ENV == "development"
-    ? import.meta.env.VITE_REACT_API_URL
-    : import.meta.env.VITE_REACT_APP_PROD_URL;
 
 export const Signup = () => {
   const [state, dispatch] = useReducer(formReducer, inState);
@@ -94,6 +90,7 @@ export const Signup = () => {
         password: state.password,
         age: state.age,
         city: state.city,
+        role: state.role,
       })
       .then((res) => {
         console.log("Data", res);
@@ -152,7 +149,7 @@ export const Signup = () => {
     });
   };
 
-  const { name, email, password, age, city } = state;
+  const { name, email, password, age, city, role } = state;
 
   return (
     <div>
@@ -275,11 +272,9 @@ export const Signup = () => {
                   className="selectRole"
                   variant="outline"
                   placeholder="Select role..."
-                  _placeholder={{ opacity: 1, color: "gray.500" }}
-                  onChange={(e) => {
-                    handleChange;
-                    setValue(e.target.value);
-                  }}
+                  name="role"
+                  value={role}
+                  onChange={handleChange}
                   // below is only for placeholder/value color
                   {...(value === "" && { color: "gray" })}
                 >
