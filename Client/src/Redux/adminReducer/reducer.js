@@ -34,6 +34,8 @@ export const reducer = (state = inState, action) => {
     //     isLoading: false,
     //   };
     // }
+    //GET
+    
     case PRODUCT_FAILURE: {
       return {
         ...state,
@@ -41,15 +43,7 @@ export const reducer = (state = inState, action) => {
         isError: true,
       };
     }
-    //GET
-    case GET_PRODUCT_SUCCESS: {
-      return {
-        ...state,
-        isLoading: false,
-        products: payload.data,
-        isError: true,
-      };
-    }
+
     // DELETE
     // case DELETE_PRODUCT_SUCCESS: {
     //   return {

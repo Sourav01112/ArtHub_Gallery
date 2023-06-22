@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import '../App.css'
 
 export const Publications = () => {
   return (
@@ -12,12 +13,13 @@ export const Publications = () => {
           PUBLICATIONS
         </p>
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3,30%)",
-            justifyContent: "space-around",
-            textAlign: "center",
-          }}
+        className="publicationContainer"
+          // style={{
+          //   display: "grid",
+          //   gridTemplateColumns: "repeat(3,30%)",
+          //   justifyContent: "space-around",
+          //   textAlign: "center",
+          // }}
         >
           <div>
             <img

@@ -109,33 +109,17 @@ export const SingleProductPage = () => {
       ) : (
         alt
       )}
-      <div
-        style={{
-          display: "flex",
-          marginTop: "50px",
-          marginBottom: "50px",
-          justifyContent: "space-around",
-        }}
-      >
-        <Text textAlign={"center"} ml={400}>
+      <div className="breadCrum">
+        <Text textAlign={"center"} ml={400} className="breadcrumText">
           Home <ChevronRightIcon /> Shop <ChevronRightIcon />{" "}
           {singlePageData?.title}
         </Text>
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          gap: "100px",
-          margin: "auto",
-          justifyContent: "center",
-          marginBottom: "100px",
-          padding: "20px",
-          // border: "1px solid red",
-        }}
-      >
-        <div style={{ width: "90%", display: "flex", gap: "40px" }}>
+      <div className="ImageFlex">
+        <div className="ImageFlexImage">
           <Box
+            className="smallImages"
             width={"20%"}
             // style={{ border: "1px solid red" }}
           >
@@ -168,9 +152,10 @@ export const SingleProductPage = () => {
               mb={5}
             />
           </Box>
-          <Box>
+          <Box className="BigImageContainer">
             <Image
-              width={"1050px"}
+              className="BigImage"
+              // width={"1050px"}
               src={
                 val == 1 ? singlePageData?.image[0] : singlePageData?.image[1]
               }
@@ -178,6 +163,7 @@ export const SingleProductPage = () => {
           </Box>
         </div>
         <div
+          className="content"
           style={{
             // border: "1px solid red",
             textAlign: "center",
@@ -185,7 +171,7 @@ export const SingleProductPage = () => {
             // margin: "auto",
           }}
         >
-          <Heading as="h5" size={"lg"} style={{}}>
+          <Heading as="h5" size={"lg"}>
             {singlePageData?.title}
           </Heading>
           <p style={{ marginTop: "20px" }}>
@@ -216,11 +202,11 @@ export const SingleProductPage = () => {
             <strong>in stock:</strong> {singlePageData?.inStock} <br />
             <br />
           </p>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <Button w={'300px'}
-            ml={'150px'}
-              colorScheme="red"
-              mb={"20px"}
+          <div
+            className="ButtonContainer"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
+            <Button
               // onClick={onOpen}
               onClick={() => {
                 handleADDtoCART(singlePageData._id);
@@ -238,10 +224,8 @@ export const SingleProductPage = () => {
             >
               ADD TO CART
             </Button>
-            <Button  w={'300px'}
-            ml={'150px'}
-              colorScheme="green" ref={btnRef} onClick={() => onOpen()}>
-              Show CART
+            <Button ref={btnRef} onClick={() => onOpen()}>
+              SHOW CART
             </Button>
           </div>
           <Drawer

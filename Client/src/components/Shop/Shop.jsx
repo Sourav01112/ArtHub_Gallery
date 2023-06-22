@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Container, Image, Text } from "@chakra-ui/react";
 import "./shop.css";
 
@@ -7,21 +7,28 @@ import ShopBig from "../../assets/Shop_Big.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { getProducts } from "../../Redux/productReducer/action";
+import axios from "axios";
 
 /*  Shop Page by Sourav */
 
 export const Shop = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { products, isLoading } = useSelector((store) => store.productReducer);
+  const { products, isError, error } = useSelector(
+    (store) => store.productReducer
+  );
   const location = useLocation();
+  const [data, setData] = useState([]);
 
   // console.log("@@@@", products);
 
   useEffect(() => {
     //  add ParamsObj inside getProducts and also in action.js when adding the filtering/sorting and useSearchParams
+
     dispatch(getProducts());
   }, []);
+
+  console.log(products);
 
   return (
     <div>

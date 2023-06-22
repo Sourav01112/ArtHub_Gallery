@@ -5,7 +5,7 @@ import "../Shop/shop.css";
 import { Shopcard } from "../Shop/Shopcard";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
-import { getAdminProducts } from "../../Redux/adminReducer/action";
+// import { getAdminProducts } from "../../Redux/adminReducer/action";
 
 /*  Shop Page by Sourav */
 
@@ -17,10 +17,10 @@ export const Admin = () => {
 
   console.log("@@@@", products);
 
-  useEffect(() => {
-    //  add ParamsObj inside getProducts and also in action.js when adding the filtering/sorting and useSearchParams
-    dispatch(getAdminProducts());
-  }, []);
+  // useEffect(() => {
+  //   //  add ParamsObj inside getProducts and also in action.js when adding the filtering/sorting and useSearchParams
+  //   dispatch(getAdminProducts());
+  // }, []);
 
   return (
     <div>

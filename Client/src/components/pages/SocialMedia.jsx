@@ -24,11 +24,11 @@ export const SocialMedia = () => {
             Sign up to receive emails featuring the latest news and events.
           </p>
         </div>
-        <div style={{ width: "40%", marginTop: "15px" }}>
+        <div className="arrowContainer"  style={{ width: "40%", marginTop: "15px" }}>
           <InputGroup width={"100%"}>
             <InputRightElement pointerEvents="none">
               {/* <PhoneIcon color='gray.300' /> */}
-              <ArrowForwardIcon style={{ marginRight: "6px" }} />
+              <ArrowForwardIcon  className="arrow" style={{ marginRight: "8px" }} />
             </InputRightElement>
             <Input
               type="tel"

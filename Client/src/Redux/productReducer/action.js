@@ -1,10 +1,7 @@
 import {
   PRODUCT_REQUEST,
   PRODUCT_FAILURE,
-  POST_PRODUCT_SUCCESS,
   GET_PRODUCT_SUCCESS,
-  DELETE_PRODUCT_SUCCESS,
-  PATCH_PRODUCT_SUCCESS,
 } from "./actionTypes";
 
 import axios from "axios";
@@ -26,13 +23,15 @@ export const getProducts = (paramsObj, _id) => (dispatch) => {
     // .get(`http://localhost:4500/shop`)
     .get(URLwithCondition, paramsObj)
     .then((res) => {
-      // console.log("@@@response", res);
+      console.log("@@@response", res.data);
       dispatch({
         type: GET_PRODUCT_SUCCESS,
         payload: res.data,
       });
     })
-    .catch((err) => {
-      dispatch({ type: PRODUCT_FAILURE });
+    .catch((error) => {
+      dispatch({
+        type: PRODUCT_FAILURE,
+      });
     });
 };

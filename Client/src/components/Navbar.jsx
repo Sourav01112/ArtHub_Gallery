@@ -276,7 +276,7 @@ function NavBar() {
       </div>
       {/* To top button :- CHAKRA */}
 
-      <Box position="fixed" bottom="2rem" right="0.5rem">
+      <Box className="ScrollTopButton" position="fixed" bottom="2rem" right="0.5rem">
         {isTop && (
           <FaArrowCircleUp color="#757575" size={30} onClick={scrollToTop} />
         )}

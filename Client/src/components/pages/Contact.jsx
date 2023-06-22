@@ -7,6 +7,7 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { SocialMedia } from "./SocialMedia";
+import '../../App.css'
 
 function Contact() {
   return (

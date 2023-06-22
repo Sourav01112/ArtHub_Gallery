@@ -1,5 +1,100 @@
-
-
-#Add-btn:hover{
-    color:  rgba(0, 0, 0, 0.392);
+#Add-btn:hover {
+  color: rgba(0, 0, 0, 0.392);
 }
+
+/*  # BreadCrum */
+.breadCrum {
+  display: flex;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  justify-content: space-around;
+}
+
+@media (max-width: 767px) {
+  .breadCrum {
+    display: flex;
+    margin-top: 40px;
+    margin-bottom: -40px;
+    justify-content: space-around;
+  }
+  .breadCrum .breadcrumText {
+    margin-left: -5%;
+  }
+}
+
+/*  # BreadCrum */
+
+/*  #ImageFlex */
+
+.ImageFlex {
+  display: flex;
+  gap: 100px;
+  padding: 20px;
+}
+.ImageFlexImage {
+  width: 90%;
+  display: flex;
+  gap: 40px;
+}
+.BigImage {
+  width: 1000px;
+}
+
+@media (max-width: 1000px) {
+  .ImageFlex {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 100px;
+    /* border: 1px solid black; */
+    padding-top: 80px;
+  }
+  .ImageFlexImage {
+    /* width: -100%; */
+    display: grid;
+  }
+  .smallImages {
+    display: flex;
+    gap: 60px;
+  }
+  .BigImageContainer .BigImage {
+    width: 90%;
+    margin-left: 30px;
+  }
+  .content {
+    margin-left: 15px;
+  }
+}
+
+/*  #ImageFlex */
+
+/* #ButtonContainer */
+.ButtonContainer Button:first-child {
+  width: 300px;
+  margin-left: 150px;
+  color: white;
+  background-color: red;
+  margin-bottom: 20px;
+}
+.ButtonContainer Button:nth-child(2) {
+  width: 300px;
+  margin-left: 150px;
+  color: white;
+  background-color: #7cb342;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 1000px) {
+  .ButtonContainer Button:first-child {
+    width: 250px;
+    margin-left: 90px;
+  }
+  .ButtonContainer Button:nth-child(2) {
+    width: 250px;
+    margin-left: 90px;
+    color: white;
+    background-color: #7cb342;
+    margin-bottom: 20px;
+  }
+}
+
+/* #ButtonContainer */

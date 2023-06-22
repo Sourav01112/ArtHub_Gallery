@@ -6,8 +6,7 @@ import i3 from "../assets/i3.png";
 import i4 from "../assets/i4.png";
 import i5 from "../assets/i5.png";
 import i6 from "../assets/i6.png";
-
-
+import "../App.css";
 
 export const SecondTop = () => {
   // const [count, Setcount] = useState(0)
@@ -15,15 +14,8 @@ export const SecondTop = () => {
   const [img1, setImg] = useState(i1);
 
   return (
-    <div style={{ marginBottom: "30px" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "40px",
-          gap: "30px",
-        }}
-      >
+    <div className="secondTopContainer">
+      <div className="bigTile">
         <img src={img1} alt="" style={{ width: "47%" }} />
         <div
           style={{
@@ -51,27 +43,11 @@ export const SecondTop = () => {
               paintings, sculptures, works on paper, and more by artists from
               our program,
             </p>
-            <button
-              style={{
-                border: "1px solid rgba(0, 0, 0, 0.107)",
-                padding: "10px 20px",
-                color: "rgba(0, 0, 0, 0.547)",
-                fontSize: "13px",
-              }}
-            >
-              View Selected Works
-            </button>
+            <button className="buttonInTile">View Selected Works</button>
           </div>
         </div>
       </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "40px",
-          gap: "30px",
-        }}
-      >
+      <div className="bigTile">
         <img src={img} alt="" style={{ width: "47%" }} />
         <div
           style={{
@@ -88,16 +64,7 @@ export const SecondTop = () => {
               Current and upcoming exhibitions, performances, and related events
               happening across Europe ahead of Art Basel.
             </p>
-            <button
-              style={{
-                border: "1px solid rgba(0, 0, 0, 0.107)",
-                padding: "10px 10px",
-                color: "rgba(0, 0, 0, 0.547)",
-                fontSize: "13px",
-              }}
-            >
-              VIEW LIST
-            </button>
+            <button className="buttonInTile">VIEW LIST</button>
           </div>
         </div>
       </div>

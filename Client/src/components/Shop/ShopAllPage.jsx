@@ -19,7 +19,7 @@ export const ShopAllPage = () => {
   }, []);
 
   return (
-    <div style={{ padding: "50px" }}>
+    <div>
       <ShopNavbar />
 
       {/* Shop ART Card  */}
