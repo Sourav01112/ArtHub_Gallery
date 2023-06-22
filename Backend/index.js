@@ -10,6 +10,7 @@ const { productRouter } = require("./routes/products.routes");
 const { errorHandler } = require("./middlewares/errorHandle.middleware");
 const { adminRouter } = require("./routes/admin.routes");
 const { orderRouter } = require("./routes/payment.routes");
+const { roleRouter } = require("./routes/roles.routes");
 
 require("dotenv").config();
 
@@ -27,6 +28,7 @@ app.use("/user", userRouter);
 app.use("/shop", productRouter);
 app.use("/admin", adminRouter);
 app.use("/order", orderRouter);
+app.use("/role", roleRouter);
 
 // Server
 app.listen(PORT, async () => {

@@ -62,7 +62,7 @@ adminRouter.post("/verify", (req, res) => {
 // CRUD Operation only by ADMIN
 
 // GET ALL PRODUCTS : Multiple
-adminRouter.get("/", async (req, res) => {
+adminRouter.get("/getProducts", async (req, res) => {
   try {
     const products = await ProductsModel.find();
     res.status(200).json(products);
@@ -156,23 +156,6 @@ adminRouter.delete("/delete-products", async (req, res) => {
   }
 });
 
-// Add- Role
-adminRouter.post("/add-role", async (req, res) => {
-  const role = req.body.role;
-  const permissions = req.body.permissions;
 
-  const newRole = await new RoleModel({ role, permissions });
-  const isSaved = await newRole.save();
-
-  if (isSaved) {
-    return res.status(200).json({ msg: "Role added" });
-  } else {
-    return res.status(500).json({ msg: "Server Error" });
-  }
-});
-// DELETE- Role
-adminRouter.post("/delete -role", async (req, res) => {
-  return res.status(200).json({ msg: "Role Deleted!" });
-});
 
 module.exports = { adminRouter };

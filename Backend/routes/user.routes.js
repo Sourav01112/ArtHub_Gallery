@@ -12,8 +12,14 @@ const { RoleModel } = require("../models/roles.model");
 // Register
 userRouter.post("/register", passwordValidater, async (req, res) => {
   const { name, email, password, age, city } = req.body;
+
+  // Saving type of role while Signup
   const type = req.body.type || "USER";
-  const roles = [type];
+  const roleData = await RoleModel.findOne({ role: type });
+  // console.log("@roleDFata", roleData);
+  const roles = [roleData._id];
+  // saving Role collection _id to that signed up user(A simple USER or ADMIN)
+
   try {
     const userExists = await UserModel.findOne({ email });
     if (userExists) {
@@ -40,9 +46,7 @@ userRouter.post("/register", passwordValidater, async (req, res) => {
 userRouter.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const userExists = await UserModel.findOne({ email });
-    const roles = userExists.roles;
-    const permissions = await RoleModel.findOne({ role: roles[0] });
+    const userExists = await UserModel.findOne({ email }).populate("roles");
 
     if (userExists) {
       bcrypt.compare(password, userExists.password, (err, result) => {
@@ -54,16 +58,15 @@ userRouter.post("/login", async (req, res) => {
               type: userExists.type,
               roles: userExists.roles,
             },
-            process.env.JWT_SECRET_KEY
+            process.env.JWT_SECRET_KEY,
+            { expiresIn: "1h" }
           );
 
-          // console.log("@@@userExists", userExists);
           if (token) {
             res.status(200).json({
               msg: "Login Successful",
-              token,
-              userID: userExists._id,
-              permissions: permissions,
+              token: token,
+              user: userExists,
             });
             /* Above userID will help in making sure which product is being added in the CART PAGE on the Client Side, retrieve in FE */
           } else {
