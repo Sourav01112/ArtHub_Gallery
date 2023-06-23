@@ -147,15 +147,17 @@ adminRouter.post("/edit-products", async (req, res) => {
 // DELETE
 
 adminRouter.delete("/delete-products", async (req, res) => {
-  const { id } = req.body;
-  const deleted = await ProductsModel.findByIdAndDelete({ _id: id });
+  const { ids } = req.body;
+  const deleted = await ProductsModel.deleteMany({ _id: { $in: ids } });
+  // $in because those are Array
   if (deleted) {
-    res.status(200).json({ msg: "Deleted successfully", deletedData: deleted });
+    res.status(200).json({
+      msg: "Selected Item Deleted successfully",
+      deletedData: deleted,
+    });
   } else {
     res.status(500).json({ msg: err.message });
   }
 });
-
-
 
 module.exports = { adminRouter };
