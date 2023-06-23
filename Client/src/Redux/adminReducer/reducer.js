@@ -1,7 +1,7 @@
 import {
   ADMIN_TYPE,
   PRODUCT_REQUEST,
-  GET_PRODUCT_SUCCESS,
+  PRODUCT_SUCCESS,
   PRODUCT_FAILURE,
   POST_PRODUCT_SUCCESS,
   DELETE_PRODUCT_SUCCESS,
@@ -9,22 +9,29 @@ import {
 } from "./actionTypes";
 
 const inState = {
-  admin: false,
+  // admin: false,
   isLoading: false,
   isError: false,
   products: [],
 };
 
 export const reducer = (state = inState, action) => {
-  // console.log("@@ REDUCER", state);
+  console.log("@@ REDUCER", state);
   switch (action.type) {
-    case ADMIN_TYPE: {
-      return { ...state, admin: action.payload };
-    }
+    // case ADMIN_TYPE: {
+    //   return { ...state, admin: action.payload };
+    // }
     case PRODUCT_REQUEST: {
       return {
         ...state,
         isLoading: true,
+      };
+    }
+    case PRODUCT_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+        products: payload,
       };
     }
     //POST
@@ -35,7 +42,7 @@ export const reducer = (state = inState, action) => {
     //   };
     // }
     //GET
-    
+
     case PRODUCT_FAILURE: {
       return {
         ...state,

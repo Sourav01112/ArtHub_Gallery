@@ -18,7 +18,7 @@ export const Footer = () => {
         <p>TERMS & CONDITIONS</p>
         <p>PRIVACY POLICY</p>
         <p>ACCESSIBILITY POLICY</p>
-        <Link to={"/admin_login"}>
+        <Link to={"/admin"}>
           <Button size="sm" colorScheme="yellow" borderRadius={'-10px'} >
             Admin
           </Button>

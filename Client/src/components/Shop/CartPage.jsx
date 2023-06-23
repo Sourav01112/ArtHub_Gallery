@@ -7,13 +7,23 @@ function CartPage() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const data = { userID: localStorage.getItem("userID") };
+    const user = localStorage.getItem("user");
+    const userObjinLS = JSON.parse(user);
+    const userID = userObjinLS._id;
+    const data = { userID: userID };
+    // console.table(data);
     const headers = { loginToken: localStorage.getItem("loginToken") };
     axios
       .post("http://localhost:4500/shop/get-cart", data, { headers })
       .then((res) => {
         // console.log(res.data.data.productInCart, "15");
         setData(res.data.data.productInCart);
+        // console.log("@product In Cart", res.data.data.productInCart);
+
+        // if (res.data.data.productInCart) {
+        //   alert("product already exists");
+        //   return;
+        // }
       })
       .catch((err) => {
         console.log(err);

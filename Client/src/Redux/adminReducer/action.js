@@ -2,26 +2,26 @@ import axios from "axios";
 import {
   ADMIN_TYPE,
   PRODUCT_REQUEST,
-  GET_PRODUCT_SUCCESS,
+  PRODUCT_SUCCESS,
   PRODUCT_FAILURE,
 } from "./actionTypes";
 
-export const getAdminProducts = (paramsObj, _id) => (dispatch) => {
+export const getAdminProducts =()=> (dispatch) => {
   dispatch({ type: PRODUCT_REQUEST });
 
   //  conditional fetch
-  let URLwithCondition = "http://localhost:4500/admin/getProducts";
-  if (_id) {
-    URLwithCondition = `${URLwithCondition}/${_id}`;
-  }
+  // let URLwithCondition = "http://localhost:4500/admin/getProducts";
+  // if (_id) {
+  //   URLwithCondition = `${URLwithCondition}/${_id}`;
+  // }
   // if (_id) is present then fetch on the basis of _id
 
   axios
-    .get(URLwithCondition, paramsObj)
+    .get('http://localhost:4500/admin/getProducts')
     .then((res) => {
-      // console.log("@@@response", res.data);
+      console.log("@@@response", res.data);
       dispatch({
-        type: GET_PRODUCT_SUCCESS,
+        type: PRODUCT_SUCCESS,
         payload: res.data,
       });
     })

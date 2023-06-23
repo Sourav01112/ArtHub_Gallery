@@ -2,7 +2,9 @@ import { Box, Flex, Text, HStack, Stack } from "@chakra-ui/react";
 import React from "react";
 import Select from "react-select";
 import AsyncSelect from "react-select/async";
-import "./Shop.css";
+import "./shop.css";
+
+
 // This will handle all the filter and sort and useSearchParams
 export const ShopNavbar = () => {
   //  Dummy Dat, change it with API call to artists

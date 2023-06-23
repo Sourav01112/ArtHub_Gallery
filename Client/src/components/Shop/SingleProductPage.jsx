@@ -21,7 +21,12 @@ import {
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import "./SingleProductPage.css";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,11 +39,20 @@ export const SingleProductPage = () => {
   const { products, isLoading, isError } = useSelector(
     (store) => store.productReducer
   );
+  const navigate = useNavigate();
   const [refresh, setRefresh] = useState(false);
   const [isAuth, SetisAuth] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const btnRef = useRef();
   const toast = useToast();
+
+  // if the token is deleted navigate to Login
+  useEffect(() => {
+    if (!localStorage.getItem("loginToken")) {
+      navigate("/login");
+    }
+  }, []);
 
   // to get product ID to add to Cart
   // console.log("@@products", products);
@@ -56,18 +70,25 @@ export const SingleProductPage = () => {
   // Getting individual Data Dynamically
   // console.log(_id);
   const singlePageData = products?.find((ele) => ele._id === _id);
-  //   console.log("SinglePageData", singlePageData);
+  // console.log("Id of product", _id);
+  // console.log("SinglePageData", singlePageData);
 
   //  API call for dynamic product fetch {(_id)}
   useEffect(() => {
-    dispatch(getProducts(_id));
-  }, [_id]);
+    dispatch(getProducts());
+  }, []);
 
   /*  Now to make sure ADD to CART works properly, we need the product ID and at the same time which user is logged in so that we can keep a track of who is buying what..thorugh handleADDtoCART */
 
   const handleADDtoCART = (product_ID) => {
     let productID = product_ID;
-    const userID = localStorage.getItem("userID");
+    const user = localStorage.getItem("user");
+    const userObjinLS = JSON.parse(user);
+    const userID = userObjinLS._id;
+    const data = { userID: userID };
+
+    console.log("user", userID);
+    console.log("Product ID", productID);
     // Generally userID can be retreived with getItem in backend also, but this is temporary, will change later with help of decoding in backend
     // console.log({ productID });
     // console.log(JSON.parse(userID));
@@ -75,6 +96,9 @@ export const SingleProductPage = () => {
     /*   const parsedUserID = JSON.parse(userID); 
     //to remove the double quotes
  */
+
+    // Logic for Duplicate
+
     const payload = { productID, userID };
     // const headers = { loginToken: localStorage.getItem("loginToken") };
     axios

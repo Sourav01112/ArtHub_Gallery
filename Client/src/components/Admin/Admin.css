@@ -1,0 +1,7 @@
+/* # Modal */
+@media (max-width: 767px) {
+  .formControl {
+    width: 10px;
+  }
+}
+/* # Modal */

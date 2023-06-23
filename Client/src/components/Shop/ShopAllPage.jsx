@@ -7,6 +7,9 @@ import { getProducts } from "../../Redux/productReducer/action";
 import { ShopNavbar } from "./ShopNavbar";
 import { Button } from "@chakra-ui/react";
 
+
+
+
 export const ShopAllPage = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();

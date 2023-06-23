@@ -6,6 +6,14 @@ import Navbar from "./Navbar";
 import { SocialMedia } from "./pages/SocialMedia";
 
 export const HomePage = () => {
+
+
+  
+
+
+
+
+
   return (
     <div style={{ padding: "40px" }}>
       <SecondTop />

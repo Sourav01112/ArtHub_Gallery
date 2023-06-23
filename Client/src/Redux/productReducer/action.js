@@ -23,7 +23,7 @@ export const getProducts = (paramsObj, _id) => (dispatch) => {
     // .get(`http://localhost:4500/shop`)
     .get(URLwithCondition, paramsObj)
     .then((res) => {
-      console.log("@@@response", res.data);
+      // console.log("@@@response", res.data);
       dispatch({
         type: GET_PRODUCT_SUCCESS,
         payload: res.data,

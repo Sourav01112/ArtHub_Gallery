@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Container, Image, Text } from "@chakra-ui/react";
-import "./shop.css";
-
 import { Shopcard } from "./Shopcard";
 import ShopBig from "../../assets/Shop_Big.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { getProducts } from "../../Redux/productReducer/action";
 import axios from "axios";
+import "./shop.css";
 
 /*  Shop Page by Sourav */
 
@@ -28,7 +27,7 @@ export const Shop = () => {
     dispatch(getProducts());
   }, []);
 
-  console.log(products);
+  // console.log(products);
 
   return (
     <div>
