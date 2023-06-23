@@ -16,6 +16,7 @@ import {
   FormControl,
   FormLabel,
   Input,
+  useToast,
 } from "@chakra-ui/react";
 import "../Shop/shop.css";
 
@@ -46,6 +47,8 @@ export const Admin = () => {
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   const location = useLocation();
+  const toast = useToast();
+
   // state for Add Product Form
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -55,6 +58,9 @@ export const Admin = () => {
   const [year, setYear] = useState("");
   const [artist, setArtist] = useState("");
   const [inStock, setStock] = useState("");
+
+  // state for Deleted Data
+  const [deletedData, setDeletedData] = useState([]);
 
   // console.log("@@@@", products);
 
@@ -81,12 +87,31 @@ export const Admin = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [deletedData]);
 
   //  To post New Product
 
   const addNewProduct = (e) => {
     e.preventDefault();
+    if (
+      !title ||
+      !image ||
+      !desc ||
+      !price ||
+      !subtitle ||
+      !year ||
+      !artist ||
+      !inStock
+    ) {
+      toast({
+        position: "top",
+        title: "Please fill in all required fields",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
     axios
       .post(
         "http://localhost:4500/admin/add-product",
@@ -94,14 +119,70 @@ export const Admin = () => {
         { title, desc, image, price, subtitle, year, artist, inStock }
       )
       .then((res) => {
-        console.log(res);
+        if (res.data.msg === "New Product added") {
+          toast({
+            position: "top",
+            title: "Product Successfully Added",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+        } else {
+          toast({
+            position: "top",
+            title: "Error while Adding New Product ",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
       })
       .catch((err) => {
         console.log(err);
       });
-    console.log({ title, desc, image, price, subtitle, year, artist, inStock });
-    // console.log("hello");
+    // console.log({ title, desc, image, price, subtitle, year, artist, inStock });
+
+    setTitle("");
+    setDesc("");
+    setImage("");
+    setPrice("");
+    setSub("");
+    setYear("");
+    setArtist("");
+    setStock("");
   };
+
+  const handleDelete = () => {
+    const requestData = { ids: deletedData };
+    axios
+      .delete("http://localhost:4500/admin/delete-products", {
+        data: requestData,
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.data.msg === "Selected Item Deleted successfully") {
+          toast({
+            position: "top",
+            title: "Selected Item Deleted successfully",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+        } else {
+          toast({
+            position: "top",
+            title: "Error while Adding New Product ",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div>
       {/* ADMIN All Products  */}
@@ -116,6 +197,9 @@ export const Admin = () => {
       >
         ADD Product
       </Button>
+      {deletedData.length > 0 && (
+        <Button onClick={handleDelete}>Delete Selected</Button>
+      )}
       <div className="ShopContainer">
         <div className="CardContainer">
           {/* Include the Card component */}
@@ -144,7 +228,19 @@ export const Admin = () => {
                   >
                     EDIT
                   </Button>
-                  <Button>DELETE</Button>
+                  <input
+                    type="checkbox"
+                    onChange={(e) => {
+                      console.log(e.target.checked);
+                      if (e.target.checked === true) {
+                        setDeletedData([...deletedData, ele._id]);
+                      } else {
+                        setDeletedData(
+                          deletedData?.filter((ele) => ele !== ele._id)
+                        );
+                      }
+                    }}
+                  />
                 </div>
               );
             })}
@@ -184,6 +280,7 @@ export const Admin = () => {
                   type="text"
                   value={image}
                   onChange={(e) => setImage(e.target.value)}
+                  isRequired
                 />
                 <br />
                 <br />
@@ -194,6 +291,7 @@ export const Admin = () => {
                   type="text"
                   value={desc}
                   onChange={(e) => setDesc(e.target.value)}
+                  isRequired
                 />
                 <br />
                 <br />
@@ -203,6 +301,7 @@ export const Admin = () => {
                   type="number"
                   value={price}
                   onChange={(e) => Number(setPrice(e.target.value))}
+                  isRequired
                 />
                 <br />
                 <br />
@@ -212,6 +311,7 @@ export const Admin = () => {
                   type="text"
                   value={subtitle}
                   onChange={(e) => setSub(e.target.value)}
+                  isRequired
                 />
                 <br />
                 <br />
@@ -221,6 +321,7 @@ export const Admin = () => {
                   type="number"
                   value={year}
                   onChange={(e) => Number(setYear(e.target.value))}
+                  isRequired
                 />
                 <br />
                 <br />
@@ -230,6 +331,7 @@ export const Admin = () => {
                   type="text"
                   value={artist}
                   onChange={(e) => setArtist(e.target.value)}
+                  isRequired
                 />
                 <br />
                 <br />
@@ -239,6 +341,7 @@ export const Admin = () => {
                   type="number"
                   value={inStock}
                   onChange={(e) => Number(setStock(e.target.value))}
+                  isRequired
                 />
               </FormControl>
             </Box>
