@@ -16,8 +16,11 @@ userRouter.post("/register", passwordValidater, async (req, res) => {
   // Saving type of role while Signup
   const type = req.body.type || "USER";
   const roleData = await RoleModel.findOne({ role: type });
+  /* `console.log("@roleDFata", roleData);` is logging the value of `roleData` to the console with a
+  label of `@roleDFata`. This is likely being used for debugging purposes to check the value of
+  `roleData` and ensure that it is being retrieved correctly from the database. */
   // console.log("@roleDFata", roleData);
-  const roles = [roleData._id];
+  // const roles = [roleData._id];
   // saving Role collection _id to that signed up user(A simple USER or ADMIN)
 
   try {
