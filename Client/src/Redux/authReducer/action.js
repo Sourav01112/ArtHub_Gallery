@@ -18,7 +18,10 @@ export const loginAction =
   (userData, toast, setEmail, setPassword) => async (dispatch) => {
     if (email && password) {
       return axios
-        .post(`http://localhost:4500/user/login`, userData)
+        .post(
+          `https://electric-blue-firefly-vest.cyclic.app/user/login`,
+          userData
+        )
         .then((res) => {
           console.log("@@ token from authReducer ~ action", res);
           dispatch({
@@ -26,6 +29,7 @@ export const loginAction =
             payload: {
               token: res.data.token,
               user: res.data.user,
+              name: res.data.user.name,
               rights: res.data.user.roles,
             },
           });

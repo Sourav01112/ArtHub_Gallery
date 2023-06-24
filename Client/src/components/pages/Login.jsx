@@ -104,7 +104,8 @@ export const Login = () => {
     <div>
       <Box
         id="log-Sec"
-        p={10}
+        className="loginContainer"
+        // p={10}
         backgroundImage={
           // "url(https://dm0qx8t0i9gc9.cloudfront.net/thumbnails/video/SNc_bPaMeiw63zp8r/white-seamless-animated-background-loop_rizjvmafux_thumbnail-1080_01.png)"
 
@@ -122,19 +123,20 @@ export const Login = () => {
           Login
         </Heading>
         <Box
-          width={"60%"}
-          display={"flex"}
-          margin={"auto"}
-          mt={"50px"}
-          borderRadius={"20px"}
-          backgroundColor={"white"}
-          p={10}
-          boxShadow={"rgba(0, 0, 0, 0.16) 0px 1px 4px"}
+          className="innerContainer"
+          // width={"60%"}
+          // display={"flex"}
+          // margin={"auto"}
+          // mt={"50px"}
+          // borderRadius={"20px"}
+          // backgroundColor={"white"}
+          // p={10}
+          // boxShadow={"rgba(0, 0, 0, 0.16) 0px 1px 4px"}
         >
           <Box>
-            <Image src={LoginPageTemp} mt={"50px"} width={"90%"} />
+            <Image src={LoginPageTemp} className="loginImageForm" />
           </Box>
-          <Box width={"50%"}>
+          <Box>
             {/* <Image
               width={"50%"}
               display={"block"}
@@ -223,7 +225,11 @@ export const Login = () => {
                   </MenuList>
                 </Menu>
               </div>
-              <Button mt={6} textAlign={"center"} variant={"ghost"}>
+              <Button
+                className="loginButton"
+                textAlign={"center"}
+                variant={"ghost"}
+              >
                 Not Registered, Don't worry?&nbsp;{" "}
                 <Link to={"/signup"}>
                   <span style={{ color: "red" }}>SIGN UP</span>

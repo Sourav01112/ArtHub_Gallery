@@ -8,7 +8,8 @@ import {
 
 const inState = {
   isLoading: false,
-  isAuth: loadData("loginToken") || true || undefined,
+  // isAuth: loadData("loginToken") || true || undefined,
+  isAuth: localStorage.getItem("loginToken") ? true : false,
   token: loadData("loginToken") || "",
   userID: loadData("userID") || "",
   isError: false,
@@ -27,8 +28,9 @@ export const reducer = (state = inState, { type, payload }) => {
     case LOGIN_SUCCESS: {
       localStorage.setItem("loginToken", payload.token);
       // saving whole User and not just _id
-      localStorage.setItem("user",  JSON.stringify(payload.user));
+      localStorage.setItem("user", JSON.stringify(payload.user));
       localStorage.setItem("Permission_To", JSON.stringify(payload.rights));
+      localStorage.setItem("userName", payload.name);
 
       return {
         ...state,
@@ -36,6 +38,7 @@ export const reducer = (state = inState, { type, payload }) => {
         isAuth: true,
         token: payload.token,
         userID: payload.userID,
+
         isError: false,
       };
     }

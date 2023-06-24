@@ -7,13 +7,14 @@ import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { getProducts } from "../../Redux/productReducer/action";
 import axios from "axios";
 import "./shop.css";
+import SkeletonModel from "./SkeletonModel";
 
 /*  Shop Page by Sourav */
 
 export const Shop = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { products, isError, error } = useSelector(
+  const { products, isLoading, isError, error } = useSelector(
     (store) => store.productReducer
   );
   const location = useLocation();
@@ -66,16 +67,27 @@ export const Shop = () => {
           </p>
         </div>
       </div>
-
       {/* Shop ART Card  */}
       <h3 style={{ fontSize: "30px", marginTop: "50px", marginLeft: "4%" }}>
         NEW
       </h3>
+
       <div className="ShopContainer">
         <div className="CardContainer">
           {/* Include the Card component */}
 
-          {products?.length > 0 &&
+          {isLoading
+            ? [1, 2].map((n) => <SkeletonModel key={n} size={145} />)
+            : products?.length > 0 &&
+              products.map((ele) => (
+                <div key={ele._id}>
+                  <Link to={`/shop/${ele._id}`}>
+                    <Shopcard {...ele} />
+                  </Link>
+                </div>
+              ))}
+
+          {/* {products?.length > 0 &&
             products?.map((ele) => {
               return (
                 <div key={ele._id}>
@@ -84,7 +96,7 @@ export const Shop = () => {
                   </Link>
                 </div>
               );
-            })}
+            })} */}
         </div>
         <Link to="/collections/shop">
           <Button>SHOP ALL</Button>

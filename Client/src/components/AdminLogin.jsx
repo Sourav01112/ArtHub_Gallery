@@ -55,7 +55,7 @@ export default function Admin() {
     // console.table({ email, password });
     if (email && password) {
       axios
-        .post(`${"http://localhost:4500/admin"}`, {
+        .post(`${"https://electric-blue-firefly-vest.cyclic.app/admin"}`, {
           email,
           password,
         })

@@ -38,7 +38,8 @@ function NavBar() {
   const cancelRef = useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isAuth } = useSelector((store) => store.authReducer);
+  const isAuth = useSelector((store) => store.authReducer.isAuth);
+  // console.log("1!!!!!isAuth", isAuth);
 
   // console.log("isAuth is Boolean value ?", isAuth);
 
@@ -168,6 +169,22 @@ function NavBar() {
                 <span style={{ color: "red", fontWeight: 800 }}>PROFILE</span>
               </MenuButton>
               <MenuList mt={5} p={0}>
+                {/* // if the userName is present in localStorage then show Menu, else don't */}
+                {localStorage.getItem("userName") && (
+                  <MenuItem border={"0"} maxH="60px" pl={'2'}>
+                    👋
+                    <span
+                      style={{
+                        color: "red",
+                        marginLeft: "5px",
+                        fontSize: "20px",
+                      }}
+                    >
+                      {localStorage.getItem("userName")}
+                    </span>
+                  </MenuItem>
+                )}
+
                 <Link to={"/signup"}>
                   <MenuItem border={"0"} maxH="60px">
                     <Image
@@ -276,7 +293,12 @@ function NavBar() {
       </div>
       {/* To top button :- CHAKRA */}
 
-      <Box className="ScrollTopButton" position="fixed" bottom="2rem" right="0.5rem">
+      <Box
+        className="ScrollTopButton"
+        position="fixed"
+        bottom="2rem"
+        right="0.5rem"
+      >
         {isTop && (
           <FaArrowCircleUp color="#757575" size={30} onClick={scrollToTop} />
         )}

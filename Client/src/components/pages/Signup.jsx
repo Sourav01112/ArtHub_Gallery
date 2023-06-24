@@ -84,7 +84,8 @@ export const Signup = () => {
 
     // console.log(state);
     axios
-      .post(`http://localhost:4500/user/register`, {
+      .post(`https://electric-blue-firefly-vest.cyclic.app/user/register`, {
+        // .post(`http://localhost:4500/user/register`, {
         name: state.name,
         email: state.email,
         password: state.password,
@@ -155,7 +156,8 @@ export const Signup = () => {
     <div>
       <Box
         id="signup"
-        p={10}
+        className="signupContainer"
+        // p={10}
         backgroundImage={
           // "url(https://www.technocrazed.com/wp-content/uploads/2015/11/Cool-Black-And-White-Wallpapers-Resolution-1920x1080-Desktop-Backgrounds-130.jpg)"
           "url(https://img.freepik.com/free-vector/watercolor-oil-painting-background_23-2150129394.jpg?w=996&t=st=1687123607~exp=1687124207~hmac=4931bcfd3e857e0bf0e3553a26d29655ce8fc66c5de6e618f16dbbed37291eb4)"
@@ -172,24 +174,14 @@ export const Signup = () => {
         >
           Signup
         </Heading>
-        <Box
-          width={"70%"}
-          display={"flex"}
-          margin={"auto"}
-          mt={"50px"}
-          borderRadius={"20px"}
-          backgroundColor={"white"}
-          p={10}
-          boxShadow={"rgba(0, 0, 0, 0.16) 0px 1px 4px"}
-        >
+        <Box className="innerContainer">
           <Box>
             <Image
-              mt={39}
-              width={"90%"}
+              className="formImage"
               src="https://img.xcitefun.net/users/2012/11/308292,xcitefun-incredible-painting-art-1.jpg"
             />
           </Box>
-          <Box width={"60%"}>
+          <Box >
             <form action="" onSubmit={handleSubmit}>
               <FormControl mt={30}>
                 <FormLabel>
@@ -310,7 +302,7 @@ export const Signup = () => {
               />
             </form>
             <Link to={"/login"}>
-              <Button mt={6} textAlign={"center"} variant={"ghost"}>
+              <Button className="signupButton" textAlign={"center"} variant={"ghost"}>
                 Already have an account ? &nbsp;{" "}
                 <span style={{ color: "red" }}>LOGIN</span>
               </Button>

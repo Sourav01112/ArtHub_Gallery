@@ -79,7 +79,7 @@ export const Admin = () => {
     //  add ParamsObj inside getProducts and also in action.js when adding the filtering/sorting and useSearchParams
     // dispatch(getAdminProducts());
     axios
-      .get("http://localhost:4500/admin/getProducts")
+      .get("https://electric-blue-firefly-vest.cyclic.app/admin/getProducts")
       .then((res) => {
         // console.log("@@@response", res.data);
         setData(res.data);
@@ -114,7 +114,7 @@ export const Admin = () => {
     }
     axios
       .post(
-        "http://localhost:4500/admin/add-product",
+        "https://electric-blue-firefly-vest.cyclic.app/admin/add-product",
 
         { title, desc, image, price, subtitle, year, artist, inStock }
       )
@@ -155,7 +155,7 @@ export const Admin = () => {
   const handleDelete = () => {
     const requestData = { ids: deletedData };
     axios
-      .delete("http://localhost:4500/admin/delete-products", {
+      .delete("https://electric-blue-firefly-vest.cyclic.app/admin/delete-products", {
         data: requestData,
       })
       .then((res) => {

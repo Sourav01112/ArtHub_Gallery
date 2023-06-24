@@ -16,7 +16,7 @@ const inState = {
 };
 
 export const reducer = (state = inState, action) => {
-  console.log("@@ REDUCER", state);
+  // console.log("@@ REDUCER", state);
   switch (action.type) {
     // case ADMIN_TYPE: {
     //   return { ...state, admin: action.payload };
