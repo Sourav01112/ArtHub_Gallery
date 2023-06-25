@@ -12,15 +12,15 @@ export const getProducts = (paramsObj, _id) => (dispatch) => {
   dispatch({ type: PRODUCT_REQUEST });
 
   //  conditional fetch
-  let URLwithCondition = "https://electric-blue-firefly-vest.cyclic.app/shop";
+  let URLwithCondition = "http://localhost:4500/shop";
   if (_id) {
     URLwithCondition = `${URLwithCondition}/${_id}`;
   }
   // if (_id) is present then fetch on the basis of _id
 
   axios
-    // .get(`https://electric-blue-firefly-vest.cyclic.app/shop`, paramsObj)
-    // .get(`https://electric-blue-firefly-vest.cyclic.app/shop`)
+    // .get(`http://localhost:4500/shop`, paramsObj)
+    // .get(`http://localhost:4500/shop`)
     .get(URLwithCondition, paramsObj)
     .then((res) => {
       // console.log("@@@response", res.data);

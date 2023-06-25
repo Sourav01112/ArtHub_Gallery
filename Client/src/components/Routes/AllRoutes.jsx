@@ -10,10 +10,10 @@ import { PageNotFound } from "../PageNotFound";
 import { PrivateRoute } from "../pages/PrivateRoute";
 import { ShopAllPage } from "../Shop/ShopAllPage";
 // import Admin from "../AdminLogin";
-
 import { Login } from "../../components/pages/Login";
 import CartPage from "../Shop/CartPage";
 import { Admin } from "../Admin/Admin";
+import { AddProduct } from "../Admin/AddProduct";
 
 export const AllRoutes = () => {
   return (
@@ -46,6 +46,8 @@ export const AllRoutes = () => {
       <Route path="/login" element={<Login />}></Route>
       <Route path="/signup" element={<Signup />}></Route>
       <Route path="/admin/" element={<Admin />}></Route>
+      <Route path="/admin/add-product" element={<AddProduct />}></Route>
+
       <Route path="*" element={<PageNotFound />}></Route>
     </Routes>
   );

@@ -102,7 +102,7 @@ export const SingleProductPage = () => {
     const payload = { productID, userID };
     // const headers = { loginToken: localStorage.getItem("loginToken") };
     axios
-      .post("https://electric-blue-firefly-vest.cyclic.app/shop/add-to-cart", payload)
+      .post("http://localhost:4500/shop/add-to-cart", payload)
       .then((res) => {
         // console.log(res.data);
         if (res.data.status === 200) {

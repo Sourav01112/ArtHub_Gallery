@@ -10,14 +10,14 @@ export const getAdminProducts =()=> (dispatch) => {
   dispatch({ type: PRODUCT_REQUEST });
 
   //  conditional fetch
-  // let URLwithCondition = "https://electric-blue-firefly-vest.cyclic.app/admin/getProducts";
+  // let URLwithCondition = "http://localhost:4500/admin/getProducts";
   // if (_id) {
   //   URLwithCondition = `${URLwithCondition}/${_id}`;
   // }
   // if (_id) is present then fetch on the basis of _id
 
   axios
-    .get('https://electric-blue-firefly-vest.cyclic.app/admin/getProducts')
+    .get('http://localhost:4500/admin/getProducts')
     .then((res) => {
       console.log("@@@response", res.data);
       dispatch({
@@ -34,7 +34,7 @@ export const verifyToken = () => async (dispatch) => {
   const token = localStorage.getItem("adminToken");
   if (token) {
     return await axios
-      .post(`https://electric-blue-firefly-vest.cyclic.app/admin/verify`, { token })
+      .post(`http://localhost:4500/admin/verify`, { token })
       .then((res) => {
         // console.log(res);
         if (res.data.decoded.role == "admin") {

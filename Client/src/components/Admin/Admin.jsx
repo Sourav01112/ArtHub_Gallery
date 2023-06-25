@@ -17,6 +17,9 @@ import {
   FormLabel,
   Input,
   useToast,
+  HStack,
+  TagLabel,
+  Checkbox,
 } from "@chakra-ui/react";
 import "../Shop/shop.css";
 
@@ -27,7 +30,6 @@ import { getAdminProducts } from "../../Redux/adminReducer/action";
 import axios from "axios";
 import "./Admin.css";
 // import { getAdminProducts } from "../../Redux/adminReducer/action";
-
 const OverlayOne = () => (
   <ModalOverlay
     bg="blackAlpha.300"
@@ -49,37 +51,17 @@ export const Admin = () => {
   const location = useLocation();
   const toast = useToast();
 
-  // state for Add Product Form
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-  const [image, setImage] = useState([""]);
-  const [price, setPrice] = useState("");
-  const [subtitle, setSub] = useState("");
-  const [year, setYear] = useState("");
-  const [artist, setArtist] = useState("");
-  const [inStock, setStock] = useState("");
-
   // state for Deleted Data
   const [deletedData, setDeletedData] = useState([]);
+  const [refreshPage, setRefreshPage] = useState(false);
 
   // console.log("@@@@", products);
-
-  const open = () => {
-    setisOpen1(true);
-  };
-
-  const onOPen = () => {
-    setonOpen1(false);
-  };
-  const close = () => {
-    setonClose1(false);
-  };
 
   useEffect(() => {
     //  add ParamsObj inside getProducts and also in action.js when adding the filtering/sorting and useSearchParams
     // dispatch(getAdminProducts());
     axios
-      .get("https://electric-blue-firefly-vest.cyclic.app/admin/getProducts")
+      .get("http://localhost:4500/admin/getProducts")
       .then((res) => {
         // console.log("@@@response", res.data);
         setData(res.data);
@@ -87,79 +69,17 @@ export const Admin = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [deletedData]);
-
-  //  To post New Product
-
-  const addNewProduct = (e) => {
-    e.preventDefault();
-    if (
-      !title ||
-      !image ||
-      !desc ||
-      !price ||
-      !subtitle ||
-      !year ||
-      !artist ||
-      !inStock
-    ) {
-      toast({
-        position: "top",
-        title: "Please fill in all required fields",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      return;
-    }
-    axios
-      .post(
-        "https://electric-blue-firefly-vest.cyclic.app/admin/add-product",
-
-        { title, desc, image, price, subtitle, year, artist, inStock }
-      )
-      .then((res) => {
-        if (res.data.msg === "New Product added") {
-          toast({
-            position: "top",
-            title: "Product Successfully Added",
-            status: "success",
-            duration: 3000,
-            isClosable: true,
-          });
-        } else {
-          toast({
-            position: "top",
-            title: "Error while Adding New Product ",
-            status: "error",
-            duration: 3000,
-            isClosable: true,
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // console.log({ title, desc, image, price, subtitle, year, artist, inStock });
-
-    setTitle("");
-    setDesc("");
-    setImage("");
-    setPrice("");
-    setSub("");
-    setYear("");
-    setArtist("");
-    setStock("");
-  };
+  }, [refreshPage]);
 
   const handleDelete = () => {
     const requestData = { ids: deletedData };
     axios
-      .delete("https://electric-blue-firefly-vest.cyclic.app/admin/delete-products", {
+      .delete("http://localhost:4500/admin/delete-products", {
         data: requestData,
       })
       .then((res) => {
         console.log(res);
+        setRefreshPage(!refreshPage);
         if (res.data.msg === "Selected Item Deleted successfully") {
           toast({
             position: "top",
@@ -189,17 +109,31 @@ export const Admin = () => {
       <h3 style={{ fontSize: "30px", marginTop: "50px", marginLeft: "4%" }}>
         Admin DASHBOARD
       </h3>
-      <Button
-        onClick={() => {
-          setOverlay(<OverlayOne />);
-          onOpen();
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "30%",
+          margin: "auto",
+          textAlign: "center",
+          padding: "45px",
+          // border: "1px solid black",
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         }}
       >
-        ADD Product
-      </Button>
-      {deletedData.length > 0 && (
-        <Button onClick={handleDelete}>Delete Selected</Button>
-      )}
+        <Link to="/admin/add-product">
+          <Button colorScheme="green" mb={"10px"}>
+            ADD Product
+          </Button>
+        </Link>
+        {deletedData.length > 0 && (
+          <Button w={"auto"} colorScheme="red" onClick={handleDelete}>
+            Delete Selected
+          </Button>
+        )}
+      </div>
+
       <div className="ShopContainer">
         <div className="CardContainer">
           {/* Include the Card component */}
@@ -207,9 +141,9 @@ export const Admin = () => {
           {data?.length > 0 &&
             data?.map((ele) => {
               return (
-                <div key={ele._id}>
+                <div className="parentShopCard" key={ele._id}>
                   {/* <Link to={`/shop/${ele._id}`}> */}
-                  <div className="ShopCard">
+                  <div className="ShopCard1">
                     <img src={ele.image[0]} />
                     <p style={{ marginTop: "50px", fontFamily: "monospace" }}>
                       {ele.title}
@@ -220,148 +154,53 @@ export const Admin = () => {
                   </div>
                   {/* </Link>{" "} */}
                   <br />
-                  <Button
-                    onClick={() => {
-                      setOverlay(<OverlayOne />);
-                      open();
-                    }}
+                  <HStack
+                  mb={15}
+                    ml={5}
+                    mr={5}
+                    gap={100}
+
+                    // style={{ border: "1px solid red" }}
                   >
-                    EDIT
-                  </Button>
-                  <input
-                    type="checkbox"
-                    onChange={(e) => {
-                      console.log(e.target.checked);
-                      if (e.target.checked === true) {
-                        setDeletedData([...deletedData, ele._id]);
-                      } else {
-                        setDeletedData(
-                          deletedData?.filter((ele) => ele !== ele._id)
-                        );
-                      }
-                    }}
-                  />
+                    <Button
+                      colorScheme="green"
+                      onClick={() => {
+                        setOverlay(<OverlayOne />);
+                        onOpen();
+                      }}
+                    >
+                      EDIT
+                    </Button>
+
+                    <Checkbox
+                      color={"gray"}
+                      onChange={(e) => {
+                        console.log(e.target.checked);
+                        if (e.target.checked === true) {
+                          setDeletedData([...deletedData, ele._id]);
+                        } else {
+                          setDeletedData(
+                            deletedData?.filter((ele) => ele !== ele._id)
+                          );
+                        }
+                      }}
+                    >
+                      Delete
+                    </Checkbox>
+                  </HStack>
                 </div>
               );
             })}
         </div>
       </div>
 
-      {/* ADD PRODUCT MODAL */}
+      {/* EDIT PRODUCT MODAL  */}
 
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
         isOpen={isOpen}
         onClose={onClose}
-      >
-        {overlay}
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>ADD Product</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <Box display={{ base: "24px", md: "block" }} mt={4}>
-              <FormControl mt={4} className="formControl">
-                <FormLabel>Title</FormLabel>
-                <Input
-                  placeholder="Title"
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-                <br />
-                <br />
-
-                <FormLabel>Image</FormLabel>
-                <Input
-                  ref={initialRef}
-                  placeholder="Min. 3 images"
-                  type="text"
-                  value={image}
-                  onChange={(e) => setImage(e.target.value)}
-                  isRequired
-                />
-                <br />
-                <br />
-
-                <FormLabel>Description</FormLabel>
-                <Input
-                  placeholder="Description"
-                  type="text"
-                  value={desc}
-                  onChange={(e) => setDesc(e.target.value)}
-                  isRequired
-                />
-                <br />
-                <br />
-                <FormLabel>Price</FormLabel>
-                <Input
-                  placeholder="Price"
-                  type="number"
-                  value={price}
-                  onChange={(e) => Number(setPrice(e.target.value))}
-                  isRequired
-                />
-                <br />
-                <br />
-                <FormLabel>Subtitle</FormLabel>
-                <Input
-                  placeholder="Subtitle"
-                  type="text"
-                  value={subtitle}
-                  onChange={(e) => setSub(e.target.value)}
-                  isRequired
-                />
-                <br />
-                <br />
-                <FormLabel>Year</FormLabel>
-                <Input
-                  placeholder="Year"
-                  type="number"
-                  value={year}
-                  onChange={(e) => Number(setYear(e.target.value))}
-                  isRequired
-                />
-                <br />
-                <br />
-                <FormLabel>Artist</FormLabel>
-                <Input
-                  placeholder="Artist"
-                  type="text"
-                  value={artist}
-                  onChange={(e) => setArtist(e.target.value)}
-                  isRequired
-                />
-                <br />
-                <br />
-                <FormLabel>In Stock</FormLabel>
-                <Input
-                  placeholder="Stock"
-                  type="number"
-                  value={inStock}
-                  onChange={(e) => Number(setStock(e.target.value))}
-                  isRequired
-                />
-              </FormControl>
-            </Box>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={addNewProduct}>
-              ADD
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-
-      {/* EDIT MODAL 
-
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen1={isOpen1}
-        onClose1={onClose1}
       >
         {overlay}
         <ModalOverlay />
@@ -407,13 +246,13 @@ export const Admin = () => {
             </Box>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3}>
+            <Button variant={"solid"} colorScheme="blue" mr={3}>
               EDIT
             </Button>
-            <Button onClick={onClose1}>Cancel</Button>
+            <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
-      </Modal> */}
+      </Modal>
     </div>
   );
 };

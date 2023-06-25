@@ -5,3 +5,62 @@
   }
 }
 /* # Modal */
+
+/* # Product Card */
+
+.parentShopCard {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+
+.ShopCard1 {
+  /* box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px; */
+  text-align: center;
+}
+.ShopCard1 img {
+  width: 90%;
+  padding-bottom: 10px;
+  margin: auto;
+  padding-top: 10px;
+}
+.ShopContainer {
+  /* border: 2px solid red; */
+  /* padding-top: 200px; */
+  padding: 50px;
+  margin-top: 10px;
+}
+.CardContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.subtitle {
+  font-family: "Dancing Script", cursive;
+  font-size: 20px;
+}
+@media (max-width: 767px) {
+  .CardContainer {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+  }
+  .ShopCard p {
+    text-align: justify;
+  }
+}
+
+/* # Product Card */
+
+/* # Add-product Form */
+
+.addproductForm {
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  /* margin: auto; */
+  padding: 50px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+/* # Add-product Form */

@@ -84,7 +84,7 @@ export const Signup = () => {
 
     // console.log(state);
     axios
-      .post(`https://electric-blue-firefly-vest.cyclic.app/user/register`, {
+      .post(`http://localhost:4500/user/register`, {
         // .post(`http://localhost:4500/user/register`, {
         name: state.name,
         email: state.email,

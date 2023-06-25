@@ -19,7 +19,7 @@ export const loginAction =
     if (email && password) {
       return axios
         .post(
-          `https://electric-blue-firefly-vest.cyclic.app/user/login`,
+          `http://localhost:4500/user/login`,
           userData
         )
         .then((res) => {
