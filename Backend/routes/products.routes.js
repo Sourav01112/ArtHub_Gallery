@@ -1,29 +1,53 @@
 const express = require("express");
-const { ProductsModel } = require("../models/Products.model");
+const { ProductsModel } = require("../models/products.model");
 const { errorHandler } = require("../middlewares/errorHandle.middleware");
-const { UserModel } = require("../models/User.model");
+const { UserModel } = require("../models/user.model");
+const { handleResponse } = require("../utils/helper");
 const productRouter = express.Router();
 require("dotenv").config();
 
 productRouter.use(errorHandler);
 
 // GET ALL PRODUCTS : Multiple
-productRouter.get("/", async (req, res) => {
+productRouter.post("/", async (req, res) => {
+
+
+
+  console.log("insdie /")
+
+  const options = {
+    page: req.body.page,
+    limit: req.body.limit,
+    collation: {
+      locale: 'en',
+      strength: 2
+    }
+  }
+
   try {
-    const products = await ProductsModel.find();
-    res.status(200).json(products);
+    ProductsModel.paginate(req.body.search, options, (err, doc) => {
+      if (doc?.docs !== null && doc?.docs?.length > 0 && doc != undefined) {
+        handleResponse(res, 200, "Fetched Inventory", doc)
+      } else {
+        handleResponse(res, 201, "Inventory Empty")
+      }
+    })
   } catch (err) {
-    console.log("Error retrieving products:", err);
-    res.status(500).json({ msg: err.message });
+    handleResponse(res, 500, "Error retrieving products", err.message)
   }
 });
 
 // To GET only One Product : ID known
-productRouter.get("/:id", async (req, res) => {
+productRouter.post("/:id", async (req, res) => {
+
+  console.log("---HITTING-----", req.query)
   // if (req.permissions.indexOf("view-product") === -1) {
   //   return res.send({ code: 401, message: "Unauthenticated" });
   // }
-  let data = await ProductsModel.findById(req.params.id);
+  // return
+  let data = await ProductsModel.findById(req.query.id);
+
+  console.log("data", data)
   if (data) {
     res.status(200).json({ msg: "Fetch by ID success", dataFetch: data });
   } else {
@@ -34,7 +58,8 @@ productRouter.get("/:id", async (req, res) => {
 // Add to Cart
 
 productRouter.post("/add-to-cart", async (req, res) => {
-  // console.log(req.body, "62");
+
+  console.log("------>req.body", req.body);
 
   const isUpdate = await UserModel.updateOne(
     { _id: req.body.userID },
@@ -53,13 +78,11 @@ productRouter.post("/add-to-cart", async (req, res) => {
 // GET productInCart products
 
 productRouter.post("/get-cart", async (req, res) => {
+  console.log("req.body")
   const userID = req.body.userID;
-
   const data = await UserModel.findOne({ _id: userID }).populate(
     "productInCart"
   );
-  /* This code is finding a user in the UserModel collection by their ID and populating the
-    "productInCart" field with the actual product documents from the ProductsModel collection. This means that when the user's cart is retrieved, it will contain the full details of each product in their cart, rather than just the product IDs. */
 
   if (data) {
     return res.status(200).json({ msg: "Get cart success.", data: data });

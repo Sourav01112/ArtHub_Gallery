@@ -1,3 +1,14 @@
+import { ChevronDownIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import LoginPageTemp from "../../assets/LoginPageTemp.png";
+import { loadData, saveData } from "../../Utilities/localStorage";
+import "../../App.css";
+import { useDispatch, useSelector } from "react-redux";
+import { loginAction, logoutAction } from "../../Redux/authReducer/action";
+import { loginCard } from "../../Utilities/encoded/login";
+import { loginBackground } from "../../Utilities/encoded/loginBackground";
 import {
   Box,
   FormControl,
@@ -6,7 +17,6 @@ import {
   Image,
   Input,
   InputGroup,
-  Text,
   Button,
   useToast,
   InputRightElement,
@@ -17,15 +27,6 @@ import {
   Menu,
   MenuItem,
 } from "@chakra-ui/react";
-import { ChevronDownIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import React, { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
-import LoginPageTemp from "../../assets/LoginPageTemp.png";
-import { loadData, saveData } from "../../Utilities/localStorage";
-import "../../App.css";
-import { useDispatch, useSelector } from "react-redux";
-import { loginAction, logoutAction } from "../../Redux/authReducer/action";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -57,7 +58,7 @@ export const Login = () => {
         duration: 4000,
         isClosable: true,
       });
-      return; // Stop further execution if the form is not valid
+      return;
     }
 
     const userData = {
@@ -65,9 +66,7 @@ export const Login = () => {
       password,
     };
 
-    // API call Logic is in action.js
     dispatch(loginAction(userData, toast, setEmail, setPassword)).then(() => {
-      // delaying Navigate after 2 seconds
       function delay(ms) {
         return new Promise((resolve, reject) => {
           setTimeout(() => {
@@ -105,12 +104,7 @@ export const Login = () => {
       <Box
         id="log-Sec"
         className="loginContainer"
-        // p={10}
-        backgroundImage={
-          // "url(https://dm0qx8t0i9gc9.cloudfront.net/thumbnails/video/SNc_bPaMeiw63zp8r/white-seamless-animated-background-loop_rizjvmafux_thumbnail-1080_01.png)"
-
-          "url(https://img.freepik.com/free-vector/watercolor-artwork_1409-2684.jpg?w=996&t=st=1687124167~exp=1687124767~hmac=74620e1e575dc094b45df3ea69670d28e0345865fa0d5a08c9acd8acbe68c21d)"
-        }
+        style={{ backgroundImage: `url(${loginBackground})` }}
         backgroundPosition={"center"}
         backgroundSize={"cover"}
       >
@@ -122,27 +116,11 @@ export const Login = () => {
         >
           Login
         </Heading>
-        <Box
-          className="innerContainer"
-          // width={"60%"}
-          // display={"flex"}
-          // margin={"auto"}
-          // mt={"50px"}
-          // borderRadius={"20px"}
-          // backgroundColor={"white"}
-          // p={10}
-          // boxShadow={"rgba(0, 0, 0, 0.16) 0px 1px 4px"}
-        >
+        <Box className="innerContainer">
           <Box>
-            <Image src={LoginPageTemp} className="loginImageForm" />
+            <Image src={loginCard} className="loginImageForm" />
           </Box>
           <Box>
-            {/* <Image
-              width={"50%"}
-              display={"block"}
-              margin={"auto"}
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTo7kHT9XYYCnVNBIrKcz7Z-b3mwtnJj-0y_tsgvEc0k8WdHVJA4T2jskYT6nElVcskZpY&usqp=CAU"
-            /> */}
             <FormControl mt={30} id="email" isInvalid={isError}>
               <FormLabel>
                 <span style={{ color: "red" }}>*</span> Email address

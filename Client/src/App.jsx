@@ -12,6 +12,11 @@ import About from "./components/pages/About";
 import Contact from "./components/pages/Contact";
 import { Signup } from "./components/pages/Signup";
 
+
+
+// console.log("urlBase---------->", import.meta.env.VITE_REACT_APP_ENV);
+
+
 function App() {
   return (
     <>

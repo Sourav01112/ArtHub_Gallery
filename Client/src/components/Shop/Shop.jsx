@@ -20,12 +20,14 @@ export const Shop = () => {
   const location = useLocation();
   const [data, setData] = useState([]);
 
-  // console.log("@@@@", products);
+  var paramsObj = {
+    page: 1,
+    limit: 50,
+    search: {},
+  };
 
   useEffect(() => {
-    //  add ParamsObj inside getProducts and also in action.js when adding the filtering/sorting and useSearchParams
-
-    dispatch(getProducts());
+    dispatch(getProducts(paramsObj));
   }, []);
 
   // console.log(products);
@@ -86,17 +88,7 @@ export const Shop = () => {
                   </Link>
                 </div>
               ))}
-
-          {/* {products?.length > 0 &&
-            products?.map((ele) => {
-              return (
-                <div key={ele._id}>
-                  <Link to={`/shop/${ele._id}`}>
-                    <Shopcard {...ele} />
-                  </Link>
-                </div>
-              );
-            })} */}
+       
         </div>
         <Link to="/collections/shop">
           <Button>SHOP ALL</Button>

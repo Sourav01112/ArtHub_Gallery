@@ -19,7 +19,7 @@ export const loginAction =
     if (email && password) {
       return axios
         .post(
-          `http://localhost:4500/user/login`,
+          `http://192.168.0.111:4500/api/users/login`,
           userData
         )
         .then((res) => {
@@ -28,18 +28,17 @@ export const loginAction =
             type: LOGIN_SUCCESS,
             payload: {
               token: res.data.token,
-              user: res.data.user,
-              name: res.data.user.name,
-              rights: res.data.user.roles,
+              user: res.data.data,
+              name: res?.data?.data?.name,
+              rights: res.data.data.roles,
             },
           });
 
           toast({
             position: "top",
-            title: res.request.statusText,
+            title: res.data.message,
             description: res.data.msg,
-            status: res.data.msg === "Login Successful" ? "success" : "error",
-            // Above code is conditional, telling if te msg is equal to given string, then pass toast in green (success) or error (red)
+            status: res.data.message === "Login Successful" ? "success" : "error",
             duration: 1000,
             isClosable: true,
           });

@@ -14,7 +14,7 @@ function CartPage() {
     // console.table(data);
     const headers = { loginToken: localStorage.getItem("loginToken") };
     axios
-      .post("http://localhost:4500/shop/get-cart", data, { headers })
+      .post("http://192.168.0.111:4500/api/shop/get-cart", data, { headers })
       .then((res) => {
         // console.log(res.data.data.productInCart, "15");
         setData(res.data.data.productInCart);

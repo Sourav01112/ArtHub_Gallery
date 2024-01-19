@@ -1,2 +1,2 @@
 # ArtHub-BE
-MERN Backend (NEM-111)
+This is specific for cyclic deployment

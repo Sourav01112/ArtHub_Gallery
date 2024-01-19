@@ -17,6 +17,8 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import "../../App.css";
+import { registerencoded } from "../../Utilities/encoded/registerencoded";
+import { signupface } from "../../Utilities/encoded/signupface";
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -70,7 +72,7 @@ export const Signup = () => {
     e.preventDefault();
 
     if (!email || !password) {
-      setIsErrorVal(true); // Set the form validation error
+      setIsErrorVal(true);
       toast({
         position: "top",
         title: "Validation Error",
@@ -79,13 +81,11 @@ export const Signup = () => {
         duration: 4000,
         isClosable: true,
       });
-      return; // Stop further execution if the form is not valid
+      return;
     }
 
-    // console.log(state);
     axios
-      .post(`http://localhost:4500/user/register`, {
-        // .post(`http://localhost:4500/user/register`, {
+      .post(`http://192.168.0.111:4500/api/users/register`, {
         name: state.name,
         email: state.email,
         password: state.password,
@@ -96,7 +96,6 @@ export const Signup = () => {
       .then((res) => {
         console.log("Data", res);
         if (res.data.msg === "The new user has been registered") {
-          // console.log("waah kya baat hai", res.data.registeredUser);
           setSignupSuccess(true);
           toast({
             position: "top",
@@ -133,7 +132,6 @@ export const Signup = () => {
   };
 
   const handleChange = (e) => {
-    // console.log("@e.target.value", e.target.value);
     let { name, value } = e.target;
 
     // logic to convert Age string to number
@@ -158,10 +156,7 @@ export const Signup = () => {
         id="signup"
         className="signupContainer"
         // p={10}
-        backgroundImage={
-          // "url(https://www.technocrazed.com/wp-content/uploads/2015/11/Cool-Black-And-White-Wallpapers-Resolution-1920x1080-Desktop-Backgrounds-130.jpg)"
-          "url(https://img.freepik.com/free-vector/watercolor-oil-painting-background_23-2150129394.jpg?w=996&t=st=1687123607~exp=1687124207~hmac=4931bcfd3e857e0bf0e3553a26d29655ce8fc66c5de6e618f16dbbed37291eb4)"
-        }
+        style={{ backgroundImage: `url(${registerencoded})` }}
         backgroundPosition={"center"}
         backgroundSize={"cover"}
       >
@@ -176,12 +171,9 @@ export const Signup = () => {
         </Heading>
         <Box className="innerContainer">
           <Box>
-            <Image
-              className="formImage"
-              src="https://img.xcitefun.net/users/2012/11/308292,xcitefun-incredible-painting-art-1.jpg"
-            />
+            <Image className="formImage" src={signupface} />
           </Box>
-          <Box >
+          <Box>
             <form action="" onSubmit={handleSubmit}>
               <FormControl mt={30}>
                 <FormLabel>
@@ -213,15 +205,6 @@ export const Signup = () => {
                 <FormLabel mt={2}>
                   <span style={{ color: "red" }}>*</span> Password{" "}
                 </FormLabel>
-
-                {/* <Input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  value={password}
-                  placeholder="Enter your Password"
-                  onChange={handleChange}
-                  isRequired
-                /> */}
 
                 <InputGroup>
                   <Input
@@ -267,7 +250,6 @@ export const Signup = () => {
                   name="role"
                   value={role}
                   onChange={handleChange}
-                  // below is only for placeholder/value color
                   {...(value === "" && { color: "gray" })}
                 >
                   <option value="User">User</option>
@@ -302,7 +284,11 @@ export const Signup = () => {
               />
             </form>
             <Link to={"/login"}>
-              <Button className="signupButton" textAlign={"center"} variant={"ghost"}>
+              <Button
+                className="signupButton"
+                textAlign={"center"}
+                variant={"ghost"}
+              >
                 Already have an account ? &nbsp;{" "}
                 <span style={{ color: "red" }}>LOGIN</span>
               </Button>
@@ -313,7 +299,3 @@ export const Signup = () => {
     </div>
   );
 };
-
-{
-  /* <Link to={"/login"}>Login</Link> */
-}

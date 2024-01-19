@@ -8,26 +8,84 @@ import axios from "axios";
 
 // GET All Products
 
+// export const getProducts = (paramsObj, id) => (dispatch) => {
+
+
+
+//   console.log({ paramsObj, id })
+
+
+
+//   dispatch({ type: PRODUCT_REQUEST });
+//   let URLwithCondition = "http://192.168.0.111:4500/api/shop/"
+
+
+
+
+
+//   // if (id) {
+//   //   // URLwithCondition = `${URLwithCondition}/${id}`;
+//   //   URLwithCondition = "http://192.168.0.111:4500/api/shop/id"
+
+
+//   // }
+
+//   if (id) {
+//     URLwithCondition = `http://192.168.0.111:4500/api/shop/${id}`;
+//   }
+
+
+
+
+//   console.log({ URLwithCondition })
+
+//   axios.post(URLwithCondition, paramsObj)
+//     .then((res) => {
+//       dispatch({
+//         type: GET_PRODUCT_SUCCESS,
+//         payload: res?.data?.data?.docs,
+//       });
+//     })
+//     .catch((error) => {
+//       dispatch({
+//         type: PRODUCT_FAILURE,
+//       });
+//     });
+// };
+
+
 export const getProducts = (paramsObj, _id) => (dispatch) => {
+
+  console.log({ paramsObj, _id })
+
+
+
+
+
   dispatch({ type: PRODUCT_REQUEST });
+  let URLwithCondition = "http://192.168.0.111:4500/api/shop/";
 
-  //  conditional fetch
-  let URLwithCondition = "http://localhost:4500/shop";
   if (_id) {
-    URLwithCondition = `${URLwithCondition}/${_id}`;
+    URLwithCondition = `http://192.168.0.111:4500/api/shop/id?id=${_id}`;
   }
-  // if (_id) is present then fetch on the basis of _id
 
-  axios
-    // .get(`http://localhost:4500/shop`, paramsObj)
-    // .get(`http://localhost:4500/shop`)
-    .get(URLwithCondition, paramsObj)
+  console.log({ URLwithCondition });
+
+  axios.post(URLwithCondition, paramsObj)
     .then((res) => {
-      // console.log("@@@response", res.data);
-      dispatch({
-        type: GET_PRODUCT_SUCCESS,
-        payload: res.data,
-      });
+
+      if (res?.data?.dataFetch) {
+        dispatch({
+          type: GET_PRODUCT_SUCCESS,
+          payload: res?.data?.dataFetch,
+        });
+      } else {
+
+        dispatch({
+          type: GET_PRODUCT_SUCCESS,
+          payload: res?.data?.data?.docs,
+        });
+      }
     })
     .catch((error) => {
       dispatch({

@@ -1,16 +1,19 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const userRouter = express.Router();
 require("dotenv").config();
-const { UserModel } = require("../models/User.model");
-const { AdminModel } = require("../models/Admin.model");
+const { UserModel } = require("../models/user.model");
 const { BlacklistModel } = require("../models/blacklist.model");
-const { passwordValidater } = require("../middlewares/validator.middleware");
 const { RoleModel } = require("../models/roles.model");
+const jwt = require("jsonwebtoken");
+
+const { handleResponse } = require('../utils/helper')
 
 // Register
-userRouter.post("/register", passwordValidater, async (req, res) => {
+userRouter.post("/register", async (req, res) => {
+
+  console.log("hello", req.body)
+
   const { name, email, password, age, city } = req.body;
 
   // Saving type of role while Signup
@@ -32,7 +35,8 @@ userRouter.post("/register", passwordValidater, async (req, res) => {
       if (err) {
         return res.json({ err: err.message });
       } else {
-        const user = UserModel({ ...req.body, password: hash, roles });
+        const user = UserModel({ ...req.body, password: hash });
+        // const user = UserModel({ ...req.body, password: hash, roles });
         await user.save();
       }
     });
@@ -47,47 +51,47 @@ userRouter.post("/register", passwordValidater, async (req, res) => {
 
 // Login
 userRouter.post("/login", async (req, res) => {
+  console.log("BODY--->", req.body)
   try {
     const { email, password } = req.body;
     const userExists = await UserModel.findOne({ email }).populate("roles");
 
-    if (userExists) {
-      bcrypt.compare(password, userExists.password, (err, result) => {
-        if (result) {
-          var token = jwt.sign(
-            {
-              userID: userExists._id,
-              userName: userExists.name,
-              type: userExists.type,
-              roles: userExists.roles,
-            },
-            process.env.JWT_SECRET_KEY,
-            { expiresIn: "1h" }
-          );
 
-          if (token) {
-            res.status(200).json({
-              msg: "Login Successful",
-              token: token,
-              user: userExists,
-            });
-            /* Above userID will help in making sure which product is being added in the CART PAGE on the Client Side, retrieve in FE */
-          } else {
-            res
-              .status(200)
-              .json({ msg: "Something went wrong. Please try again." });
-          }
-        } else {
-          res.status(400).json({ msg: "Invalid Credentials." });
-        }
-      });
+console.log("userExists", userExists)
+
+    if (userExists) {
+      const accessToken = jwt.sign({
+        userID: userExists._id
+      },
+        process.env.JWT_SECRET_KEY, { expiresIn: '1d' }
+      )
+      if (accessToken) {
+        const userWithoutPass = { ...userExists.toObject() }
+        delete userWithoutPass.password
+        handleResponse(res, 200, "Login Successful", userWithoutPass, accessToken)
+      } else {
+        handleResponse(res, 200, "Something went wrong. Please try again.")
+      }
     } else {
-      res.status(400).json({ msg: "User does not exist" });
+      handleResponse(res, 400, "User does not exist")
+
     }
+
   } catch (err) {
     res.status(400).json({ err: err.message });
   }
 });
+
+
+
+
+
+
+
+
+
+
+
 
 // Logout : couldn't implement
 
