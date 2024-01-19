@@ -19,6 +19,7 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import "../../App.css";
 import { registerencoded } from "../../Utilities/encoded/registerencoded";
 import { signupface } from "../../Utilities/encoded/signupface";
+import { urlBase } from "../../api/constant";
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -85,7 +86,7 @@ export const Signup = () => {
     }
 
     axios
-      .post(`http://192.168.0.111:4500/api/users/register`, {
+      .post(`${urlBase}/users/register`, {
         name: state.name,
         email: state.email,
         password: state.password,

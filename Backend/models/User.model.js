@@ -9,9 +9,9 @@ const userSchema = new Schema(
     password: { type: String, required: true },
     age: { type: Number, required: true },
     city: { type: String, required: true },
-    productInCart: [
-      { type: Schema.Types.ObjectId, ref: "products" }
-    ],
+    // productInCart: [
+    //   { type: Schema.Types.ObjectId, ref: "products" }
+    // ],
 
     roles: { type: [String], ref: "roles" },
   },

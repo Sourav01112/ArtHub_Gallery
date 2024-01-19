@@ -1,3 +1,4 @@
+import { urlBase } from "../../api/constant";
 import {
   PRODUCT_REQUEST,
   PRODUCT_FAILURE,
@@ -6,70 +7,16 @@ import {
 
 import axios from "axios";
 
-// GET All Products
-
-// export const getProducts = (paramsObj, id) => (dispatch) => {
-
-
-
-//   console.log({ paramsObj, id })
-
-
-
-//   dispatch({ type: PRODUCT_REQUEST });
-//   let URLwithCondition = "http://192.168.0.111:4500/api/shop/"
-
-
-
-
-
-//   // if (id) {
-//   //   // URLwithCondition = `${URLwithCondition}/${id}`;
-//   //   URLwithCondition = "http://192.168.0.111:4500/api/shop/id"
-
-
-//   // }
-
-//   if (id) {
-//     URLwithCondition = `http://192.168.0.111:4500/api/shop/${id}`;
-//   }
-
-
-
-
-//   console.log({ URLwithCondition })
-
-//   axios.post(URLwithCondition, paramsObj)
-//     .then((res) => {
-//       dispatch({
-//         type: GET_PRODUCT_SUCCESS,
-//         payload: res?.data?.data?.docs,
-//       });
-//     })
-//     .catch((error) => {
-//       dispatch({
-//         type: PRODUCT_FAILURE,
-//       });
-//     });
-// };
-
 
 export const getProducts = (paramsObj, _id) => (dispatch) => {
 
-  console.log({ paramsObj, _id })
-
-
-
-
-
   dispatch({ type: PRODUCT_REQUEST });
-  let URLwithCondition = "http://192.168.0.111:4500/api/shop/";
+  let URLwithCondition = `${urlBase}/shop/`;
 
   if (_id) {
-    URLwithCondition = `http://192.168.0.111:4500/api/shop/id?id=${_id}`;
+    URLwithCondition = `${urlBase}/shop/id?id=${_id}`;
   }
 
-  console.log({ URLwithCondition });
 
   axios.post(URLwithCondition, paramsObj)
     .then((res) => {

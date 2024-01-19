@@ -1,3 +1,4 @@
+import { urlBase } from "../../api/constant";
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -5,7 +6,6 @@ import {
   LOGOUT,
 } from "./actionTypes";
 import axios from "axios";
-
 function delay(ms) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -19,7 +19,7 @@ export const loginAction =
     if (email && password) {
       return axios
         .post(
-          `http://192.168.0.111:4500/api/users/login`,
+          `${urlBase}/users/login`,
           userData
         )
         .then((res) => {

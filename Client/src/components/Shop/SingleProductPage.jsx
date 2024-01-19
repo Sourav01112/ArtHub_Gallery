@@ -33,14 +33,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../Redux/productReducer/action";
 import Contact from "../../components/pages/Contact";
 import CartPage from "./CartPage";
+import { addToCartAction, getCartAction } from "../../Redux/cartReducer/action";
 
 export const SingleProductPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { products, isLoading, isError } = useSelector(
     (store) => store.productReducer
   );
-
+  const { token } = useSelector((store) => store.authReducer);
+  const cartData = useSelector((store) => store.cartReducer);
   const navigate = useNavigate();
+
+  const cartLength = cartData?.cartData;
   const [refresh, setRefresh] = useState(false);
   const [isAuth, SetisAuth] = useState(true);
   const [val, setval] = useState(1);
@@ -65,42 +69,14 @@ export const SingleProductPage = () => {
     dispatch(getProducts({}, _id));
   }, []);
 
-  console.log("PRODUCTS FROM REDUCER /ID", products?.image);
-  /*  Now to make sure ADD to CART works properly, we need the product ID and at the same time which user is logged in so that we can keep a track of who is buying what..thorugh handleADDtoCART */
+  const handleADDtoCART = () => {
+    const payload = {
+      productId: _id,
+      quantity: 1,
+    };
 
-  //   const handleADDtoCART = (product_ID) => {
-  //     let productID = product_ID;
-  //     const user = localStorage.getItem("user");
-  //     const userObjinLS = JSON.parse(user);
-  //     const userID = userObjinLS._id;
-  //     const data = { userID: userID };
-
-  //     console.log("user", userID);
-  //     console.log("Product ID", productID);
-  //     // Generally userID can be retreived with getItem in backend also, but this is temporary, will change later with help of decoding in backend
-  //     // console.log({ productID });
-  //     // console.log(JSON.parse(userID));
-  //     // got productID and userID from frontEnd, now logic can be written on the BE
-  //     /*   const parsedUserID = JSON.parse(userID);
-  //     //to remove the double quotes
-  //  */
-
-  //     // Logic for Duplicate
-
-  //     const payload = { productID, userID };
-  //     // const headers = { loginToken: localStorage.getItem("loginToken") };
-  //     axios
-  //       .post("http://192.168.0.111:4500/api/shop/add-to-cart", payload)
-  //       .then((res) => {
-  //         // console.log(res.data);
-  //         if (res.data.status === 200) {
-  //           setRefresh(!refresh);
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         console.log(err, "30");
-  //       });
-  //   };
+    dispatch(addToCartAction(payload, token));
+  };
 
   return (
     <div>
@@ -121,6 +97,7 @@ export const SingleProductPage = () => {
         <Text textAlign={"center"} ml={400} className="breadcrumText">
           Home <ChevronRightIcon /> Shop <ChevronRightIcon /> {products?.title}
         </Text>
+        <Button onClick={() => navigate("/get/cart")}>Cart</Button>
       </div>
 
       <div className="ImageFlex">
@@ -201,10 +178,12 @@ export const SingleProductPage = () => {
             className="ButtonContainer"
             style={{ display: "flex", flexDirection: "column" }}
           >
-            {/* <Button
+            <Button
               // onClick={onOpen}
               onClick={() => {
-                handleADDtoCART(products._id);
+                handleADDtoCART();
+
+                // handleADDtoCART(products._id);
                 toast({
                   position: "top",
                   title: "Art added to Cart !",
@@ -214,16 +193,17 @@ export const SingleProductPage = () => {
                   isClosable: true,
                 });
               }}
-              // key={size}
-              // sending product ID directly through function
             >
               ADD TO CART
-            </Button> */}
-            <Button ref={btnRef} onClick={() => onOpen()}>
-              SHOW CART
             </Button>
+
+            {/* <Button ref={btnRef} onClick={() => onOpen()}>
+              SHOW CART
+            </Button> */}
           </div>
-          <Drawer
+
+          {/*  Showing Cart Drawer */}
+          {/* <Drawer
             isOpen={isOpen}
             placement="right"
             onClose={onClose}
@@ -234,7 +214,7 @@ export const SingleProductPage = () => {
 
             <DrawerContent css={{ "&::-webkit-scrollbar": { width: "6px" } }}>
               <DrawerCloseButton />
-              <DrawerHeader>Cart : 4</DrawerHeader>
+              <DrawerHeader>Cart : {cartLength?.length}</DrawerHeader>
 
               <DrawerBody css={{ "&::-webkit-scrollbar": { width: "6px" } }}>
                 <CartPage />
@@ -247,7 +227,8 @@ export const SingleProductPage = () => {
                 <Button onClick={onClose}>Cancel</Button>
               </DrawerFooter>
             </DrawerContent>
-          </Drawer>
+          </Drawer> */}
+          {/*  Showing Cart Drawer */}
         </div>
       </div>
       <Contact />

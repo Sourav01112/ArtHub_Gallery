@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Container, Image, Text } from "@chakra-ui/react";
 import { Shopcard } from "./Shopcard";
-import ShopBig from "../../assets/Shop_Big.jpg";
+import { Shop_Big } from "../../Utilities/encoded/Shop_Big";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { getProducts } from "../../Redux/productReducer/action";
@@ -35,7 +35,16 @@ export const Shop = () => {
   return (
     <div>
       <div style={{ position: "relative", display: "inline-block" }}>
-        <img src={ShopBig} alt="Image" style={{ maxWidth: "100%" }} />
+        <img
+          alt="Image"
+          src={Shop_Big}
+          style={{
+            maxWidth: "100%",
+         
+          }}
+        />
+        {/* <Image src={Shop_Big} className="loginImageForm" w={"100%"} /> */}
+
         <Link to="/collections/shop">
           <div
             style={{
@@ -88,7 +97,6 @@ export const Shop = () => {
                   </Link>
                 </div>
               ))}
-       
         </div>
         <Link to="/collections/shop">
           <Button>SHOP ALL</Button>

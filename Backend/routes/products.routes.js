@@ -10,11 +10,7 @@ productRouter.use(errorHandler);
 
 // GET ALL PRODUCTS : Multiple
 productRouter.post("/", async (req, res) => {
-
-
-
-  console.log("insdie /")
-
+  // console.log("insdie /")
   const options = {
     page: req.body.page,
     limit: req.body.limit,
@@ -39,15 +35,14 @@ productRouter.post("/", async (req, res) => {
 
 // To GET only One Product : ID known
 productRouter.post("/:id", async (req, res) => {
-
-  console.log("---HITTING-----", req.query)
+  // console.log("---HITTING-----", req.query)
   // if (req.permissions.indexOf("view-product") === -1) {
   //   return res.send({ code: 401, message: "Unauthenticated" });
   // }
   // return
   let data = await ProductsModel.findById(req.query.id);
 
-  console.log("data", data)
+  // console.log("data", data)
   if (data) {
     res.status(200).json({ msg: "Fetch by ID success", dataFetch: data });
   } else {
@@ -57,39 +52,39 @@ productRouter.post("/:id", async (req, res) => {
 
 // Add to Cart
 
-productRouter.post("/add-to-cart", async (req, res) => {
+// productRouter.post("/add-to-cart", async (req, res) => {
 
-  console.log("------>req.body", req.body);
+//   console.log("------>req.body", req.body);
 
-  const isUpdate = await UserModel.updateOne(
-    { _id: req.body.userID },
-    {
-      $addToSet: { productInCart: req.body.productID },
-    }
-    /*   // $addToSet will help in pushing some data inside Array becuase productInCart is  Array, so this method is the only way */
-  );
-  if (isUpdate) {
-    return res.status(200).json({ msg: "Add to cart success." });
-  } else {
-    return res.status(500).json({ msg: "Server Error" });
-  }
-});
+//   const isUpdate = await UserModel.updateOne(
+//     { _id: req.body.userID },
+//     {
+//       $addToSet: { productInCart: req.body.productID },
+//     }
+//     /*   // $addToSet will help in pushing some data inside Array becuase productInCart is  Array, so this method is the only way */
+//   );
+//   if (isUpdate) {
+//     return res.status(200).json({ msg: "Add to cart success." });
+//   } else {
+//     return res.status(500).json({ msg: "Server Error" });
+//   }
+// });
 
-// GET productInCart products
+// // GET productInCart products
 
-productRouter.post("/get-cart", async (req, res) => {
-  console.log("req.body")
-  const userID = req.body.userID;
-  const data = await UserModel.findOne({ _id: userID }).populate(
-    "productInCart"
-  );
+// productRouter.post("/get-cart", async (req, res) => {
+//   console.log("req.body")
+//   const userID = req.body.userID;
+//   const data = await UserModel.findOne({ _id: userID }).populate(
+//     "productInCart"
+//   );
 
-  if (data) {
-    return res.status(200).json({ msg: "Get cart success.", data: data });
-  } else {
-    return res.status(500).json({ msg: "Server Error" });
-  }
-});
+//   if (data) {
+//     return res.status(200).json({ msg: "Get cart success.", data: data });
+//   } else {
+//     return res.status(500).json({ msg: "Server Error" });
+//   }
+// });
 
 //****  ADD here the filter, sorting, pagination for useSearchParams in the FrontEnd ******
 

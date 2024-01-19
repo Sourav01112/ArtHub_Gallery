@@ -3,21 +3,24 @@ const { BlacklistModel } = require("../models/blacklist.model");
 require("dotenv").config();
 
 const authMiddleware = async (req, res, next) => {
+
+  // console.log("req.headers in authMiddleware ", req.headers)
+
   const tokenExists = req.headers.authorization?.split(" ")[1] || null;
 
-  console.log("@tokenExists", tokenExists);
+  console.log("@tokenExists0000", tokenExists);
 
 
   if (tokenExists !== undefined) {
     try {
-      const decoded = jwt.verify(tokenExists, process.env.SECRET_KEY);
+      const decoded = jwt.verify(tokenExists, process.env.JWT_SECRET_KEY);
       console.log("@@decoded", decoded);
       if (decoded) {
         req.body.userID = decoded.userID;
-        req.body.userName = decoded.userName;
+        // req.body.userName = decoded.userName;
 
         console.log("@userID", decoded.userID);
-        console.log("@userName", decoded.userName);
+        // console.log("@userName", decoded.userName);
         next();
       } else {
         res.status(401).json({ msg: "Not Authorized" });
