@@ -35,7 +35,7 @@ const formReducer = (state, action) => {
       };
     }
     default: {
-      console.log("Action Type is Invalid");
+      //("Action Type is Invalid");
     }
   }
 };
@@ -95,7 +95,7 @@ export const Signup = () => {
         role: state.role,
       })
       .then((res) => {
-        console.log("Data", res);
+        //("Data", res);
         if (res.data.msg === "The new user has been registered") {
           setSignupSuccess(true);
           toast({
@@ -118,7 +118,7 @@ export const Signup = () => {
         });
       })
       .catch((error) => {
-        console.log("Error", error);
+        //("Error", error);
         toast({
           position: "top-right",
           description: "Error Occurred",

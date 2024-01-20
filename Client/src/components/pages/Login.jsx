@@ -41,7 +41,7 @@ export const Login = () => {
   const toast = useToast();
   const isError = email === "";
   const { isAuth } = useSelector((store) => store.authReducer);
-  // console.log("@@@location from Login", location);
+  // //("@@@location from Login", location);
 
   // All the Logic inside handleSubmit is in action.js of AuthReducer
 
@@ -86,7 +86,7 @@ export const Login = () => {
           });
         })
         .catch((err) => {
-          console.log(err);
+          //(err);
         });
 
       delay(2000)
@@ -94,7 +94,7 @@ export const Login = () => {
           navigate(location.state);
         })
         .catch((err) => {
-          console.log(err);
+          //(err);
         });
     });
   };

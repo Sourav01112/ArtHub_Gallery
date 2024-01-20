@@ -14,7 +14,7 @@ import { Signup } from "./components/pages/Signup";
 
 
 
-// console.log("urlBase---------->", import.meta.env.VITE_REACT_APP_ENV);
+// //("urlBase---------->", import.meta.env.VITE_REACT_APP_ENV);
 
 
 function App() {

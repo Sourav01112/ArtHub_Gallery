@@ -10,7 +10,7 @@ if (production) {
 }
 
 
-// console.log("urlBase---------->", import.meta.env.VITE_REACT_APP_ENV);
+// //("urlBase---------->", import.meta.env.VITE_REACT_APP_ENV);
 
 
 // if (import.meta.env.VITE_REACT_APP_ENV === 'true') {
@@ -23,7 +23,7 @@ if (production) {
 // }
 
 
-// console.log("urlBase=======", urlBase)
+// //("urlBase=======", urlBase)
 
 
 

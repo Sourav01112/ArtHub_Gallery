@@ -23,7 +23,7 @@ export const loginAction =
           userData
         )
         .then((res) => {
-          console.log("@@ token from authReducer ~ action", res);
+          //("@@ token from authReducer ~ action", res);
           dispatch({
             type: LOGIN_SUCCESS,
             payload: {
@@ -45,7 +45,7 @@ export const loginAction =
         })
         .catch((err) => {
           dispatch({ type: LOGIN_FAILURE, payload: err.message });
-          console.log(err);
+          //(err);
           toast({
             position: "top",
             title: `Request Failed`,

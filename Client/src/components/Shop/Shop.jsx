@@ -30,7 +30,7 @@ export const Shop = () => {
     dispatch(getProducts(paramsObj));
   }, []);
 
-  // console.log(products);
+  // //(products);
 
   return (
     <div>

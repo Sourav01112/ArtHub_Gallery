@@ -17,7 +17,7 @@ const inState = {
 };
 
 export const reducer = (state = inState, { type, payload }) => {
-  // console.log("@payload", payload);
+  // //("@payload", payload);
   switch (type) {
     case LOGIN_REQUEST: {
       return {

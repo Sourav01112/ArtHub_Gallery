@@ -9,7 +9,7 @@ const inState = {
   isError: false,
   products: [],
 };
-// console.log(inState);
+// //(inState);
 
 export const reducer = (state = inState, { type, payload }) => {
 

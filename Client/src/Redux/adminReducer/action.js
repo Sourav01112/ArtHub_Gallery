@@ -19,7 +19,7 @@ export const getAdminProducts =()=> (dispatch) => {
   axios
     .get('http://localhost:4500/admin/getProducts')
     .then((res) => {
-      console.log("@@@response", res.data);
+      //("@@@response", res.data);
       dispatch({
         type: PRODUCT_SUCCESS,
         payload: res.data,
@@ -36,7 +36,7 @@ export const verifyToken = () => async (dispatch) => {
     return await axios
       .post(`http://localhost:4500/admin/verify`, { token })
       .then((res) => {
-        // console.log(res);
+        // //(res);
         if (res.data.decoded.role == "admin") {
           dispatch({ type: ADMIN_TYPE, payload: true });
         } else {
@@ -44,7 +44,7 @@ export const verifyToken = () => async (dispatch) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        //(err);
       });
   } else {
     dispatch({ type: ADMIN_TYPE, payload: false });

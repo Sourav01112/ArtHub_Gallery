@@ -55,7 +55,7 @@ export const Admin = () => {
   const [deletedData, setDeletedData] = useState([]);
   const [refreshPage, setRefreshPage] = useState(false);
 
-  // console.log("@@@@", products);
+  // //("@@@@", products);
 
   useEffect(() => {
     //  add ParamsObj inside getProducts and also in action.js when adding the filtering/sorting and useSearchParams
@@ -63,11 +63,11 @@ export const Admin = () => {
     axios
       .get("http://localhost:4500/admin/getProducts")
       .then((res) => {
-        // console.log("@@@response", res.data);
+        // //("@@@response", res.data);
         setData(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        //(err);
       });
   }, [refreshPage]);
 
@@ -78,7 +78,7 @@ export const Admin = () => {
         data: requestData,
       })
       .then((res) => {
-        console.log(res);
+        //(res);
         setRefreshPage(!refreshPage);
         if (res.data.msg === "Selected Item Deleted successfully") {
           toast({
@@ -99,7 +99,7 @@ export const Admin = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        //(err);
       });
   };
 
@@ -175,7 +175,7 @@ export const Admin = () => {
                     <Checkbox
                       color={"gray"}
                       onChange={(e) => {
-                        console.log(e.target.checked);
+                        //(e.target.checked);
                         if (e.target.checked === true) {
                           setDeletedData([...deletedData, ele._id]);
                         } else {

@@ -35,7 +35,7 @@ export default function Admin() {
 
   const isError = email === "";
 
-  // console.log(location, admin);
+  // //(location, admin);
 
   function handleAdminLogin() {
     // Form validation
@@ -60,7 +60,7 @@ export default function Admin() {
           password,
         })
         .then((res) => {
-          console.log(res);
+          //(res);
           toast({
             position: "top",
             title: res.statusText,
@@ -79,7 +79,7 @@ export default function Admin() {
           }
         })
         .catch((err) => {
-          console.log(err);
+          //(err);
           toast({
             position: "top",
             title: `Request Failed`,

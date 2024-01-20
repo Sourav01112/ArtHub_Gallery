@@ -85,9 +85,9 @@ export const AddProduct = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        //(err);
       });
-    // console.log({ title, desc, image, price, subtitle, year, artist, inStock });
+    // //({ title, desc, image, price, subtitle, year, artist, inStock });
 
     setTitle("");
     setDesc("");
