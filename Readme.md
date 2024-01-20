@@ -4,7 +4,7 @@
 <p>1. Clone the repo : VITE App</p>
 
 ```
-git clone https://github.com/Sourav01112/gusty-adjustment-6018.git
+git clone https://github.com/Sourav01112/ArtHub
 ```
 
 <p>2. Install NPM packages in both Client & Backend</p>
