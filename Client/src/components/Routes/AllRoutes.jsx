@@ -35,9 +35,9 @@ export const AllRoutes = () => {
         path="/get/cart"
         // path="/shop/:_id"
         element={
-          // <PrivateRoute>
-          <CartPage />
-          // </PrivateRoute>
+          <PrivateRoute>
+            <CartPage />
+          </PrivateRoute>
         }
       />
 

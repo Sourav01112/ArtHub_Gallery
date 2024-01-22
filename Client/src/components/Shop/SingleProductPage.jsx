@@ -18,6 +18,9 @@ import {
   Divider,
   Heading,
   useToast,
+  Badge,
+  Stack,
+  Spinner,
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import "./SingleProductPage.css";
@@ -27,38 +30,41 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import { AiOutlineShoppingCart } from "react-icons/ai";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../Redux/productReducer/action";
 import Contact from "../../components/pages/Contact";
 import CartPage from "./CartPage";
 import { addToCartAction, getCartAction } from "../../Redux/cartReducer/action";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 export const SingleProductPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { products, isLoading, isError } = useSelector(
     (store) => store.productReducer
   );
+  const toast = useToast();
   const { token } = useSelector((store) => store.authReducer);
   const cartData = useSelector((store) => store.cartReducer);
   const navigate = useNavigate();
 
   const cartLength = cartData?.cartData;
+  console.log("cartData--------", cartData);
+
   const [refresh, setRefresh] = useState(false);
   const [isAuth, SetisAuth] = useState(true);
   const [val, setval] = useState(1);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const btnRef = useRef();
-  const toast = useToast();
 
   // if the token is deleted navigate to Login
   useEffect(() => {
     if (!localStorage.getItem("loginToken")) {
       navigate("/login");
     }
-  }, []);
+    dispatch(getCartAction(token));
+  }, [getCartAction]);
 
   const dispatch = useDispatch();
   const [alertStatus, SetAlert] = useState(false);
@@ -75,7 +81,7 @@ export const SingleProductPage = () => {
       quantity: 1,
     };
 
-    dispatch(addToCartAction(payload, token));
+    dispatch(addToCartAction(payload, token, cartData, toast));
   };
 
   return (
@@ -94,10 +100,40 @@ export const SingleProductPage = () => {
         </Alert>
       ) : null}
       <div className="breadCrum">
-        <Text textAlign={"center"} ml={400} className="breadcrumText">
-          Home <ChevronRightIcon /> Shop <ChevronRightIcon /> {products?.title}
+        <Text textAlign="center" className="breadcrumText">
+          <Link to="/" className="breadcrumb-link">
+            Home
+          </Link>{" "}
+          <ChevronRightIcon boxSize={4} color="gray.500" />
+          <Link to="/shop" className="breadcrumb-link">
+            Shop
+          </Link>{" "}
+          <ChevronRightIcon boxSize={4} color="gray.500" /> {products?.title}
         </Text>
-        <Button onClick={() => navigate("/get/cart")}>Cart</Button>
+        {/* 
+        <div
+          style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+          onClick={() => navigate("/get/cart")}
+        >
+          <AiOutlineShoppingCart
+            style={{ fontSize: "24px", marginRight: "5px" }}
+          />
+          {cartData === undefined ? ( // Assuming cartData is initially undefined
+            <Spinner size="sm" color="green.500" />
+          ) : (
+            <>
+              {cartData?.cartData?.length > 0 ? (
+                <Badge variant="solid" colorScheme="green">
+                  {cartData?.cartData?.length}
+                </Badge>
+              ) : (
+                <Badge variant="solid" colorScheme="red">
+                  0
+                </Badge>
+              )}
+            </>
+          )}
+        </div> */}
       </div>
 
       <div className="ImageFlex">
@@ -137,9 +173,9 @@ export const SingleProductPage = () => {
         <div
           className="content"
           style={{
-            border: "1px solid red",
+            // border: "1px solid red",
             textAlign: "center",
-            width: "90%",
+            width: "80%",
             // margin: "auto",
           }}
         >
@@ -180,30 +216,18 @@ export const SingleProductPage = () => {
           >
             <Button
               // onClick={onOpen}
-              onClick={() => {
-                handleADDtoCART();
-
-                // handleADDtoCART(products._id);
-                toast({
-                  position: "top",
-                  title: "Art added to Cart !",
-                  // description: "Please fill in all the fields.",
-                  status: "success",
-                  duration: 2000,
-                  isClosable: true,
-                });
-              }}
+              onClick={() => handleADDtoCART()}
             >
               ADD TO CART
             </Button>
 
-            {/* <Button ref={btnRef} onClick={() => onOpen()}>
+            <Button ref={btnRef} onClick={() => onOpen()}>
               SHOW CART
-            </Button> */}
+            </Button>
           </div>
 
           {/*  Showing Cart Drawer */}
-          {/* <Drawer
+          <Drawer
             isOpen={isOpen}
             placement="right"
             onClose={onClose}
@@ -227,7 +251,7 @@ export const SingleProductPage = () => {
                 <Button onClick={onClose}>Cancel</Button>
               </DrawerFooter>
             </DrawerContent>
-          </Drawer> */}
+          </Drawer>
           {/*  Showing Cart Drawer */}
         </div>
       </div>

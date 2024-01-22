@@ -21,9 +21,11 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
   Button,
+  Spinner,
+  Badge,
 } from "@chakra-ui/react";
 import { FaArrowCircleUp, FaBars, FaTimes } from "react-icons/fa";
-import { AiOutlineLogin } from "react-icons/ai";
+import { AiOutlineLogin, AiOutlineShoppingCart } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 import { AiOutlineLogout } from "react-icons/ai";
@@ -35,6 +37,10 @@ import "../App.css";
 function NavBar() {
   const [navColour, updateNavbar] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const cartData = useSelector((store) => store.cartReducer);
+
+  console.log("cartData in navBARRRRR", cartData);
+
   const cancelRef = useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -69,7 +75,7 @@ function NavBar() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [cartData]);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -171,7 +177,7 @@ function NavBar() {
               <MenuList mt={5} p={0}>
                 {/* // if the userName is present in localStorage then show Menu, else don't */}
                 {localStorage.getItem("userName") && (
-                  <MenuItem border={"0"} maxH="60px" pl={'2'}>
+                  <MenuItem border={"0"} maxH="60px" pl={"2"}>
                     👋
                     <span
                       style={{
@@ -273,9 +279,35 @@ function NavBar() {
               </AlertDialogOverlay>
             </AlertDialog>
           </div>
-          <Link className="links" style={{ paddingBottom: "5px" }}>
+
+          <div
+            style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+            onClick={() => navigate("/get/cart")}
+          >
+            <AiOutlineShoppingCart
+              style={{ fontSize: "24px", marginRight: "5px" }}
+            />
+            {cartData === undefined ? ( // Assuming cartData is initially undefined
+              <Spinner size="sm" color="green.500" />
+            ) : (
+              <>
+                {cartData?.cartData?.length > 0 ? (
+                  <Badge variant="solid" colorScheme="green">
+                    {cartData?.cartData?.length}
+                  </Badge>
+                ) : (
+                  <Badge variant="solid" colorScheme="red">
+                    0
+                  </Badge>
+                )}
+              </>
+            )}
+          </div>
+
+          {/* <Link className="links" style={{ paddingBottom: "5px" }}>
             <Search2Icon />
-          </Link>
+          </Link> */}
+
           <Button className="nav-btn nav-close-btn" onClick={showNavBar}>
             <FaTimes />
           </Button>

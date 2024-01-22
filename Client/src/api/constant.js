@@ -4,8 +4,11 @@ const production = true
 
 
 if (production) {
+    console.log("inside xx")
+
     urlBase = 'https://difficult-petticoat.cyclic.app/api'
 } else {
+    console.log("inside else")
     urlBase = 'http://192.168.0.111:4500/api'
 }
 

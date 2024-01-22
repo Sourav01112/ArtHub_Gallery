@@ -16,7 +16,6 @@ function CartPage() {
 
   const { token } = useSelector((store) => store.authReducer);
   const { cartData, isLoading } = useSelector((store) => store.cartReducer);
-  // // console.log("CART DATa==========", cartData);
 
   useEffect(() => {
     dispatch(getCartAction(token));
@@ -34,6 +33,15 @@ function CartPage() {
     // console.log("productID from button", productId);
     dispatch(removeItemAction(token, productId, cartData));
   };
+  const calculateTotal = () => {
+    const totalPrice = cartData.reduce(
+      (total, item) => total + item?.productId?.price * item?.quantity,
+      0
+    );
+    console.log("toatlPrice", totalPrice);
+    return totalPrice;
+  };
+  calculateTotal();
 
   if (isLoading === undefined || isLoading) {
     // Render a loading spinner or message
@@ -50,6 +58,9 @@ function CartPage() {
       <h1 style={{ marginBottom: "15px", marginTop: "15px" }}>
         CART LIST : {cartData?.length}
       </h1>
+      {/* <h1 style={{ marginBottom: "15px", marginTop: "15px" }}>
+        Total : {calculateTotal()}
+      </h1> */}
       <div style={{ display: "flex", flexDirection: "column" }}>
         <Text>Hello</Text>
         {Array.isArray(cartData) &&

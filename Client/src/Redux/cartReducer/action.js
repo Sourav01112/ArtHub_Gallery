@@ -3,6 +3,7 @@ import {
   ADD_TO_CART_REQUEST,
   ADD_TO_CART_SUCCESS,
   ADD_TO_CART_FAILURE,
+  ADD_TO_CART_DUPLICATE,
   GET_CART_REQUEST,
   GET_CART_SUCCESS,
   GET_CART_FAILURE,
@@ -34,27 +35,103 @@ const updateCartInState = (updatedItem, cartData) => {
   return updatedCart;
 };
 
-export const addToCartAction = (payload, token) => (dispatch) => {
-  dispatch({ type: ADD_TO_CART_REQUEST });
-  let apiHit = `${urlBase}/cart/addCart`;
-  axios.post(apiHit, payload, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((res) => {
-      dispatch({
-        type: ADD_TO_CART_SUCCESS,
-        payload: res?.data?.data
-      })
+// export const addToCartAction = (payload, token, cartData) => (dispatch) => {
 
-    })
-    .catch((error) => {
-      dispatch({
-        type: ADD_TO_CART_FAILURE,
-      });
+
+
+//   console.log(payload, token)
+//   console.log("hello",cartData?.cartData)
+
+//   // return
+//   dispatch({ type: ADD_TO_CART_REQUEST });
+//   let apiHit = `${urlBase}/cart/addCart`;
+//   axios.post(apiHit, payload, {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   })
+//     .then((res) => {
+//       dispatch({
+//         type: ADD_TO_CART_SUCCESS,
+//         payload: res?.data?.data
+//       })
+
+//     })
+//     .catch((error) => {
+//       dispatch({
+//         type: ADD_TO_CART_FAILURE,
+//       });
+//     });
+// };
+
+
+// actions.js
+
+export const addToCartAction = (payload, token, cartData, toast) => (dispatch) => {
+
+
+
+  console.log("hello", cartData?.cartData)
+
+  dispatch({ type: ADD_TO_CART_REQUEST });
+
+
+  // const existingCartItem = cartData?.cartData?.find(item => item.productId === payload.productId);
+
+
+  const existingCartItem = cartData?.cartData?.find((item) => {
+
+    if (item?.productId?._id === payload?.productId) {
+      return true
+    }
+    return false
+  });
+
+  if (existingCartItem) {
+
+    return toast({
+      position: "top",
+      title: "Product already in the cart !",
+      description: "Please increase the quantity in the next step.",
+      status: "warning",
+      duration: 2000,
+      isClosable: true,
     });
+
+  } else {
+    console.log("else")
+    // If the product is not in the cart, proceed with the original logic
+    let apiHit = `${urlBase}/cart/addCart`;
+    return axios.post(apiHit, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        dispatch({
+          type: ADD_TO_CART_SUCCESS,
+          payload: res?.data?.data
+        });
+
+        toast({
+          position: "top",
+          title: "Product added to Cart !",
+          // description: "Please fill in all the fields.",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: ADD_TO_CART_FAILURE,
+        });
+      });
+  }
 };
+
+
+
 
 
 
@@ -67,6 +144,8 @@ export const getCartAction = (token) => (dispatch) => {
     },
   })
     .then((res) => {
+      console.log("res", res)
+
       dispatch({
         type: GET_CART_SUCCESS,
         payload: res?.data?.data,

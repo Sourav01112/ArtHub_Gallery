@@ -6,6 +6,7 @@ import {
   ADD_TO_CART_REQUEST,
   ADD_TO_CART_SUCCESS,
   ADD_TO_CART_FAILURE,
+  ADD_TO_CART_DUPLICATE,
   GET_CART_REQUEST,
   GET_CART_SUCCESS,
   GET_CART_FAILURE,
@@ -29,8 +30,10 @@ const initialState = {
 
 export const reducer = (state = initialState, { type, payload }) => {
 
-
   switch (type) {
+
+
+
     case ADD_TO_CART_REQUEST:
     case GET_CART_REQUEST:
     case INCREMENT_ITEM_REQUEST:
@@ -47,8 +50,30 @@ export const reducer = (state = initialState, { type, payload }) => {
         ...state,
         isLoading: false,
         cartData: [...state.cartData, payload],
+        // cartData: [payload],
+
       };
     }
+
+    // case ADD_TO_CART_DUPLICATE: {
+    //   // Handle the duplicate action, update quantity, or take other appropriate action
+    //   const updatedCart = state.cartData.map(item => {
+    //     if (item?.productId?._id === payload.productId) {
+    //       return {
+    //         ...item,
+    //         quantity: item.quantity + 1,  // Adjust quantity update logic as needed
+    //       };
+    //     }
+    //     return item;
+    //   });
+
+    //   console.log("Returning updateCart", updatedCart)
+    //   return {
+    //     ...state,
+    //     isLoading: false,
+    //     cartData: updatedCart,
+    //   };
+    // }
 
     case GET_CART_SUCCESS:
     case INCREMENT_ITEM_SUCCESS:
