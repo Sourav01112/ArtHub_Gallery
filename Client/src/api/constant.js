@@ -1,6 +1,6 @@
 
 export var urlBase;
-const production = true
+const production = false
 
 
 if (production) {
@@ -9,7 +9,7 @@ if (production) {
     urlBase = 'https://difficult-petticoat.cyclic.app/api'
 } else {
     console.log("inside else")
-    urlBase = 'http://192.168.0.111:4500/api'
+    urlBase = 'http://192.168.56.1:4500/api'
 }
 
 

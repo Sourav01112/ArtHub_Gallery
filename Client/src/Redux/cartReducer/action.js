@@ -16,79 +16,32 @@ import {
   REMOVE_ITEM_REQUEST,
   REMOVE_ITEM_SUCCESS,
   REMOVE_ITEM_FAILURE,
+  CALCULATE_TOTAL
 } from "./actionTypes";
 
 import axios from "axios";
 
 const updateCartInState = (updatedItem, cartData) => {
-
   const updatedCart = [...cartData];
-  // // console.log("upatedCart", updatedCart)
   const index = updatedCart.findIndex(item => item._id === updatedItem._id);
-
-  // // console.log("id inside ----", index)
-
   if (index !== -1) {
     updatedCart[index] = updatedItem;
   }
-
   return updatedCart;
 };
 
-// export const addToCartAction = (payload, token, cartData) => (dispatch) => {
-
-
-
-//   console.log(payload, token)
-//   console.log("hello",cartData?.cartData)
-
-//   // return
-//   dispatch({ type: ADD_TO_CART_REQUEST });
-//   let apiHit = `${urlBase}/cart/addCart`;
-//   axios.post(apiHit, payload, {
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   })
-//     .then((res) => {
-//       dispatch({
-//         type: ADD_TO_CART_SUCCESS,
-//         payload: res?.data?.data
-//       })
-
-//     })
-//     .catch((error) => {
-//       dispatch({
-//         type: ADD_TO_CART_FAILURE,
-//       });
-//     });
-// };
-
-
-// actions.js
 
 export const addToCartAction = (payload, token, cartData, toast) => (dispatch) => {
 
-
-
-  console.log("hello", cartData?.cartData)
-
   dispatch({ type: ADD_TO_CART_REQUEST });
 
-
-  // const existingCartItem = cartData?.cartData?.find(item => item.productId === payload.productId);
-
-
   const existingCartItem = cartData?.cartData?.find((item) => {
-
     if (item?.productId?._id === payload?.productId) {
       return true
     }
     return false
   });
-
   if (existingCartItem) {
-
     return toast({
       position: "top",
       title: "Product already in the cart !",
@@ -97,7 +50,6 @@ export const addToCartAction = (payload, token, cartData, toast) => (dispatch) =
       duration: 2000,
       isClosable: true,
     });
-
   } else {
     console.log("else")
     // If the product is not in the cart, proceed with the original logic
@@ -112,7 +64,6 @@ export const addToCartAction = (payload, token, cartData, toast) => (dispatch) =
           type: ADD_TO_CART_SUCCESS,
           payload: res?.data?.data
         });
-
         toast({
           position: "top",
           title: "Product added to Cart !",
@@ -132,9 +83,6 @@ export const addToCartAction = (payload, token, cartData, toast) => (dispatch) =
 
 
 
-
-
-
 export const getCartAction = (token) => (dispatch) => {
   dispatch({ type: GET_CART_REQUEST });
   let apiHit = `${urlBase}/cart/getCart`;
@@ -144,8 +92,6 @@ export const getCartAction = (token) => (dispatch) => {
     },
   })
     .then((res) => {
-      console.log("res", res)
-
       dispatch({
         type: GET_CART_SUCCESS,
         payload: res?.data?.data,
@@ -162,8 +108,6 @@ export const getCartAction = (token) => (dispatch) => {
 
 
 export const incrementItemAction = (token, productId, cartData) => {
-  // // console.log("in inc^^^^^^", {token, productId, cartData})
-
   return async (dispatch) => {
     dispatch({ type: 'INCREMENT_ITEM_REQUEST' });
     try {
@@ -190,35 +134,36 @@ export const incrementItemAction = (token, productId, cartData) => {
 
 
 
-// Thunk action for decrementing item quantity
 export const decrementItemAction = (token, productId, cartData) => {
-
-
-  // // console.log("in dec^^^^^^", {token, productId, cartData})
   return async (dispatch) => {
-    dispatch({ type: 'DECREMENT_ITEM_REQUEST' });
+    const qtyIsGreaterThanOne = cartData?.find((item) => {
+      if (item.quantity > 1) {
+        return true
+      }
+      return false;
+    });
 
-    try {
-      const response = await axios.post(
-        `${urlBase}/cart/decrement/id?id=${productId}`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      const updatedItem = response.data.data;
-      // // console.log("updatedItem", updatedItem)
-
-
-      dispatch({
-        type: DECREMENT_ITEM_SUCCESS,
-        payload: updateCartInState(updatedItem, cartData)
-      });
-
-    } catch (error) {
-      dispatch({
-        type: DECREMENT_ITEM_FAILURE,
-        payload: error.message
-      });
+    if (qtyIsGreaterThanOne) {
+      dispatch({ type: 'DECREMENT_ITEM_REQUEST' });
+      try {
+        const response = await axios.post(
+          `${urlBase}/cart/decrement/id?id=${productId}`,
+          {},
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        const updatedItem = response.data.data;
+        dispatch({
+          type: DECREMENT_ITEM_SUCCESS,
+          payload: updateCartInState(updatedItem, cartData)
+        });
+      } catch (error) {
+        dispatch({
+          type: DECREMENT_ITEM_FAILURE,
+          payload: error.message
+        });
+      }
+    } else {
+      console.log("SORTTTYIU")
     }
   };
 };
@@ -228,22 +173,13 @@ export const decrementItemAction = (token, productId, cartData) => {
 
 export const removeItemAction = (token, productId) => async (dispatch) => {
 
-
   dispatch({ type: REMOVE_ITEM_REQUEST });
-
   try {
-
-
     const response = await axios.delete(`${urlBase}/cart/remove/id?id=${productId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-
-    // console.log("response======", response)
-
-    // return
-
     dispatch({
       type: REMOVE_ITEM_SUCCESS,
       payload: productId,
@@ -255,3 +191,13 @@ export const removeItemAction = (token, productId) => async (dispatch) => {
     });
   }
 };
+
+
+
+export const calculateTotalAction = (total) => async (dispatch) => {
+
+  dispatch({
+    type: CALCULATE_TOTAL,
+    payload: total,
+  })
+}

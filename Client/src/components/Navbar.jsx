@@ -33,21 +33,20 @@ import LoginLogo from "../assets/Login.png";
 import { logoutAction } from "../Redux/authReducer/action";
 import { useDispatch, useSelector } from "react-redux";
 import "../App.css";
+import { getCartAction } from "../Redux/cartReducer/action";
 
 function NavBar() {
   const [navColour, updateNavbar] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cartData = useSelector((store) => store.cartReducer);
 
-  console.log("cartData in navBARRRRR", cartData);
+  // console.log("cartData in navBARRRRR", cartData);
 
   const cancelRef = useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isAuth = useSelector((store) => store.authReducer.isAuth);
-  // //("1!!!!!isAuth", isAuth);
-
-  // //("isAuth is Boolean value ?", isAuth);
+  const { token } = useSelector((store) => store.authReducer);
 
   const toast = useToast();
   const navRef = useRef();
@@ -59,6 +58,8 @@ function NavBar() {
   const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
+    dispatch(getCartAction(token));
+
     const handleScroll = () => {
       const threshold =
         document.documentElement.scrollHeight - window.innerHeight;
@@ -75,7 +76,7 @@ function NavBar() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [cartData]);
+  }, [getCartAction]);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -287,9 +288,12 @@ function NavBar() {
             <AiOutlineShoppingCart
               style={{ fontSize: "24px", marginRight: "5px" }}
             />
-            {cartData === undefined ? ( // Assuming cartData is initially undefined
-              <Spinner size="sm" color="green.500" />
+            {cartData?.cartData.length === 0 ? (
+              <Badge variant="solid" colorScheme="red">
+                0
+              </Badge>
             ) : (
+              // <Spinner size="sm" color="green.500" />
               <>
                 {cartData?.cartData?.length > 0 ? (
                   <Badge variant="solid" colorScheme="green">

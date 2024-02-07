@@ -1,14 +1,16 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
+  calculateTotalAction,
   decrementItemAction,
   getCartAction,
   incrementItemAction,
   removeItemAction,
 } from "../../Redux/cartReducer/action";
-import { Text, Spinner, Button } from "@chakra-ui/react";
+import { Text, Spinner, Button, HStack, IconButton, VStack } from "@chakra-ui/react";
+import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 
 function CartPage() {
   const navigate = useNavigate();
@@ -17,31 +19,38 @@ function CartPage() {
   const { token } = useSelector((store) => store.authReducer);
   const { cartData, isLoading } = useSelector((store) => store.cartReducer);
 
-  useEffect(() => {
-    dispatch(getCartAction(token));
-  }, []);
+  // console.log("cartData in", cartData);
 
   const handleIncrement = (productId) => {
     dispatch(incrementItemAction(token, productId, cartData));
   };
 
   const handleDecrement = (productId) => {
+    // if (quantity > 1) {
     dispatch(decrementItemAction(token, productId, cartData));
+    // }
   };
 
   const handleRemove = (productId) => {
     // console.log("productID from button", productId);
     dispatch(removeItemAction(token, productId, cartData));
   };
-  const calculateTotal = () => {
+
+  const calculateTotal = useCallback(() => {
     const totalPrice = cartData.reduce(
       (total, item) => total + item?.productId?.price * item?.quantity,
       0
     );
-    console.log("toatlPrice", totalPrice);
-    return totalPrice;
-  };
-  calculateTotal();
+    console.log("totalPrice", totalPrice);
+    dispatch(calculateTotalAction(totalPrice));
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getCartAction(token));
+    calculateTotal();
+  }, [dispatch, token, calculateTotal]);
+
+
 
   if (isLoading === undefined || isLoading) {
     // Render a loading spinner or message
@@ -55,14 +64,13 @@ function CartPage() {
   return (
     <div style={{ overflowX: "hidden", overflow: "hidden" }}>
       <hr style={{ border: "2px solid gray" }} />
-      <h1 style={{ marginBottom: "15px", marginTop: "15px" }}>
+      {/* <h1 style={{ marginBottom: "15px", marginTop: "15px" }}>
         CART LIST : {cartData?.length}
-      </h1>
+      </h1> */}
       {/* <h1 style={{ marginBottom: "15px", marginTop: "15px" }}>
         Total : {calculateTotal()}
       </h1> */}
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <Text>Hello</Text>
         {Array.isArray(cartData) &&
           cartData.length > 0 &&
           cartData.map((item, index) => {
@@ -119,6 +127,32 @@ function CartPage() {
                     </strong>
                     <p> Quantity: {item?.quantity} </p>
 
+                    <div
+                      className="ButtonContainer"
+                      style={{ display: "flex", flexDirection: "column" }}
+                    >
+                      <VStack spacing={1} mb={3}>
+                        <IconButton
+                          w="10px"
+                          icon={<MinusIcon />}
+                          onClick={() => handleDecrement(item?.productId?._id)}
+                          aria-label="Decrement"
+                        />
+                        {/* <Text fontSize="lg">{quantity}</Text> */}
+                        <IconButton
+                          icon={<AddIcon />}
+                          onClick={() => handleIncrement(item?.productId?._id)}
+                          aria-label="Increment"
+                        />
+                      <Button
+                        onClick={() => handleRemove(item?.productId?._id)}
+                      >
+                        Remove
+                      </Button>
+                      </VStack>
+                    </div>
+
+                    {/* 
                     <Button
                       onClick={() => handleIncrement(item?.productId?._id)}
                     >
@@ -135,7 +169,7 @@ function CartPage() {
                       >
                         Remove
                       </Button>
-                    </strong>
+                    </strong> */}
                   </div>
                 </div>
               </div>

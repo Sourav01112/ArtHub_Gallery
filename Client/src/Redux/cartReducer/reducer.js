@@ -19,12 +19,14 @@ import {
   REMOVE_ITEM_REQUEST,
   REMOVE_ITEM_SUCCESS,
   REMOVE_ITEM_FAILURE,
+  CALCULATE_TOTAL
 } from "./actionTypes";
 
 const initialState = {
   isLoading: false,
   isError: false,
   cartData: [],
+  total: 0,
 };
 
 
@@ -125,6 +127,13 @@ export const reducer = (state = initialState, { type, payload }) => {
         isLoading: false,
         isError: true,
         erro: payload,
+      };
+    }
+
+    case CALCULATE_TOTAL: {
+      return {
+        ...state,
+        total: payload,
       };
     }
 

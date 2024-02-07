@@ -40,23 +40,41 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 
 export const SingleProductPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { products, isLoading, isError } = useSelector(
-    (store) => store.productReducer
-  );
-  const toast = useToast();
   const { token } = useSelector((store) => store.authReducer);
   const cartData = useSelector((store) => store.cartReducer);
   const navigate = useNavigate();
-
   const cartLength = cartData?.cartData;
   console.log("cartData--------", cartData);
-
   const [refresh, setRefresh] = useState(false);
   const [isAuth, SetisAuth] = useState(true);
   const [val, setval] = useState(1);
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const dispatch = useDispatch();
+  const [alertStatus, SetAlert] = useState(false);
+  const [art, setArt] = useState();
+  const { _id } = useParams();
   const btnRef = useRef();
+  const toast = useToast();
+  const { products, isLoading, isError } = useSelector(
+    (store) => store.productReducer
+  );
+
+  const calculateTotal = () => {
+    const totalPrice = cartData?.cartData?.reduce(
+      (total, item) => total + item?.productId?.price * item?.quantity,
+      0
+    );
+    console.log("totalPrice", totalPrice);
+    return totalPrice;
+  };
+
+  const handleADDtoCART = () => {
+    const payload = {
+      productId: _id,
+      quantity: 1,
+    };
+    dispatch(addToCartAction(payload, token, cartData, toast));
+  };
 
   // if the token is deleted navigate to Login
   useEffect(() => {
@@ -64,25 +82,9 @@ export const SingleProductPage = () => {
       navigate("/login");
     }
     dispatch(getCartAction(token));
-  }, [getCartAction]);
-
-  const dispatch = useDispatch();
-  const [alertStatus, SetAlert] = useState(false);
-  const [art, setArt] = useState();
-  const { _id } = useParams();
-
-  useEffect(() => {
     dispatch(getProducts({}, _id));
-  }, []);
-
-  const handleADDtoCART = () => {
-    const payload = {
-      productId: _id,
-      quantity: 1,
-    };
-
-    dispatch(addToCartAction(payload, token, cartData, toast));
-  };
+    calculateTotal();
+  }, [getCartAction]);
 
   return (
     <div>
@@ -110,30 +112,6 @@ export const SingleProductPage = () => {
           </Link>{" "}
           <ChevronRightIcon boxSize={4} color="gray.500" /> {products?.title}
         </Text>
-        {/* 
-        <div
-          style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
-          onClick={() => navigate("/get/cart")}
-        >
-          <AiOutlineShoppingCart
-            style={{ fontSize: "24px", marginRight: "5px" }}
-          />
-          {cartData === undefined ? ( // Assuming cartData is initially undefined
-            <Spinner size="sm" color="green.500" />
-          ) : (
-            <>
-              {cartData?.cartData?.length > 0 ? (
-                <Badge variant="solid" colorScheme="green">
-                  {cartData?.cartData?.length}
-                </Badge>
-              ) : (
-                <Badge variant="solid" colorScheme="red">
-                  0
-                </Badge>
-              )}
-            </>
-          )}
-        </div> */}
       </div>
 
       <div className="ImageFlex">
@@ -215,19 +193,35 @@ export const SingleProductPage = () => {
             style={{ display: "flex", flexDirection: "column" }}
           >
             <Button
-              // onClick={onOpen}
               onClick={() => handleADDtoCART()}
+              colorScheme="teal"
+              size="lg"
+              mb={3}
             >
               ADD TO CART
             </Button>
+            {/* 
+            <Button
+              ref={btnRef}
+              onClick={() => onOpen()}
+              colorScheme="purple"
+              size="lg"
+            >
+              SHOW CART
+            </Button> */}
 
-            <Button ref={btnRef} onClick={() => onOpen()}>
+            <Button
+              ref={btnRef}
+              onClick={() => onOpen()}
+              colorScheme="black"
+              size="lg"
+            >
               SHOW CART
             </Button>
           </div>
 
           {/*  Showing Cart Drawer */}
-          <Drawer
+          {/* <Drawer
             isOpen={isOpen}
             placement="right"
             onClose={onClose}
@@ -246,20 +240,51 @@ export const SingleProductPage = () => {
 
               <DrawerFooter>
                 <Button colorScheme="blue" mr={3}>
+                  Total: ${calculateTotal()}
+                </Button>
+
+                <Button colorScheme="blue" mr={3}>
                   Checkout
                 </Button>
                 <Button onClick={onClose}>Cancel</Button>
               </DrawerFooter>
             </DrawerContent>
+          </Drawer> */}
+
+          <Drawer
+            isOpen={isOpen}
+            placement="right"
+            onClose={onClose}
+            finalFocusRef={btnRef}
+            size="md"
+          >
+            <DrawerOverlay />
+            <DrawerContent css={{ "&::-webkit-scrollbar": { width: "6px" } }}>
+              <DrawerCloseButton />
+              <DrawerHeader>Cart: {cartLength?.length}</DrawerHeader>
+              <DrawerBody css={{ "&::-webkit-scrollbar": { width: "6px" } }}>
+                <CartPage />
+              </DrawerBody>
+              <DrawerFooter>
+                <Button colorScheme="blue" mr={3} size="lg">
+                  Total: ${calculateTotal()}
+                </Button>
+                <Button colorScheme="blue" mr={3} size="lg">
+                  Checkout
+                </Button>
+                <Button onClick={onClose} size="lg">
+                  Cancel
+                </Button>
+              </DrawerFooter>
+            </DrawerContent>
           </Drawer>
+
           {/*  Showing Cart Drawer */}
         </div>
       </div>
       <Contact />
     </div>
   );
-
-  // return <Text>Hello</Text>;
 };
 
 // ******************************* DRAWER *****************
