@@ -9,8 +9,14 @@ import {
   incrementItemAction,
   removeItemAction,
 } from "../../Redux/cartReducer/action";
-import { Text, Spinner, Button, HStack, IconButton, VStack } from "@chakra-ui/react";
-import { AddIcon, MinusIcon } from "@chakra-ui/icons";
+import {
+  Text,
+  Spinner,
+  HStack,
+  IconButton,
+} from "@chakra-ui/react";
+import { AddIcon, DeleteIcon, MinusIcon } from "@chakra-ui/icons";
+import "./SingleProductPage.css";
 
 function CartPage() {
   const navigate = useNavigate();
@@ -19,20 +25,16 @@ function CartPage() {
   const { token } = useSelector((store) => store.authReducer);
   const { cartData, isLoading } = useSelector((store) => store.cartReducer);
 
-  // console.log("cartData in", cartData);
 
   const handleIncrement = (productId) => {
     dispatch(incrementItemAction(token, productId, cartData));
   };
 
   const handleDecrement = (productId) => {
-    // if (quantity > 1) {
     dispatch(decrementItemAction(token, productId, cartData));
-    // }
   };
 
   const handleRemove = (productId) => {
-    // console.log("productID from button", productId);
     dispatch(removeItemAction(token, productId, cartData));
   };
 
@@ -50,10 +52,7 @@ function CartPage() {
     calculateTotal();
   }, [dispatch, token, calculateTotal]);
 
-
-
   if (isLoading === undefined || isLoading) {
-    // Render a loading spinner or message
     return (
       <div style={{ textAlign: "center", paddingTop: "50px" }}>
         <Spinner size="xl" />
@@ -64,12 +63,7 @@ function CartPage() {
   return (
     <div style={{ overflowX: "hidden", overflow: "hidden" }}>
       <hr style={{ border: "2px solid gray" }} />
-      {/* <h1 style={{ marginBottom: "15px", marginTop: "15px" }}>
-        CART LIST : {cartData?.length}
-      </h1> */}
-      {/* <h1 style={{ marginBottom: "15px", marginTop: "15px" }}>
-        Total : {calculateTotal()}
-      </h1> */}
+
       <div style={{ display: "flex", flexDirection: "column" }}>
         {Array.isArray(cartData) &&
           cartData.length > 0 &&
@@ -94,9 +88,7 @@ function CartPage() {
                 >
                   {imageUrl && (
                     <img
-                      style={{
-                        width: "50%",
-                      }}
+                      className="cartImg"
                       src={imageUrl}
                       alt={item?.productId?.title}
                     />
@@ -128,48 +120,37 @@ function CartPage() {
                     <p> Quantity: {item?.quantity} </p>
 
                     <div
-                      className="ButtonContainer"
+                      className="cartBtn"
                       style={{ display: "flex", flexDirection: "column" }}
                     >
-                      <VStack spacing={1} mb={3}>
+                      <HStack mb={3}>
+                        {item.quantity == 1 ? (
+                          "null"
+                        ) : (
+                          <>
+                            <IconButton
+                              icon={<MinusIcon w="3" />}
+                              onClick={() =>
+                                handleDecrement(item?.productId?._id)
+                              }
+                              aria-label="Decrement"
+                            />
+                          </>
+                        )}
+
                         <IconButton
-                          w="10px"
-                          icon={<MinusIcon />}
-                          onClick={() => handleDecrement(item?.productId?._id)}
-                          aria-label="Decrement"
-                        />
-                        {/* <Text fontSize="lg">{quantity}</Text> */}
-                        <IconButton
-                          icon={<AddIcon />}
+                          icon={<AddIcon w="3" />}
                           onClick={() => handleIncrement(item?.productId?._id)}
                           aria-label="Increment"
                         />
-                      <Button
-                        onClick={() => handleRemove(item?.productId?._id)}
-                      >
-                        Remove
-                      </Button>
-                      </VStack>
-                    </div>
 
-                    {/* 
-                    <Button
-                      onClick={() => handleIncrement(item?.productId?._id)}
-                    >
-                      Increment
-                    </Button>
-                    <Button
-                      onClick={() => handleDecrement(item?.productId?._id)}
-                    >
-                      Decrement
-                    </Button>
-                    <strong>
-                      <Button
-                        onClick={() => handleRemove(item?.productId?._id)}
-                      >
-                        Remove
-                      </Button>
-                    </strong> */}
+                        <IconButton
+                          icon={<DeleteIcon w="6" />}
+                          onClick={() => handleRemove(item?.productId?._id)}
+                          aria-label="Increment"
+                        />
+                      </HStack>
+                    </div>
                   </div>
                 </div>
               </div>

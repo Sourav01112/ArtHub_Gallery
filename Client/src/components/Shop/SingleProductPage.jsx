@@ -30,7 +30,6 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../Redux/productReducer/action";
 import Contact from "../../components/pages/Contact";
@@ -113,6 +112,9 @@ export const SingleProductPage = () => {
           <ChevronRightIcon boxSize={4} color="gray.500" /> {products?.title}
         </Text>
       </div>
+     
+      <div  className="singlProductAlign"  >
+
 
       <div className="ImageFlex">
         <div className="ImageFlexImage">
@@ -148,6 +150,8 @@ export const SingleProductPage = () => {
             )}
           </Box>
         </div>
+      </div>
+      <div>
         <div
           className="content"
           style={{
@@ -190,7 +194,7 @@ export const SingleProductPage = () => {
           </p>
           <div
             className="ButtonContainer"
-            style={{ display: "flex", flexDirection: "column" }}
+            // style={{ display: "flex", flexDirection: "column" }}
           >
             <Button
               onClick={() => handleADDtoCART()}
@@ -200,15 +204,7 @@ export const SingleProductPage = () => {
             >
               ADD TO CART
             </Button>
-            {/* 
-            <Button
-              ref={btnRef}
-              onClick={() => onOpen()}
-              colorScheme="purple"
-              size="lg"
-            >
-              SHOW CART
-            </Button> */}
+           
 
             <Button
               ref={btnRef}
@@ -219,69 +215,65 @@ export const SingleProductPage = () => {
               SHOW CART
             </Button>
           </div>
-
-          {/*  Showing Cart Drawer */}
-          {/* <Drawer
-            isOpen={isOpen}
-            placement="right"
-            onClose={onClose}
-            finalFocusRef={btnRef}
-            size={"md"}
-          >
-            <DrawerOverlay />
-
-            <DrawerContent css={{ "&::-webkit-scrollbar": { width: "6px" } }}>
-              <DrawerCloseButton />
-              <DrawerHeader>Cart : {cartLength?.length}</DrawerHeader>
-
-              <DrawerBody css={{ "&::-webkit-scrollbar": { width: "6px" } }}>
-                <CartPage />
-              </DrawerBody>
-
-              <DrawerFooter>
-                <Button colorScheme="blue" mr={3}>
-                  Total: ${calculateTotal()}
-                </Button>
-
-                <Button colorScheme="blue" mr={3}>
-                  Checkout
-                </Button>
-                <Button onClick={onClose}>Cancel</Button>
-              </DrawerFooter>
-            </DrawerContent>
-          </Drawer> */}
-
-          <Drawer
-            isOpen={isOpen}
-            placement="right"
-            onClose={onClose}
-            finalFocusRef={btnRef}
-            size="md"
-          >
-            <DrawerOverlay />
-            <DrawerContent css={{ "&::-webkit-scrollbar": { width: "6px" } }}>
-              <DrawerCloseButton />
-              <DrawerHeader>Cart: {cartLength?.length}</DrawerHeader>
-              <DrawerBody css={{ "&::-webkit-scrollbar": { width: "6px" } }}>
-                <CartPage />
-              </DrawerBody>
-              <DrawerFooter>
-                <Button colorScheme="blue" mr={3} size="lg">
-                  Total: ${calculateTotal()}
-                </Button>
-                <Button colorScheme="blue" mr={3} size="lg">
-                  Checkout
-                </Button>
-                <Button onClick={onClose} size="lg">
-                  Cancel
-                </Button>
-              </DrawerFooter>
-            </DrawerContent>
-          </Drawer>
-
-          {/*  Showing Cart Drawer */}
         </div>
       </div>
+      </div>
+
+
+      {/*  Showing Cart Drawer */}
+
+      <Drawer
+        isOpen={isOpen}
+        placement="right"
+        onClose={onClose}
+        finalFocusRef={btnRef}
+        size="lg"
+      >
+        <DrawerOverlay />
+        <DrawerContent
+          css={{
+            "&::-webkit-scrollbar": { width: "6px" },
+            borderRadius: "10px",
+            background: "#fff",
+            color: "#333",
+          }}
+        >
+          <DrawerCloseButton />
+          <DrawerHeader
+            borderBottomWidth="1px"
+            fontSize="xl"
+            fontWeight="bold"
+            color="blue.500"
+          >
+            Your Cart ({cartLength?.length} Items)
+          </DrawerHeader>
+          <DrawerBody css={{ "&::-webkit-scrollbar": { width: "6px" } }}>
+            <CartPage />
+          </DrawerBody>
+          {/* <div className="checkoutPanel"> */}
+          <DrawerFooter display={"flex"} justifyContent={"space-between"}>
+            <div>
+              <Text fontSize="lg" fontWeight="bold" color="gray.700">
+                Total: ${calculateTotal()}
+              </Text>
+            </div>
+            <div>
+              <Button
+                colorScheme="blue"
+                mr={3}
+                size="lg"
+                // onClick={handleCheckout}
+                _hover={{ bg: "blue.800" }}
+              >
+                Checkout
+              </Button>
+            </div>
+          </DrawerFooter>
+          {/* </div> */}
+        </DrawerContent>
+      </Drawer>
+
+      {/*  Showing Cart Drawer */}
       <Contact />
     </div>
   );

@@ -4,12 +4,12 @@ const production = false
 
 
 if (production) {
-    console.log("inside xx")
+    // console.log("inside xx")
 
     urlBase = 'https://difficult-petticoat.cyclic.app/api'
 } else {
     console.log("inside else")
-    urlBase = 'http://192.168.56.1:4500/api'
+    urlBase = 'http://192.168.0.115:4500/api'
 }
 
 

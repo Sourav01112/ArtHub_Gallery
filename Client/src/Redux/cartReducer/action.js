@@ -134,23 +134,62 @@ export const incrementItemAction = (token, productId, cartData) => {
 
 
 
+// export const decrementItemAction = (token, productId, cartData) => {
+//   return async (dispatch) => {
+//     const qtyIsGreaterThanOne = cartData?.find((item) => {
+
+//       console.log("item.quanretrtrt", item.quantity)
+//       if (item.quantity < 1) {
+//         return false
+//       }
+//       return true;
+//     });
+
+//     const itemToDecrement = cartData.find((item) => item.productId === productId);
+
+//     console.log("cartDATAAAA", itemToDecrement)
+
+//     if (qtyIsGreaterThanOne) {
+//       dispatch({ type: 'DECREMENT_ITEM_REQUEST' });
+//       try {
+//         const response = await axios.post(
+//           `${urlBase}/cart/decrement/id?id=${productId}`,
+//           {},
+//           { headers: { Authorization: `Bearer ${token}` } }
+//         );
+//         const updatedItem = response.data.data;
+//         dispatch({
+//           type: DECREMENT_ITEM_SUCCESS,
+//           payload: updateCartInState(updatedItem, cartData)
+//         });
+//       } catch (error) {
+//         dispatch({
+//           type: DECREMENT_ITEM_FAILURE,
+//           payload: error.message
+//         });
+//       }
+//     } else {
+//       console.log("SORTTTYIU")
+//     }
+//   };
+// };
+
+
 export const decrementItemAction = (token, productId, cartData) => {
   return async (dispatch) => {
-    const qtyIsGreaterThanOne = cartData?.find((item) => {
-      if (item.quantity > 1) {
-        return true
-      }
-      return false;
-    });
 
-    if (qtyIsGreaterThanOne) {
+    const itemToDecrement = cartData.find((item) => item.productId._id === productId)
+
+    if (itemToDecrement && itemToDecrement.quantity > 1) {
       dispatch({ type: 'DECREMENT_ITEM_REQUEST' });
+
       try {
         const response = await axios.post(
           `${urlBase}/cart/decrement/id?id=${productId}`,
           {},
           { headers: { Authorization: `Bearer ${token}` } }
         );
+
         const updatedItem = response.data.data;
         dispatch({
           type: DECREMENT_ITEM_SUCCESS,
@@ -163,7 +202,7 @@ export const decrementItemAction = (token, productId, cartData) => {
         });
       }
     } else {
-      console.log("SORTTTYIU")
+      console.log("Quantity is already 1 or less. Cannot decrement further.");
     }
   };
 };

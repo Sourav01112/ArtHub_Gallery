@@ -27,17 +27,24 @@
 /*  #ImageFlex */
 
 .ImageFlex {
-  display: flex;
+  /* display: flex; */
   gap: 100px;
   padding: 20px;
 }
 .ImageFlexImage {
-  width: 90%;
+  width: 80%;
   display: flex;
   gap: 40px;
 }
 .BigImage {
   width: 1000px;
+}
+
+.singlProductAlign{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
 }
 
 @media (max-width: 1000px) {
@@ -49,7 +56,7 @@
     padding-top: 80px;
   }
   .ImageFlexImage {
-    /* width: -100%; */
+    width: 90%;
     display: grid;
   }
   .smallImages {
@@ -63,38 +70,121 @@
   .content {
     margin-left: 15px;
   }
+
+  .singlProductAlign{
+    display: grid;
+  
+  }
 }
 
 /*  #ImageFlex */
 
 /* #ButtonContainer */
+
+
+.ButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
 .ButtonContainer Button:first-child {
-  width: 300px;
-  margin-left: 150px;
+  width: 200px;
+  /* margin-left: 150px; */
   color: white;
-  background-color: red;
-  margin-bottom: 20px;
+  background-color: rgb(10, 144, 144);
+  /* margin-bottom: 20px; */
 }
 .ButtonContainer Button:nth-child(2) {
-  width: 300px;
-  margin-left: 150px;
+  width: 200px;
+  /* margin-left: 150px; */
   color: white;
-  background-color: #7cb342;
+  background-color: #427bb3;
   margin-bottom: 20px;
 }
 
 @media (max-width: 1000px) {
-  .ButtonContainer Button:first-child {
-    width: 250px;
-    margin-left: 90px;
+
+.ButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+ 
+  .ButtonContainer Button:nth-child(1) {
+    width: 180px;
+    margin-left: 20px;
+    margin-right: 25px;
+    /* margin: 40px; */
   }
   .ButtonContainer Button:nth-child(2) {
-    width: 250px;
-    margin-left: 90px;
+    width: 180px;
+    /* margin-left: 90px; */
     color: white;
-    background-color: #7cb342;
+    background-color: #427bb3;
+
     margin-bottom: 20px;
   }
 }
 
+
 /* #ButtonContainer */
+
+
+.cartBtn{
+  margin-top: 15px;
+  /* width: 5px !important */
+}
+/* .cartBtn IconButton:hover{
+  background-color: rgba(0, 0, 0, 0.392);
+
+} */
+
+.cartBtn Button{
+  width: -5px !important;
+  /* color: white; */
+  background-color: white;
+  /* margin-bottom: 20px; */
+}
+
+
+.cartImg{
+  width: 40%;
+  height: auto;
+  border-radius: 5px;
+}
+.checkoutPanel{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.checkoutPanel div{
+  margin-left: 10%;
+}
+
+@media (max-width: 1000px) {
+  .cartBtn{
+    margin-top: 5px;
+  }
+ 
+  
+  .cartBtn Button{
+    width: -5px !important;
+    background-color: white;
+  }
+
+  .cartImg{
+    width: 50%;
+    height: auto;
+    border-radius: 5px;
+  }
+
+  .checkoutPanel{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  
+  
+}
