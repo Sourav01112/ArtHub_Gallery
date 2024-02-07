@@ -1,6 +1,6 @@
 
 export var urlBase;
-const production = false
+const production = true
 
 
 if (production) {
