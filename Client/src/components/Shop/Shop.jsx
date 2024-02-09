@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Box, Button, Container, Image, Text } from "@chakra-ui/react";
+import React, { useEffect, useRef, useState } from "react";
+import { Badge, Box, Button, Spinner, useDisclosure } from "@chakra-ui/react";
 import { Shopcard } from "./Shopcard";
 import { Shop_Big } from "../../Utilities/encoded/Shop_Big";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { getProducts } from "../../Redux/productReducer/action";
-import axios from "axios";
 import "./shop.css";
 import SkeletonModel from "./SkeletonModel";
-
-/*  Shop Page by Sourav */
+import { ImCart } from "react-icons/im";
+import { DrawerComponent } from "../DrawerComponent";
 
 export const Shop = () => {
   const dispatch = useDispatch();
@@ -17,8 +16,19 @@ export const Shop = () => {
   const { products, isLoading, isError, error } = useSelector(
     (store) => store.productReducer
   );
-  const location = useLocation();
-  const [data, setData] = useState([]);
+  const [isTop, setIsTop] = useState(true);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = useRef();
+  const cartData = useSelector((store) => store.cartReducer);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
 
   var paramsObj = {
     page: 1,
@@ -26,11 +36,29 @@ export const Shop = () => {
     search: {},
   };
 
-  useEffect(() => {
-    dispatch(getProducts(paramsObj));
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  //   dispatch(getProducts(paramsObj));
+  // }, []);
 
-  // //(products);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    dispatch(getProducts(paramsObj));
+    const handleScroll = () => {
+      const threshold =
+        document.documentElement.scrollHeight - window.innerHeight;
+
+      if (window.scrollY < threshold / 8) {
+        setIsTop(false);
+      } else {
+        setIsTop(true);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <div>
@@ -40,10 +68,8 @@ export const Shop = () => {
           src={Shop_Big}
           style={{
             maxWidth: "100%",
-         
           }}
         />
-        {/* <Image src={Shop_Big} className="loginImageForm" w={"100%"} /> */}
 
         <Link to="/collections/shop">
           <div
@@ -52,7 +78,6 @@ export const Shop = () => {
               top: "5%",
               left: "90%",
               color: "white",
-              // padding: "10px",
             }}
           >
             <p style={{ fontSize: "25px" }}>SHOP ALL</p>
@@ -78,15 +103,12 @@ export const Shop = () => {
           </p>
         </div>
       </div>
-      {/* Shop ART Card  */}
       <h3 style={{ fontSize: "30px", marginTop: "50px", marginLeft: "4%" }}>
         NEW
       </h3>
 
       <div className="ShopContainer">
         <div className="CardContainer">
-          {/* Include the Card component */}
-
           {isLoading
             ? [1, 2].map((n) => <SkeletonModel key={n} size={145} />)
             : products?.length > 0 &&
@@ -101,6 +123,68 @@ export const Shop = () => {
         <Link to="/collections/shop">
           <Button>SHOP ALL</Button>
         </Link>
+
+        <DrawerComponent
+          isOpen={isOpen}
+          onOpen={onOpen}
+          onClose={onClose}
+          btnRef={btnRef}
+        />
+
+        <Box
+          className="hoverCart"
+          position="fixed"
+          bottom="2rem"
+          right="1.5rem"
+        >
+          {isTop && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+                position: "relative",
+                backgroundColor: "rgb(255, 213, 79)",
+                borderRadius: "5px",
+                padding: "5px",
+              }}
+              className="hoverContent"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onClick={() => onOpen()}
+            >
+              <ImCart
+                ref={btnRef}
+                style={{
+                  fontSize: "24px",
+                }}
+              />
+              {cartData?.cartData.length === 0 ? (
+                <Spinner size="sm" color="red.500" />
+              ) : (
+                <>
+                  {cartData?.cartData?.length > 0 ? (
+                    <Badge
+                      variant="solid"
+                      colorScheme="green"
+                      style={{ marginLeft: "5px" }}
+                    >
+                      {cartData?.cartData?.length}
+                    </Badge>
+                  ) : (
+                    <Badge
+                      variant="solid"
+                      colorScheme="red"
+                      style={{ marginLeft: "5px" }}
+                    >
+                      0
+                    </Badge>
+                  )}
+                </>
+              )}
+            </div>
+          )}
+        </Box>
       </div>
     </div>
   );

@@ -14,6 +14,7 @@ import { Login } from "../../components/pages/Login";
 import CartPage from "../Shop/CartPage";
 import { Admin } from "../Admin/Admin";
 import { AddProduct } from "../Admin/AddProduct";
+// import { CheckoutContainer } from "../CheckoutContainer";
 
 export const AllRoutes = () => {
   return (
@@ -45,6 +46,7 @@ export const AllRoutes = () => {
       <Route path="/contact" element={<Contact />}></Route>
       <Route path="/login" element={<Login />}></Route>
       <Route path="/signup" element={<Signup />}></Route>
+      {/* <Route path="/checkout" element={<CheckoutContainer />}></Route> */}
       <Route path="/admin/" element={<Admin />}></Route>
       <Route path="/admin/add-product" element={<AddProduct />}></Route>
 

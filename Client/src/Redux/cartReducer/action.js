@@ -16,7 +16,8 @@ import {
   REMOVE_ITEM_REQUEST,
   REMOVE_ITEM_SUCCESS,
   REMOVE_ITEM_FAILURE,
-  CALCULATE_TOTAL
+  CALCULATE_TOTAL,
+  EMPTY_CART
 } from "./actionTypes";
 
 import axios from "axios";
@@ -36,22 +37,24 @@ export const addToCartAction = (payload, token, cartData, toast) => (dispatch) =
   dispatch({ type: ADD_TO_CART_REQUEST });
 
   const existingCartItem = cartData?.cartData?.find((item) => {
-    if (item?.productId?._id === payload?.productId) {
+
+    if (item?.productId === payload?.productId || item?.productId?._id === payload.productId) {
       return true
     }
     return false
   });
+
   if (existingCartItem) {
     return toast({
       position: "top",
       title: "Product already in the cart !",
-      description: "Please increase the quantity in the next step.",
+      description: "Please increase the quantity.",
       status: "warning",
       duration: 2000,
       isClosable: true,
     });
   } else {
-    console.log("else")
+    // console.log("else") 
     // If the product is not in the cart, proceed with the original logic
     let apiHit = `${urlBase}/cart/addCart`;
     return axios.post(apiHit, payload, {
@@ -134,47 +137,6 @@ export const incrementItemAction = (token, productId, cartData) => {
 
 
 
-// export const decrementItemAction = (token, productId, cartData) => {
-//   return async (dispatch) => {
-//     const qtyIsGreaterThanOne = cartData?.find((item) => {
-
-//       console.log("item.quanretrtrt", item.quantity)
-//       if (item.quantity < 1) {
-//         return false
-//       }
-//       return true;
-//     });
-
-//     const itemToDecrement = cartData.find((item) => item.productId === productId);
-
-//     console.log("cartDATAAAA", itemToDecrement)
-
-//     if (qtyIsGreaterThanOne) {
-//       dispatch({ type: 'DECREMENT_ITEM_REQUEST' });
-//       try {
-//         const response = await axios.post(
-//           `${urlBase}/cart/decrement/id?id=${productId}`,
-//           {},
-//           { headers: { Authorization: `Bearer ${token}` } }
-//         );
-//         const updatedItem = response.data.data;
-//         dispatch({
-//           type: DECREMENT_ITEM_SUCCESS,
-//           payload: updateCartInState(updatedItem, cartData)
-//         });
-//       } catch (error) {
-//         dispatch({
-//           type: DECREMENT_ITEM_FAILURE,
-//           payload: error.message
-//         });
-//       }
-//     } else {
-//       console.log("SORTTTYIU")
-//     }
-//   };
-// };
-
-
 export const decrementItemAction = (token, productId, cartData) => {
   return async (dispatch) => {
 
@@ -240,3 +202,13 @@ export const calculateTotalAction = (total) => async (dispatch) => {
     payload: total,
   })
 }
+
+
+export const emptyCartAction = async (dispatch) => {
+
+  dispatch({
+    type: EMPTY_CART,
+    payload: [],
+  })
+}
+

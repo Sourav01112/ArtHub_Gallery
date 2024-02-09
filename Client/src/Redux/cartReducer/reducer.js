@@ -19,7 +19,8 @@ import {
   REMOVE_ITEM_REQUEST,
   REMOVE_ITEM_SUCCESS,
   REMOVE_ITEM_FAILURE,
-  CALCULATE_TOTAL
+  CALCULATE_TOTAL,
+  EMPTY_CART
 } from "./actionTypes";
 
 const initialState = {
@@ -31,6 +32,9 @@ const initialState = {
 
 
 export const reducer = (state = initialState, { type, payload }) => {
+
+
+
 
   switch (type) {
 
@@ -56,26 +60,6 @@ export const reducer = (state = initialState, { type, payload }) => {
 
       };
     }
-
-    // case ADD_TO_CART_DUPLICATE: {
-    //   // Handle the duplicate action, update quantity, or take other appropriate action
-    //   const updatedCart = state.cartData.map(item => {
-    //     if (item?.productId?._id === payload.productId) {
-    //       return {
-    //         ...item,
-    //         quantity: item.quantity + 1,  // Adjust quantity update logic as needed
-    //       };
-    //     }
-    //     return item;
-    //   });
-
-    //   console.log("Returning updateCart", updatedCart)
-    //   return {
-    //     ...state,
-    //     isLoading: false,
-    //     cartData: updatedCart,
-    //   };
-    // }
 
     case GET_CART_SUCCESS:
     case INCREMENT_ITEM_SUCCESS:
@@ -135,6 +119,14 @@ export const reducer = (state = initialState, { type, payload }) => {
         ...state,
         total: payload,
       };
+    }
+
+    case EMPTY_CART: {
+
+
+      return {
+        cartData: payload,
+      }
     }
 
     default: {

@@ -25,7 +25,7 @@ import {
   Badge,
 } from "@chakra-ui/react";
 import { FaArrowCircleUp, FaBars, FaTimes } from "react-icons/fa";
-import { AiOutlineLogin, AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlineLogin } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 import { AiOutlineLogout } from "react-icons/ai";
@@ -33,11 +33,31 @@ import LoginLogo from "../assets/Login.png";
 import { logoutAction } from "../Redux/authReducer/action";
 import { useDispatch, useSelector } from "react-redux";
 import "../App.css";
-import { getCartAction } from "../Redux/cartReducer/action";
+import { emptyCartAction, getCartAction } from "../Redux/cartReducer/action";
+import { signupLogo } from "../Utilities/encoded/signupLogo";
+import { DrawerComponent } from "./DrawerComponent";
+import { ImCart } from "react-icons/im";
 
 function NavBar() {
   const [navColour, updateNavbar] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  const {
+    isOpen: isLogoutModalOpen,
+    onOpen: openLogoutModal,
+    onClose: closeLogoutModal,
+  } = useDisclosure();
+
   const cartData = useSelector((store) => store.cartReducer);
 
   // console.log("cartData in navBARRRRR", cartData);
@@ -46,13 +66,17 @@ function NavBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isAuth = useSelector((store) => store.authReducer.isAuth);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { token } = useSelector((store) => store.authReducer);
+  const btnRef = useRef();
+  const [showSpinner, setShowSpinner] = useState(true);
 
   const toast = useToast();
   const navRef = useRef();
   const showNavBar = () => {
     navRef.current.classList.toggle("responsive_nav");
   };
+
   //****************  Scroll to Top   **************
   const [isTop, setIsTop] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
@@ -85,6 +109,7 @@ function NavBar() {
     });
     setIsTop(true);
   };
+
   //****************  Scroll to Top  ENDS **************
 
   // LogOut
@@ -117,12 +142,24 @@ function NavBar() {
     delay(2000)
       .then(() => {
         dispatch(logoutAction);
+        dispatch(emptyCartAction);
         navigate("/");
       })
       .catch((err) => {
         //(err);
       });
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+
+      // After 5 seconds, hide the spinner
+      setShowSpinner(false);
+    };
+
+    fetchData();
+  }, []); // Empty dependency array to run this effect only once
 
   return (
     <header>
@@ -156,6 +193,7 @@ function NavBar() {
             justifyContent: "space-between",
             width: "100%",
             alignItems: "center",
+            alignContent: "center",
           }}
         >
           <Link className="links">ARTISTS</Link>
@@ -173,12 +211,12 @@ function NavBar() {
           <div>
             <Menu>
               <MenuButton as={Text} color={"rgba(0, 0, 0, 0.547)"}>
-                <span style={{ color: "red", fontWeight: 800 }}>PROFILE</span>
+                <span style={{ color: "red", fontWeight: 800, marginTop:'150px' }}>PROFILE</span>
+                
               </MenuButton>
               <MenuList mt={5} p={0}>
-                {/* // if the userName is present in localStorage then show Menu, else don't */}
                 {localStorage.getItem("userName") && (
-                  <MenuItem border={"0"} maxH="60px" pl={"2"}>
+                  <MenuItem border={"0"} maxH="60px" pl={"30%"}>
                     👋
                     <span
                       style={{
@@ -187,17 +225,19 @@ function NavBar() {
                         fontSize: "20px",
                       }}
                     >
-                      {localStorage.getItem("userName")}
+                      {localStorage?.getItem("userName")?.split(" ")[0]}
                     </span>
                   </MenuItem>
                 )}
+
+                {/* style={{ backgroundImage: `url(${registerencoded})` }} */}
+                {/*  */}
 
                 <Link to={"/signup"}>
                   <MenuItem border={"0"} maxH="60px">
                     <Image
                       boxSize="2.1rem"
-                      // borderRadius="full"
-                      src="https://img.uxwing.com/wp-content/themes/uxwing/download/editing-user-action/signup-icon.svg"
+                      src={signupLogo}
                       alt="SignUp"
                       ml="10%"
                       mr="20%"
@@ -222,15 +262,13 @@ function NavBar() {
                   </Link>
                 ) : (
                   <MenuItem
-                    onClick={onOpen}
-                    // onClick={logout}
+                    onClick={openLogoutModal}
                     border={"0"}
                     maxH="60px"
                     bg={"#FF7043"}
                   >
                     <Image
                       boxSize="2rem"
-                      // borderRadius="full"
                       src={
                         "https://cdn.icon-icons.com/icons2/2518/PNG/512/logout_icon_151219.png"
                       }
@@ -246,9 +284,9 @@ function NavBar() {
 
             <AlertDialog
               motionPreset="scale"
-              isOpen={isOpen}
+              isOpen={isLogoutModalOpen}
               leastDestructiveRef={cancelRef}
-              onClose={onClose}
+              onClose={closeLogoutModal}
               isCentered
             >
               <AlertDialogOverlay>
@@ -262,14 +300,15 @@ function NavBar() {
                   </AlertDialogBody>
 
                   <AlertDialogFooter>
-                    <Button ref={cancelRef} onClick={onClose}>
+                    <Button ref={cancelRef} onClick={closeLogoutModal}>
                       Cancel
                     </Button>
                     <Button
                       colorScheme="red"
                       onClick={() => {
                         logout();
-                        onClose();
+                        // onClose();
+                        closeLogoutModal();
                       }}
                       ml={3}
                     >
@@ -281,36 +320,49 @@ function NavBar() {
             </AlertDialog>
           </div>
 
+          <DrawerComponent
+            isOpen={isOpen}
+            onOpen={onOpen}
+            onClose={onClose}
+            btnRef={btnRef}
+          />
+
           <div
-            style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
-            onClick={() => navigate("/get/cart")}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              cursor: "pointer",
+              position: "relative",
+              backgroundColor: isHovered ? "rgb(224, 224, 224)" : "",
+              borderRadius: "5px",
+              padding: "5px",
+            }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onClick={() => onOpen()}
           >
-            <AiOutlineShoppingCart
-              style={{ fontSize: "24px", marginRight: "5px" }}
+            <ImCart
+              ref={btnRef}
+              style={{
+                fontSize: "20px",
+                marginRight: "5px",
+              }}
             />
-            {cartData?.cartData.length === 0 ? (
-              <Badge variant="solid" colorScheme="red">
-                0
+
+            {showSpinner ? (
+              <Spinner size="sm" color="red.500" />
+            ) : cartData?.cartData?.length > 0 ? (
+              <Badge
+                variant="solid"
+                colorScheme="green"
+                style={{ marginLeft: "5px" }}
+              >
+                {cartData?.cartData?.length}
               </Badge>
             ) : (
-              // <Spinner size="sm" color="green.500" />
-              <>
-                {cartData?.cartData?.length > 0 ? (
-                  <Badge variant="solid" colorScheme="green">
-                    {cartData?.cartData?.length}
-                  </Badge>
-                ) : (
-                  <Badge variant="solid" colorScheme="red">
-                    0
-                  </Badge>
-                )}
-              </>
+              ""
             )}
           </div>
-
-          {/* <Link className="links" style={{ paddingBottom: "5px" }}>
-            <Search2Icon />
-          </Link> */}
 
           <Button className="nav-btn nav-close-btn" onClick={showNavBar}>
             <FaTimes />
@@ -319,17 +371,10 @@ function NavBar() {
         <Button className="nav-btn" onClick={showNavBar}>
           <GiHamburgerMenu />
         </Button>
-
-        {/* Hamburger Menu starts */}
-        {/* <div className="hamburger-menu">
-          <a href="#" onClick={() => setShowMenu(!showMenu)}>
-            <GiHamburgerMenu />
-          </a>
-        </div> */}
       </div>
-      {/* To top button :- CHAKRA */}
 
-      <Box
+      {/* To top button :- CHAKRA */}
+      {/* <Box
         className="ScrollTopButton"
         position="fixed"
         bottom="2rem"
@@ -338,7 +383,7 @@ function NavBar() {
         {isTop && (
           <FaArrowCircleUp color="#757575" size={30} onClick={scrollToTop} />
         )}
-      </Box>
+      </Box> */}
       {/* <hr /> */}
     </header>
   );
